@@ -17,7 +17,8 @@ public class Activity {
     private ActivityType activityType;
     private UUID owner;
     private String title;
-    private String location;
+    private String city;
+    private String street;
     private LocalDate date;
     private LocalTime time;
     private String description;
