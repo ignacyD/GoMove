@@ -10,7 +10,7 @@ import java.util.UUID;
 
 @Getter
 @Setter
-@AllArgsConstructor
+
 public class Comment {
     private final UUID commentId;
     private LocalDate date;
@@ -18,4 +18,13 @@ public class Comment {
     private UUID userId;
     private String message;
     private UUID activityId;
+
+    public Comment(LocalDate date, LocalTime time, UUID userId, String message, UUID activityId) {
+        this.commentId = UUID.randomUUID();
+        this.date = date;
+        this.time = time;
+        this.userId = userId;
+        this.message = message;
+        this.activityId = activityId;
+    }
 }
