@@ -23,11 +23,7 @@ public class UserController {
     public void addUser(@RequestBody User user) {
     }
 
-    @PutMapping("/update/{id}")
+    @PatchMapping("/update/{id}")
     public void updateUser(@RequestBody User user, @PathVariable UUID id) {
-    }
-
-    @DeleteMapping("/{id}")
-    public void deleteUser(@PathVariable UUID id) {
     }
 }

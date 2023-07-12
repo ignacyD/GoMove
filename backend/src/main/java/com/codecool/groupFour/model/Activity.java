@@ -24,5 +24,4 @@ public class Activity {
     private String description;
     private List<UUID> participants;
     private String activityPhotoUrl;
-    private List<UUID> comments;
 }

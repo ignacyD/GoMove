@@ -15,6 +15,7 @@ public class Comment {
     private final UUID commentId;
     private LocalDate date;
     private LocalTime time;
-    private UUID owner;
+    private UUID userId;
     private String message;
+    private UUID activityId;
 }

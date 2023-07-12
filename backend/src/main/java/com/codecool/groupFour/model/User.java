@@ -15,20 +15,19 @@ public class User {
     private String userEmail;
     private String password;
     private String city;
-    private List<ActivityType> preferredActivities;
-    private List<UUID> userActivitiesId;
-    private List<UUID> favouriteActivitiesId;
+    private ActivityType preferredActivity;
+    private List<UUID> userActivitiesIds;
     private String gender;
     private String description;
     private String userPhotoUrl;
 
-    public User(String userName, String userEmail, String password) {
+    public User(String userName, String userEmail, String password, ActivityType preferredActivity, String city) {
         this.userId = UUID.randomUUID();
         this.userName = userName;
         this.userEmail = userEmail;
         this.password = password;
-        this.preferredActivities = new ArrayList<>();
-        this.userActivitiesId = new ArrayList<>();
-        this.favouriteActivitiesId = new ArrayList<>();
+        this.city = city;
+        this.preferredActivity = preferredActivity;
+        this.userActivitiesIds = new ArrayList<>();
     }
 }

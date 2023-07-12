@@ -20,18 +20,9 @@ public class ActivityController {
         return null;
     }
 
-    @GetMapping("/{city}")
-    public List<Activity> getActivitiesByCity(@PathVariable String city) {
-        return null;
-    }
-
-    @GetMapping("/{type}")
-    public List<Activity> getActivitiesByType(@PathVariable ActivityType type) {
-        return null;
-    }
-
-    @GetMapping("/{city}/{type}")
-    public List<Activity> getActivitiesByTypeAndCity(@PathVariable String city, @PathVariable ActivityType type) {
+    @GetMapping()
+    public List<Activity> getActivitiesByTypeAndCity(@RequestParam(required = false) String city,
+                                                     @RequestParam(required = false) ActivityType type) {
         return null;
     }
 

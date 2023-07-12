@@ -8,13 +8,9 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/comments")
 public class CommentController {
-    @GetMapping
-    public List<Comment> getAllComments() {
-        return null;
-    }
 
-    @GetMapping("/{id}")
-    public Comment getComment(@PathVariable UUID id) {
+    @GetMapping("/{activityId}")
+    public List<Comment> getActivityComments(@PathVariable UUID activityId) {
         return null;
     }
 
@@ -22,11 +18,11 @@ public class CommentController {
     public void addComment(@RequestBody Comment comment) {
     }
 
-    @PutMapping("/update/{id}")
-    public void updateComment(@RequestBody Comment comment, @PathVariable UUID id) {
+    @PatchMapping("/update/{commentId}")
+    public void updateComment(@RequestBody Comment comment, @PathVariable UUID commentId) {
     }
 
-    @DeleteMapping("/{id}")
-    public void deleteComment(@PathVariable UUID id) {
+    @DeleteMapping("/{commentId}")
+    public void deleteComment(@PathVariable UUID commentId) {
     }
 }
