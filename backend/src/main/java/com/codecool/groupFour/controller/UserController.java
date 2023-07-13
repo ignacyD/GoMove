@@ -1,7 +1,6 @@
 package com.codecool.groupFour.controller;
 
 import com.codecool.groupFour.model.User;
-import com.codecool.groupFour.repository.ActivityRepository;
 import com.codecool.groupFour.service.UserService;
 import org.springframework.web.bind.annotation.*;
 

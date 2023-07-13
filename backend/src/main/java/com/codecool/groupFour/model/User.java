@@ -21,8 +21,8 @@ public class User {
     private String description;
     private String userPhotoUrl;
 
-    public User(UUID userId, String userName, String userEmail, String password, ActivityType preferredActivity, String city) {
-        this.userId = userId;
+    public User(String userName, String userEmail, String password, ActivityType preferredActivity, String city) {
+        this.userId = UUID.randomUUID();
         this.userName = userName;
         this.userEmail = userEmail;
         this.password = password;

@@ -17,10 +17,10 @@ public class UserRepository {
     public UserRepository() {
         this.users = new ArrayList<>();
 
-        users.add(new User(UUID.fromString("e024e4b6-f49a-41d4-8d5e-db7fd91b7225"), "Dominik", "dominik@gmail.com", "dominik", ActivityType.CYCLING, "Radziszow"));
-        users.add(new User(UUID.fromString("9886e1a7-7acf-4f50-8275-1449748e96eb"), "Kamil", "kamil@gmail.com", "kamil", ActivityType.WALKING, "Krzeszowice"));
-        users.add(new User(UUID.fromString("dd57746b-980b-4eaa-80c1-968c6f921560"), "Jakub", "jakub@gmail.com", "jakub", ActivityType.RUNNING, "Orly"));
-        users.add(new User(UUID.fromString("f6f12683-9487-4ccb-90bc-ad3405120407"), "Ignacy", "ignacy@gmail.com", "ignacy", ActivityType.SKATING, "Warszawa"));
+        users.add(new User("Dominik", "dominik@gmail.com", "dominik", ActivityType.CYCLING, "Radziszow"));
+        users.add(new User("Kamil", "kamil@gmail.com", "kamil", ActivityType.WALKING, "Krzeszowice"));
+        users.add(new User("Jakub", "jakub@gmail.com", "jakub", ActivityType.RUNNING, "Orly"));
+        users.add(new User("Ignacy", "ignacy@gmail.com", "ignacy", ActivityType.SKATING, "Warszawa"));
     }
 
     public List<User> getAllUsers() {
@@ -49,7 +49,7 @@ public class UserRepository {
         if (userToUpdateOptional.isPresent()) {
             User userToUpdate = userToUpdateOptional.get();
             userToUpdate.setUserName(user.getUserName());
-            userToUpdate.setUserName(user.getUserEmail());
+            userToUpdate.setUserEmail(user.getUserEmail());
             userToUpdate.setPassword(user.getPassword());
             userToUpdate.setCity(user.getCity());
             userToUpdate.setPreferredActivity(user.getPreferredActivity());
