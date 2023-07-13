@@ -39,7 +39,7 @@ public class ActivityController {
         activityService.addActivity(activity);
     }
 
-    @PutMapping("/update/{id}")
+    @PatchMapping("/update/{id}")
     public void updateActivity(@RequestBody Activity activity, @PathVariable UUID id) {
         activityService.updateActivity(activity, id);
     }

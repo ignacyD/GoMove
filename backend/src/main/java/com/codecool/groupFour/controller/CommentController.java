@@ -17,6 +17,10 @@ public class CommentController {
         this.commentService = commentService;
     }
 
+    @GetMapping
+    public List<Comment> getAllComments() {
+        return commentService.getAllComments();
+    }
 
     @GetMapping("/{activityId}")
     public List<Comment> getActivityComments(@PathVariable UUID activityId) {

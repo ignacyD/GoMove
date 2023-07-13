@@ -1,6 +1,5 @@
 package com.codecool.groupFour.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,7 +11,7 @@ import java.util.UUID;
 @Setter
 @Getter
 public class Activity {
-    private final UUID activityId;
+    private UUID activityId;
     private ActivityType activityType;
     private UUID owner;
     private String title;

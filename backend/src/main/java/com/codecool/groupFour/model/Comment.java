@@ -1,6 +1,5 @@
 package com.codecool.groupFour.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,7 +11,7 @@ import java.util.UUID;
 @Setter
 
 public class Comment {
-    private final UUID commentId;
+    private UUID commentId;
     private LocalDate date;
     private LocalTime time;
     private UUID userId;

@@ -32,4 +32,8 @@ public class CommentService {
     public void deleteComment(UUID commentId) {
         commentRepository.deleteComment(commentId);
     }
+
+    public List<Comment> getAllComments() {
+        return commentRepository.getAllComments();
+    }
 }

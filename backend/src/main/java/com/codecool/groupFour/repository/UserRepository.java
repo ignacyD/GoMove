@@ -17,10 +17,18 @@ public class UserRepository {
     public UserRepository() {
         this.users = new ArrayList<>();
 
-        users.add(new User("Dominik", "dominik@gmail.com", "dominik", ActivityType.CYCLING, "Radziszow"));
-        users.add(new User("Kamil", "kamil@gmail.com", "kamil", ActivityType.WALKING, "Krzeszowice"));
-        users.add(new User("Jakub", "jakub@gmail.com", "jakub", ActivityType.RUNNING, "Orly"));
-        users.add(new User("Ignacy", "ignacy@gmail.com", "ignacy", ActivityType.SKATING, "Warszawa"));
+        User user1 = new User("Dominik", "dominik@gmail.com", "dominik", ActivityType.CYCLING, "Radziszow");
+        user1.setUserId(UUID.fromString("1111e1a7-7acf-4f50-8275-1449748e96eb"));
+        users.add(user1);
+        User user2 = new User("Kamil", "kamil@gmail.com", "kamil", ActivityType.WALKING, "Krzeszowice");
+        user2.setUserId(UUID.fromString("2222e1a7-7acf-4f50-8275-1449748e96eb"));
+        users.add(user2);
+        User user3 = new User("Jakub", "jakub@gmail.com", "jakub", ActivityType.RUNNING, "Orly");
+        user3.setUserId(UUID.fromString("3333e1a7-7acf-4f50-8275-1449748e96eb"));
+        users.add(user3);
+        User user4 = new User("Ignacy", "ignacy@gmail.com", "ignacy", ActivityType.SKATING, "Warszawa");
+        user4.setUserId(UUID.fromString("4444e1a7-7acf-4f50-8275-1449748e96eb"));
+        users.add(user4);
     }
 
     public List<User> getAllUsers() {
