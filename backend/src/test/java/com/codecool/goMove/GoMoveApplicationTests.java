@@ -1,10 +1,10 @@
-package com.codecool.groupFour;
+package com.codecool.goMove;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class GroupFourApplicationTests {
+class GoMoveApplicationTests {
 
 	@Test
 	void contextLoads() {

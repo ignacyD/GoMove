@@ -1,13 +1,12 @@
-package com.codecool.groupFour;
+package com.codecool.goMove;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class GroupFourApplication {
+public class GoMoveApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(GroupFourApplication.class, args);
+		SpringApplication.run(GoMoveApplication.class, args);
 	}
-
 }

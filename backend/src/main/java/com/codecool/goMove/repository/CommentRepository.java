@@ -1,6 +1,6 @@
-package com.codecool.groupFour.repository;
+package com.codecool.goMove.repository;
 
-import com.codecool.groupFour.model.Comment;
+import com.codecool.goMove.model.Comment;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;

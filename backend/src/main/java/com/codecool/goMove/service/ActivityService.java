@@ -1,8 +1,8 @@
-package com.codecool.groupFour.service;
+package com.codecool.goMove.service;
 
-import com.codecool.groupFour.model.Activity;
-import com.codecool.groupFour.model.ActivityType;
-import com.codecool.groupFour.repository.ActivityRepository;
+import com.codecool.goMove.model.Activity;
+import com.codecool.goMove.model.ActivityType;
+import com.codecool.goMove.repository.ActivityRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

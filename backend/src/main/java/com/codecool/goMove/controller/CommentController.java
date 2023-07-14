@@ -1,7 +1,7 @@
-package com.codecool.groupFour.controller;
+package com.codecool.goMove.controller;
 
-import com.codecool.groupFour.model.Comment;
-import com.codecool.groupFour.service.CommentService;
+import com.codecool.goMove.model.Comment;
+import com.codecool.goMove.service.CommentService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

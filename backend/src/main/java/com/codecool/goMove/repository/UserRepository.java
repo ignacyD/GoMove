@@ -1,7 +1,7 @@
-package com.codecool.groupFour.repository;
+package com.codecool.goMove.repository;
 
-import com.codecool.groupFour.model.ActivityType;
-import com.codecool.groupFour.model.User;
+import com.codecool.goMove.model.ActivityType;
+import com.codecool.goMove.model.User;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;

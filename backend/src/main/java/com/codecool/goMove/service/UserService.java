@@ -1,7 +1,7 @@
-package com.codecool.groupFour.service;
+package com.codecool.goMove.service;
 
-import com.codecool.groupFour.model.User;
-import com.codecool.groupFour.repository.UserRepository;
+import com.codecool.goMove.model.User;
+import com.codecool.goMove.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

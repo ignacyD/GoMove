@@ -1,7 +1,7 @@
-package com.codecool.groupFour.service;
+package com.codecool.goMove.service;
 
-import com.codecool.groupFour.model.Comment;
-import com.codecool.groupFour.repository.CommentRepository;
+import com.codecool.goMove.model.Comment;
+import com.codecool.goMove.repository.CommentRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

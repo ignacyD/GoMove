@@ -1,8 +1,8 @@
-package com.codecool.groupFour.controller;
+package com.codecool.goMove.controller;
 
-import com.codecool.groupFour.model.Activity;
-import com.codecool.groupFour.model.ActivityType;
-import com.codecool.groupFour.service.ActivityService;
+import com.codecool.goMove.model.Activity;
+import com.codecool.goMove.model.ActivityType;
+import com.codecool.goMove.service.ActivityService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

@@ -1,7 +1,7 @@
-package com.codecool.groupFour.repository;
+package com.codecool.goMove.repository;
 
-import com.codecool.groupFour.model.Activity;
-import com.codecool.groupFour.model.ActivityType;
+import com.codecool.goMove.model.Activity;
+import com.codecool.goMove.model.ActivityType;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;

@@ -1,4 +1,4 @@
-package com.codecool.groupFour.model;
+package com.codecool.goMove.model;
 
 public enum ActivityType {
     WALKING,
