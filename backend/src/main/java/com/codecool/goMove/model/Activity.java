@@ -13,7 +13,7 @@ import java.util.UUID;
 public class Activity {
     private UUID activityId;
     private ActivityType activityType;
-    private UUID owner;
+    private UUID ownerId;
     private String title;
     private String city;
     private String street;
@@ -23,10 +23,10 @@ public class Activity {
     private List<UUID> participants;
     private String activityPhotoUrl;
 
-    public Activity(ActivityType activityType, UUID owner, String title, String city, String street, LocalDate date, LocalTime time, String description) {
+    public Activity(ActivityType activityType, UUID ownerId, String title, String city, String street, LocalDate date, LocalTime time, String description) {
         this.activityId = UUID.randomUUID();
         this.activityType = activityType;
-        this.owner = owner;
+        this.ownerId = ownerId;
         this.title = title;
         this.city = city;
         this.street = street;

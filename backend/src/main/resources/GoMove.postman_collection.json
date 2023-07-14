@@ -225,6 +225,27 @@
 			"response": []
 		},
 		{
+			"name": "activities - get by owner id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/activities/user/1111e1a7-7acf-4f50-8275-1449748e96eb",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"activities",
+						"user",
+						"1111e1a7-7acf-4f50-8275-1449748e96eb"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "activity - add new",
 			"request": {
 				"method": "POST",

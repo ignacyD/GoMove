@@ -34,6 +34,11 @@ public class ActivityController {
         return activityService.getActivitiesByTypeAndCity(city, type);
     }
 
+    @GetMapping("/user/{ownerId}")
+    public List<Activity> getActivitiesByOwner(@PathVariable UUID ownerId) {
+        return activityService.getActivitiesByOwner(ownerId);
+    }
+
     @PostMapping
     public void addActivity(@RequestBody Activity activity) {
         activityService.addActivity(activity);

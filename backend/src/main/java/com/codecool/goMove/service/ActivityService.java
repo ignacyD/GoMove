@@ -35,6 +35,10 @@ public class ActivityService {
         }
     }
 
+    public List<Activity> getActivitiesByOwner(UUID ownerId) {
+        return activityRepository.getActivitiesByOwner(ownerId);
+    }
+
     public void addActivity(Activity activity) {
         activityRepository.addActivity(activity);
     }
@@ -46,4 +50,5 @@ public class ActivityService {
     public void deleteActivity(UUID id) {
         activityRepository.deleteActivity(id);
     }
+
 }

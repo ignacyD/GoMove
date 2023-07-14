@@ -16,7 +16,7 @@ public class User {
     private String password;
     private String city;
     private ActivityType preferredActivity;
-    private List<UUID> userActivitiesIds;
+    private List<UUID> enrolledActivitiesId;
     private String gender;
     private String description;
     private String userPhotoUrl;
@@ -28,6 +28,6 @@ public class User {
         this.password = password;
         this.city = city;
         this.preferredActivity = preferredActivity;
-        this.userActivitiesIds = new ArrayList<>();
+        this.enrolledActivitiesId = new ArrayList<>();
     }
 }

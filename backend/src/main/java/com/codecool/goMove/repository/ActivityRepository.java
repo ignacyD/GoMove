@@ -66,6 +66,12 @@ public class ActivityRepository {
                 .collect(Collectors.toList());
     }
 
+    public List<Activity> getActivitiesByOwner(UUID ownerId) {
+        return activities.stream()
+                .filter(activity -> activity.getOwnerId().equals(ownerId))
+                .collect(Collectors.toList());
+    }
+
     public void addActivity(Activity activity) {
         activities.add(activity);
     }
@@ -101,4 +107,5 @@ public class ActivityRepository {
             throw new IllegalArgumentException("No activity with requested Id");
         }
     }
+
 }
