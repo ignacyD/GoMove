@@ -1,16 +1,24 @@
 package com.codecool.goMove.model;
 
+import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
+@Entity
+@Table(name = "activities")
 @Setter
 @Getter
+@NoArgsConstructor
 public class Activity {
+    @Id
     private UUID activityId;
     private ActivityType activityType;
     private UUID ownerId;
@@ -20,7 +28,8 @@ public class Activity {
     private LocalDate date;
     private LocalTime time;
     private String description;
-    private List<UUID> participants;
+    @ManyToMany(mappedBy = "enrolledActivities")
+    private Set<User> participants;
     private String activityPhotoUrl;
 
     public Activity(ActivityType activityType, UUID ownerId, String title, String city, String street, LocalDate date, LocalTime time, String description) {
@@ -33,6 +42,7 @@ public class Activity {
         this.date = date;
         this.time = time;
         this.description = description;
+        this.participants = new HashSet<>();
     }
 }
 
