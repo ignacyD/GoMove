@@ -16,7 +16,7 @@ import java.util.UUID;
 @NoArgsConstructor
 public class User {
     @Id
-    private UUID userId;
+    private UUID userId = UUID.randomUUID();
     private String userName;
     private String userEmail;
     private String password;
