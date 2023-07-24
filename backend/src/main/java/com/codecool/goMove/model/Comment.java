@@ -18,7 +18,7 @@ import java.util.UUID;
 @NoArgsConstructor
 public class Comment {
     @Id
-    private UUID commentId;
+    private UUID commentId = UUID.randomUUID();
     private LocalDate date;
     private LocalTime time;
     private UUID userId;
