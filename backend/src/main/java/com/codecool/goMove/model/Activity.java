@@ -1,6 +1,9 @@
 package com.codecool.goMove.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,7 +11,6 @@ import lombok.Setter;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -19,7 +21,7 @@ import java.util.UUID;
 @NoArgsConstructor
 public class Activity {
     @Id
-    private UUID activityId;
+    private UUID activityId = UUID.randomUUID();
     private ActivityType activityType;
     private UUID ownerId;
     private String title;

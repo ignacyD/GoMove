@@ -21,6 +21,7 @@ public class User {
     private String userEmail;
     private String password;
     private String city;
+    @Enumerated(EnumType.STRING)
     private ActivityType preferredActivity;
     @ManyToMany
     @JoinTable(
