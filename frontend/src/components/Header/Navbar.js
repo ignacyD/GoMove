@@ -33,6 +33,9 @@ function Navbar() {
                 <Link to='/login' className='nav-btn'>
                     <li>Login</li>
                 </Link>
+                <Link to='/add-activity' className='add-activity-btn'>
+                    <li>Add Activity</li>
+                </Link>
             </ul>
             <div className={`media ${showMenu ? 'show' : ''}`}>
                 <FontAwesomeIcon className='media-btn' icon={faFacebook} size="2x" style={{color: "#2b75f6"}}/>

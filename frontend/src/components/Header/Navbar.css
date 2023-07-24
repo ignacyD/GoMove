@@ -7,6 +7,7 @@
     padding: 20px;
     color: lightgreen;
     box-shadow: 0 2px 20px rgba(9, 8, 8, 0.71);
+    height: 5%;
 }
 
 .navbar .logo {
@@ -65,6 +66,24 @@
 
 .navbar .media .media-btn {
     margin-right: 20px;
+}
+
+.navbar .add-activity-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: lightgreen;
+    color: #2a2a2a;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+    /*font-weight: lighter;*/
+}
+
+.navbar .add-activity-btn:hover {
+    background-color: greenyellow;
+    transform: scale(1.1);
+    animation-duration: 0.2s;
+    transition-duration: 0.2s;
 }
 
 .navbar .media .media-btn:hover {
