@@ -18,11 +18,12 @@ public class ActivityController {
         this.activityService = activityService;
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping
     public List<Activity> getAllActivities() {
         return activityService.getAllActivities();
     }
-
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/{id}")
     public Activity getActivityById(@PathVariable UUID id) {
         return activityService.getActivityById(id);
