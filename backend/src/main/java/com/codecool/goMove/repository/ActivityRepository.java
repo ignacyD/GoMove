@@ -4,7 +4,6 @@ import com.codecool.goMove.model.Activity;
 import com.codecool.goMove.model.ActivityType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -21,15 +20,6 @@ public interface ActivityRepository extends JpaRepository<Activity, UUID> {
 
     List<Activity> findByOwnerId(UUID uuid);
 
-//    @Query(
-//            nativeQuery = true,
-//            value = "SELECT activity_id FROM user_activity WHERE user_id = :participantId"
-//
-//    )
-//    List<Activity> findByParticipants(@Param("participantId") UUID participantId);
-
-
     @Query("SELECT a FROM Activity a WHERE :userUuid IN (SELECT u.userId FROM a.participants u)")
     List<Activity> getActivitiesByParticipantId (UUID userUuid);
-
 }
