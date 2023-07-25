@@ -71,6 +71,11 @@ public class ActivityService {
     }
 
     public void deleteActivity(UUID id) {
-        activityRepository.deleteById(id);    }
+        activityRepository.deleteById(id);
+    }
+
+//    public List<Activity> getActivitiesByParticipantId(UUID uuid) {
+//        return activityRepository.findByParticipants(uuid);
+//    }
 
 }

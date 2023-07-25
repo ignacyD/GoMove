@@ -36,4 +36,9 @@ public class UserController {
     public void updateUser(@RequestBody User user, @PathVariable UUID id) {
         userService.updateUser(user, id);
     }
+
+    @PatchMapping("/enroll/{userId}/{activityId}")
+    public void enrollUser(@PathVariable UUID userId, @PathVariable UUID activityId) {
+        userService.enrollUser(userId, activityId);
+    }
 }

@@ -1,5 +1,6 @@
 package com.codecool.goMove.service;
 
+import com.codecool.goMove.model.Activity;
 import com.codecool.goMove.model.ActivityType;
 import com.codecool.goMove.model.User;
 import com.codecool.goMove.repository.UserRepository;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 
 @Service
@@ -64,5 +66,14 @@ public class UserService {
 
     private Optional<User> findById(UUID id) {
         return userRepository.findById(id);
+    }
+
+    public void enrollUser(UUID userId, UUID activityId) {
+        User userToUpdate = getUserById(userId);
+        Set<Activity> enrolledActivities = userToUpdate.getEnrolledActivities();
+        Activity activityToAdd = new Activity();
+        activityToAdd.setActivityId(activityId);
+        enrolledActivities.add(activityToAdd);
+        userRepository.save(userToUpdate);
     }
 }

@@ -53,4 +53,9 @@ public class ActivityController {
     public void deleteActivity(@PathVariable UUID id) {
         activityService.deleteActivity(id);
     }
+
+//    @GetMapping("/participant/{participantId}")
+//    public List<Activity> getActivitiesByParticipant(@PathVariable UUID participantId) {
+//        return activityService.getActivitiesByParticipantId(participantId);
+//    }
 }
