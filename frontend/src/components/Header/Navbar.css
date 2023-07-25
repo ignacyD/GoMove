@@ -37,14 +37,13 @@
     margin-right: 40px;
     text-decoration: none;
     color: lightgreen;
+    transition: transform .3s;
 }
 
 .navbar .nav-btn:hover {
     color: greenyellow;
     transform: scale(1.2);
-    font-weight: bold;
-    animation-duration: 0.2s;
-    transition-duration: 0.2s;
+    transition: transform .3s;
 }
 
 .navbar .nav-links {
