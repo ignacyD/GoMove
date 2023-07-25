@@ -16,7 +16,7 @@ function Search() {
 
     const fetchData = async (id) => {
         try {
-            const response = await fetch(`http://localhost:8080/activities`);
+            const response = await fetch(`http://localhost:8080/activities/${id}`);
             const data = await response.json();
             setActivitiesList(JSON.stringify(data));
         } catch (error) {

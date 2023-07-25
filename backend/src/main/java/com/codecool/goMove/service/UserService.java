@@ -16,19 +16,6 @@ public class UserService {
 
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
-
-        User user1 = new User("Dominik", "dominik@gmail.com", "dominik", ActivityType.CYCLING, "Radziszow");
-        user1.setUserId(UUID.fromString("1111e1a7-7acf-4f50-8275-1449748e96eb"));
-        addUser(user1);
-        User user2 = new User("Kamil", "kamil@gmail.com", "kamil", ActivityType.WALKING, "Krzeszowice");
-        user2.setUserId(UUID.fromString("2222e1a7-7acf-4f50-8275-1449748e96eb"));
-        addUser(user2);
-        User user3 = new User("Jakub", "jakub@gmail.com", "jakub", ActivityType.RUNNING, "Orly");
-        user3.setUserId(UUID.fromString("3333e1a7-7acf-4f50-8275-1449748e96eb"));
-        addUser(user3);
-        User user4 = new User("Ignacy", "ignacy@gmail.com", "ignacy", ActivityType.SKATING, "Warszawa");
-        user4.setUserId(UUID.fromString("4444e1a7-7acf-4f50-8275-1449748e96eb"));
-        addUser(user4);
     }
 
     public List<User> getAllUsers() {
