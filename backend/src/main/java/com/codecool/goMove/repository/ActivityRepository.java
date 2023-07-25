@@ -28,4 +28,8 @@ public interface ActivityRepository extends JpaRepository<Activity, UUID> {
 //    )
 //    List<Activity> findByParticipants(@Param("participantId") UUID participantId);
 
+
+    @Query("SELECT a FROM Activity a WHERE :userUuid IN (SELECT u.userId FROM a.participants u)")
+    List<Activity> getActivitiesByParticipantId (UUID userUuid);
+
 }
