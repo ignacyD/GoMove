@@ -32,14 +32,15 @@ public class UserService {
     }
 
     public boolean addUser(User user) {
-        Optional<User> userByUserName = userRepository.findByUserName(user.getUserName());
-        Optional<User> userByUserEmail = userRepository.findByUserEmail(user.getUserEmail());
 
-        if (userByUserName.isEmpty() && userByUserEmail.isEmpty()) {
-            userRepository.save(user);
-            return true;
+        boolean existsByUserName = userRepository.existsByUserName(user.getUserName());
+        boolean existsByUserEmail = userRepository.existsByUserEmail(user.getUserEmail());
+
+        if (existsByUserName || existsByUserEmail) {
+            return false;
         }
-        return false;
+        userRepository.save(user);
+        return true;
     }
 
     public void updateUser(User user, UUID id) {
