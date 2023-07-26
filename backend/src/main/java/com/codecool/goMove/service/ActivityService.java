@@ -72,4 +72,7 @@ public class ActivityService {
         return activityRepository.getActivitiesByParticipantId(uuid);
     }
 
+    public List<String> getAllCities() {
+        return activityRepository.getAllCities();
+    }
 }

@@ -5,6 +5,8 @@ import com.codecool.goMove.model.ActivityType;
 import com.codecool.goMove.service.ActivityService;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -22,10 +24,9 @@ public class ActivityController {
     public List<Activity> getAllActivities() {
         return activityService.getAllActivities();
     }
-
     @GetMapping("/{id}")
-    public Activity getActivityById(@PathVariable UUID id) {
-        return activityService.getActivityById(id);
+    public Activity getActivityById(@PathVariable String id) {
+        return activityService.getActivityById(UUID.fromString(id));
     }
 
     @GetMapping("/filter")
@@ -52,6 +53,11 @@ public class ActivityController {
     @DeleteMapping("/delete/{id}")
     public void deleteActivity(@PathVariable UUID id) {
         activityService.deleteActivity(id);
+    }
+
+    @GetMapping("/cities")
+    public List<String> getAllCities() {
+        return activityService.getAllCities();
     }
 
    @GetMapping("/participant/{participantId}")
