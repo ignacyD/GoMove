@@ -2,9 +2,12 @@ package com.codecool.goMove.service;
 
 import com.codecool.goMove.model.Activity;
 import com.codecool.goMove.model.ActivityType;
+import com.codecool.goMove.model.User;
 import com.codecool.goMove.repository.ActivityRepository;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -55,7 +58,15 @@ public class ActivityService {
     }
 
     public void deleteActivity(UUID id) {
-        activityRepository.deleteById(id);
+
+        if (activityRepository.findById(id).isPresent()) {
+            Activity activityToDelete = activityRepository.findById(id).get();
+            for(User user : activityToDelete.getParticipants()){
+                activityToDelete.removeParticipant(user);
+            }
+            activityRepository.deleteById(id);
+        }
+
     }
 
     public List<Activity> getActivitiesByParticipantId(UUID uuid) {
