@@ -17,7 +17,14 @@
     border-radius: 50%;
     background-color: #da0000;
     cursor: pointer;
+    transition: transform .2s;
 }
+
+.home-page .delete-activity:hover {
+    transform: scale(1.2);
+    transition: transform .2s;
+}
+
 
 .home-page .accept-activity {
     display: flex;
@@ -28,17 +35,10 @@
     border-radius: 50%;
     background-color: #00da00;
     cursor: pointer;
-}
-
-
-.home-page .delete-activity:hover {
-    transform: scale(1.2);
-    animation-duration: 0.2s;
-    transition-duration: 0.2s;
+    transition: transform .2s;
 }
 
 .home-page .accept-activity:hover{
     transform: scale(1.2);
-    animation-duration: 0.2s;
-    transition-duration: 0.2s;
+    transition: transform .2s;
 }
