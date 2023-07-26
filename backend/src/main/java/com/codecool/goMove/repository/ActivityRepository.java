@@ -20,9 +20,7 @@ public interface ActivityRepository extends JpaRepository<Activity, UUID> {
 
     List<Activity> findByOwnerId(UUID uuid);
 
-    @Query(
-            nativeQuery = true,
-            value = "SELECT DISTINCT city FROM activities")
+    @Query("SELECT DISTINCT a.city FROM Activity a")
     List<String> getAllCities();
 
     @Query("SELECT a FROM Activity a WHERE :userUuid IN (SELECT u.userId FROM a.participants u)")
