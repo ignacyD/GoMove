@@ -33,10 +33,9 @@ public class UserService {
 
     public boolean addUser(User user) {
 
-        boolean existsByUserName = userRepository.existsByUserName(user.getUserName());
-        boolean existsByUserEmail = userRepository.existsByUserEmail(user.getUserEmail());
+        boolean userExists = userRepository.existsByUserNameOrUserEmail(user.getUserName(), user.getUserEmail());
 
-        if (existsByUserName || existsByUserEmail) {
+        if (userExists) {
             return false;
         }
         userRepository.save(user);
