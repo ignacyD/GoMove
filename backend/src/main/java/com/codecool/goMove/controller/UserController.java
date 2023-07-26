@@ -2,6 +2,8 @@ package com.codecool.goMove.controller;
 
 import com.codecool.goMove.model.User;
 import com.codecool.goMove.service.UserService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,8 +30,12 @@ public class UserController {
     }
 
     @PostMapping
-    public void addUser(@RequestBody User user) {
-        userService.addUser(user);
+    public ResponseEntity<?> addUser(@RequestBody User user) {
+        boolean addPerformed = userService.addUser(user);
+        if (addPerformed) {
+            return ResponseEntity.status(HttpStatus.OK).body("User created");
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Username or email already exist");
     }
 
     @PatchMapping("/update/{id}")
