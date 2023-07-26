@@ -7,6 +7,7 @@ import ErrorPage from "./components/ErrorPage/ErrorPage";
 import AboutUsPage from "./components/AboutUsPage/AboutUsPage";
 import HomePage from "./components/HomePage/HomePage";
 import Search from "./components/Search/Search";
+import ActivityPage from "./components/ActivityPage/ActivityPage";
 
 const router = createBrowserRouter([
     {
@@ -25,7 +26,15 @@ const router = createBrowserRouter([
             {
                 path:"/search",
                 element: <Search/>
+            },
+
+            {
+                path:"/activity-page",
+                element: <ActivityPage/>
+
+
             }
+
         ]
     }
 ]);
