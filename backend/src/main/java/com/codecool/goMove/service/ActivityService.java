@@ -60,4 +60,7 @@ public class ActivityService {
     public void deleteActivity(UUID id) {
         activityRepository.deleteById(id);    }
 
+    public List<String> getAllCities() {
+        return activityRepository.getAllCities();
+    }
 }
