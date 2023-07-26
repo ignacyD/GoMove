@@ -24,4 +24,7 @@ public interface ActivityRepository extends JpaRepository<Activity, UUID> {
             nativeQuery = true,
             value = "SELECT DISTINCT city FROM activities")
     List<String> getAllCities();
+
+    @Query("SELECT a FROM Activity a WHERE :userUuid IN (SELECT u.userId FROM a.participants u)")
+    List<Activity> getActivitiesByParticipantId (UUID userUuid);
 }

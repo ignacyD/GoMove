@@ -1,12 +1,10 @@
 package com.codecool.goMove.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.sql.Delete;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -22,6 +20,7 @@ import java.util.UUID;
 public class Activity {
     @Id
     private UUID activityId = UUID.randomUUID();
+    @Enumerated(EnumType.STRING)
     private ActivityType activityType;
     private UUID ownerId;
     private String title;
@@ -30,9 +29,17 @@ public class Activity {
     private LocalDate date;
     private LocalTime time;
     private String description;
+
     @ManyToMany(mappedBy = "enrolledActivities")
     private Set<User> participants;
     private String activityPhotoUrl;
+
+
+    public void removeParticipant(User user){
+        this.participants.remove(user);
+        user.getEnrolledActivities().remove(this);
+    }
+
 
     public Activity(ActivityType activityType, UUID ownerId, String title, String city, String street, LocalDate date, LocalTime time, String description) {
         this.activityId = UUID.randomUUID();

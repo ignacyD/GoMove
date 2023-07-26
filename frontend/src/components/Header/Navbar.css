@@ -7,6 +7,7 @@
     padding: 20px;
     color: lightgreen;
     box-shadow: 0 2px 20px rgba(9, 8, 8, 0.71);
+    height: 5%;
 }
 
 .navbar .logo {
@@ -36,14 +37,13 @@
     margin-right: 40px;
     text-decoration: none;
     color: lightgreen;
+    transition: transform .3s;
 }
 
 .navbar .nav-btn:hover {
     color: greenyellow;
     transform: scale(1.2);
-    font-weight: bold;
-    animation-duration: 0.2s;
-    transition-duration: 0.2s;
+    transition: transform .3s;
 }
 
 .navbar .nav-links {
@@ -63,14 +63,32 @@
     margin-right: 30px;
 }
 
+.navbar .add-activity-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: lightgreen;
+    color: #2a2a2a;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+    transition: transform .2s;
+}
+
+.navbar .add-activity-btn:hover {
+    background-color: greenyellow;
+    transform: scale(1.1);
+    transition: transform .2s;
+}
+
 .navbar .media .media-btn {
     margin-right: 20px;
+    transition: transform .2s;
 }
 
 .navbar .media .media-btn:hover {
     transform: scale(1.2);
     animation-duration: 0.2s;
-    transition-duration: 0.2s;
+    transition: transform .2s;
 }
 
 @media screen and (max-width: 768px) {
@@ -122,8 +140,13 @@
         transition: transform 0.3s ease;
     }
 
+    .media .media-btn {
+        transition: transform .5s;
+    }
+
     .media .media-btn:hover {
         transform: scale(1.1);
+        transition: transform .2s;
     }
 }
 

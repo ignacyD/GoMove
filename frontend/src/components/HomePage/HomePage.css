@@ -1,0 +1,44 @@
+.home-page {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    height: 94vh;
+    background: url("../../assets/images/video_running.gif") no-repeat center;
+    background-size: cover;
+}
+
+.home-page .delete-activity {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    background-color: #da0000;
+    cursor: pointer;
+    transition: transform .2s;
+}
+
+.home-page .delete-activity:hover {
+    transform: scale(1.2);
+    transition: transform .2s;
+}
+
+
+.home-page .accept-activity {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    background-color: #00da00;
+    cursor: pointer;
+    transition: transform .2s;
+}
+
+.home-page .accept-activity:hover{
+    transform: scale(1.2);
+    transition: transform .2s;
+}

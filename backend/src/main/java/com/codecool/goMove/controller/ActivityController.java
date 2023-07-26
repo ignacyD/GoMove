@@ -59,4 +59,9 @@ public class ActivityController {
     public List<String> getAllCities() {
         return activityService.getAllCities();
     }
+
+   @GetMapping("/participant/{participantId}")
+   public List<Activity> getActivitiesByParticipant(@PathVariable UUID participantId) {
+        return activityService.getActivitiesByParticipantId(participantId);
+   }
 }
