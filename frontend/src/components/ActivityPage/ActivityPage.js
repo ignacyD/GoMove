@@ -40,7 +40,7 @@ function ActivityPage() {
                     <p>Street: {activityData.street}</p>
 
 
-                    <GoogleMapComponent address={`${activityData.city} ${activityData.street}`}/>
+                    <GoogleMapComponent height={'400px'} width={'400px'} address={`${activityData.city} ${activityData.street}`}/>
 
                 </div>
             ) : (

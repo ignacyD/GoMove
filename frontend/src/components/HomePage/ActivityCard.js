@@ -1,6 +1,7 @@
 import React from 'react';
 import './ActivitCard.css';
 import testPhoto from '../../assets/images/test.jpg'
+import GoogleMapComponent from "../GoogleMap/GoogleMap";
 
 function ActivityCard({activity}) {
     return (
@@ -16,7 +17,7 @@ function ActivityCard({activity}) {
                 </div>
             </div>
             <br/>
-            <div className="middel-section">
+            <div className="middle-section">
                 <div className="location">
                     <h3>Location: </h3>
                     <p>{activity.city}, {activity.street}</p>
@@ -32,8 +33,9 @@ function ActivityCard({activity}) {
             <h3>Description: </h3>
             <p>{activity.description}</p>
             <br/>
+            <h2>Google Maps</h2>
             <div className="google-maps">
-                <h2>Google Maps</h2>
+                <GoogleMapComponent height={'350px'} width={'650px'} address={`${activity.city} ${activity.street}`}/>
             </div>
         </div>
     )
