@@ -43,8 +43,15 @@ public class ActivityService {
         return activityRepository.findByOwnerId(ownerId);
     }
 
-    public void addActivity(Activity activity) {
-        activityRepository.save(activity);
+    public boolean addActivity(Activity activity) {
+        LocalDate today = LocalDate.now();
+        LocalTime now = LocalTime.now();
+        if (activity.getDate().isAfter(today)
+                || activity.getDate().equals(today) && activity.getTime().isAfter(now)) {
+            activityRepository.save(activity);
+            return true;
+        }
+        return false;
     }
 
     public void updateActivity(Activity activity, UUID id) {
