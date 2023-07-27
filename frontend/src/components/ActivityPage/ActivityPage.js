@@ -1,5 +1,6 @@
 import './ActivityPage.css';
 import {useEffect, useState} from "react";
+import GoogleMapComponent from "../GoogleMap/GoogleMap";
 
 
 function ActivityPage() {
@@ -9,7 +10,7 @@ function ActivityPage() {
     useEffect(() => {
         const fetchActivityData = async () => {
             try {
-                const response = await fetch('http://localhost:8080/activities/1111e4ee-06f5-40ab-935e-442074f939a1', );
+                const response = await fetch('http://localhost:8080/activities/2222e4ee-06f5-40ab-935e-442074f939a1', );
 
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
@@ -38,6 +39,8 @@ function ActivityPage() {
                     <p>City: {activityData.city}</p>
                     <p>Street: {activityData.street}</p>
 
+
+                    <GoogleMapComponent address={`${activityData.city} ${activityData.street}`}/>
 
                 </div>
             ) : (
