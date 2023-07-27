@@ -3,7 +3,7 @@
     flex-direction: column;
     align-items: center;
     position: relative;
-    top: 4vh;
+    top: 7vh;
 }
 .username-field, .password-field{
     display: flex;
