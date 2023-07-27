@@ -295,7 +295,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"activityType\": \"RUNNING\",\r\n    \"owner\": \"2222e1a7-7acf-4f50-8275-1449748e96eb\",\r\n    \"title\": \"Chodź pobiegać\",\r\n    \"city\": \"Krzeszowice\",\r\n    \"street\": \"Rynek\",\r\n    \"date\": \"2023-07-14\",\r\n    \"time\": \"16:00:00\",\r\n    \"description\": \"Zapraszam na wspólne bieganie\",\r\n    \"participants\": null,\r\n    \"activityPhotoUrl\": null\r\n}",
+					"raw": "{\r\n    \"activityType\": \"RUNNING\",\r\n    \"ownerId\": \"2222e1a7-7acf-4f50-8275-1449748e96eb\",\r\n    \"title\": \"Chodź pobiegać\",\r\n    \"city\": \"Krzeszowice\",\r\n    \"street\": \"Rynek\",\r\n    \"date\": \"2023-07-14\",\r\n    \"time\": \"16:00:00\",\r\n    \"description\": \"Zapraszam na wspólne bieganie\",\r\n    \"participants\": null,\r\n    \"activityPhotoUrl\": null\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -362,6 +362,26 @@
 						"activities",
 						"delete",
 						"1111e4ee-06f5-40ab-935e-442074f939a1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "activities - get cities",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/activities/cities",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"activities",
+						"cities"
 					]
 				}
 			},

@@ -1,7 +1,6 @@
 package com.codecool.goMove.service;
 
 import com.codecool.goMove.model.Activity;
-import com.codecool.goMove.model.ActivityType;
 import com.codecool.goMove.model.User;
 import com.codecool.goMove.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -32,8 +31,15 @@ public class UserService {
         throw new IllegalArgumentException("No user with requested Id");
     }
 
-    public void addUser(User user) {
+    public boolean addUser(User user) {
+
+        boolean userExists = userRepository.existsByUserNameOrUserEmail(user.getUserName(), user.getUserEmail());
+
+        if (userExists) {
+            return false;
+        }
         userRepository.save(user);
+        return true;
     }
 
     public void updateUser(User user, UUID id) {

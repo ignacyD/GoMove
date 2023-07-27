@@ -25,8 +25,8 @@ public class ActivityController {
         return activityService.getAllActivities();
     }
     @GetMapping("/{id}")
-    public Activity getActivityById(@PathVariable String id) {
-        return activityService.getActivityById(UUID.fromString(id));
+    public Activity getActivityById(@PathVariable UUID id) {
+        return activityService.getActivityById(id);
     }
 
     @GetMapping("/filter")
