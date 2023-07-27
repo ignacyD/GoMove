@@ -1,23 +1,23 @@
-.login-form{
+.registration-form{
     display: flex;
     flex-direction: column;
     align-items: center;
     position: relative;
-    top: 7vh;
+    top: 4vh;
 }
-.username-field, .password-field{
+.username-field, .password-field, .e-mail-field, .confirm-password-field{
     display: flex;
     margin-bottom: 10px;
 }
 
-.username-label, .password-label{
+.username-label, .password-label, .e-mail-label, .confirm-password-label{
     margin-right: 10px;
-    min-width: 7vw;
-    max-width: 7vw;
+    min-width: 9vw;
+    max-width: 9vw;
     display: block;
 }
 
-.login-submit-btn {
+.register-submit-btn {
     margin-top: 10px;
     margin-bottom: 10px;
     display: inline-block;
@@ -36,12 +36,12 @@
     transition: transform .5s;
 }
 
-.username-input, .password-input{
+.username-input, .password-input, .e-mail-input, .confirm-password-input{
     min-width: 12.5vw;
     max-width: 12.5vw;
 }
 .username-input:hover, .password-input:hover{
-box-shadow: 0px 0px 5px yellowgreen;
+    box-shadow: 0px 0px 5px yellowgreen;
 }
 .register-link{
     color: yellowgreen;
@@ -50,7 +50,7 @@ box-shadow: 0px 0px 5px yellowgreen;
     text-decoration: underline;
 }
 
-.login-form {
+.registration-form {
     text-align: center;
 }
 
