@@ -84,15 +84,14 @@
     background-color: lightgreen;
     color: #2a2a2a;
     text-decoration: none;
-    border-radius: 4px;
-    transition: background-color 0.3s ease;
-    transition: transform .2s;
+    border-radius: 6px;
+    transition: transform .4s ease;
 }
 
 .navbar .add-activity-btn:hover {
     background-color: greenyellow;
     transform: scale(1.1);
-    transition: transform .2s;
+    transition: transform .4s ease;
 }
 
 .navbar .media .media-btn {
