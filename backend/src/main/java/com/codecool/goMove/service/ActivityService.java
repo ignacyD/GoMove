@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class ActivityService {
@@ -43,8 +43,15 @@ public class ActivityService {
         return activityRepository.findByOwnerId(ownerId);
     }
 
-    public void addActivity(Activity activity) {
-        activityRepository.save(activity);
+    public boolean addActivity(Activity activity) {
+        LocalDate today = LocalDate.now();
+        LocalTime now = LocalTime.now();
+        if (activity.getDate().isAfter(today)
+                || activity.getDate().equals(today) && activity.getTime().isAfter(now)) {
+            activityRepository.save(activity);
+            return true;
+        }
+        return false;
     }
 
     public void updateActivity(Activity activity, UUID id) {
@@ -63,7 +70,7 @@ public class ActivityService {
 
         if (activityRepository.findById(id).isPresent()) {
             Activity activityToDelete = activityRepository.findById(id).get();
-            for(User user : activityToDelete.getParticipants()){
+            for (User user : activityToDelete.getParticipants()) {
                 activityToDelete.removeParticipant(user);
             }
             activityRepository.deleteById(id);
@@ -76,5 +83,15 @@ public class ActivityService {
 
     public List<String> getAllCities() {
         return activityRepository.getAllCities();
+    }
+
+    public List<Activity> getFutureActivities() {
+        LocalDate today = LocalDate.now();
+        LocalTime now = LocalTime.now();
+
+        return activityRepository.findByDateAfter(today.minusDays(1)).stream()
+                .filter(activity -> activity.getDate().isAfter(today)
+                        || (activity.getDate().isEqual(today) && activity.getTime().isAfter(now)))
+                .collect(Collectors.toList());
     }
 }

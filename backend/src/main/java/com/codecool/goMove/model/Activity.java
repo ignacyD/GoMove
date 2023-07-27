@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.sql.Delete;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -35,12 +34,6 @@ public class Activity {
     private String activityPhotoUrl;
 
 
-    public void removeParticipant(User user){
-        this.participants.remove(user);
-        user.getEnrolledActivities().remove(this);
-    }
-
-
     public Activity(ActivityType activityType, UUID ownerId, String title, String city, String street, LocalDate date, LocalTime time, String description) {
         this.activityId = UUID.randomUUID();
         this.activityType = activityType;
@@ -52,6 +45,11 @@ public class Activity {
         this.time = time;
         this.description = description;
         this.participants = new HashSet<>();
+    }
+
+    public void removeParticipant(User user) {
+        this.participants.remove(user);
+        user.getEnrolledActivities().remove(this);
     }
 }
 

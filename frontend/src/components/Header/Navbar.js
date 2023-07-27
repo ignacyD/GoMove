@@ -3,15 +3,12 @@ import {Link} from "react-router-dom";
 import React, {useState} from "react";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faFacebook, faYoutube} from "@fortawesome/free-brands-svg-icons";
-import {faBars, faChevronLeft, faLaptopCode, faX} from "@fortawesome/free-solid-svg-icons";
+import {faChevronLeft, faLaptopCode, faX} from "@fortawesome/free-solid-svg-icons";
+import MobileMenu from "../MobileMenu/MobileMenu";
 
 function Navbar({loggedIn, setLoggedIn, setDisplayLoginForm, handleLogout}) {
-    const [showMenu, setShowMenu] = useState(false);
     const [displayMedia, setDisplayMedia] = useState(false);
     const [mediaContainerOpen, setMediaContainerOpen] = useState(true);
-    const toggleMenu = () => {
-        setShowMenu(!showMenu);
-    };
     const displayMediaTimer = () => {
         setTimeout(() => {
             setDisplayMedia(true);
@@ -24,10 +21,8 @@ function Navbar({loggedIn, setLoggedIn, setDisplayLoginForm, handleLogout}) {
             <div className='logo'>
                 <Link to='/' className='logo-btn'>Go Move.</Link>
             </div>
-            <div className='menu-icon' onClick={toggleMenu}>
-                <FontAwesomeIcon icon={faBars} size="2x" style={{color: "#90EE90FF"}}/>
-            </div>
-            <ul className={`nav-links ${showMenu ? 'show' : ''}`}>
+            {<MobileMenu/>}
+            <ul className="nav-links">
                 <Link to='/search' className='nav-btn'>
                     <li>Search</li>
                 </Link>
@@ -39,10 +34,11 @@ function Navbar({loggedIn, setLoggedIn, setDisplayLoginForm, handleLogout}) {
                 </Link>
             </ul>
             <div
-                className={`media ${showMenu ? 'show' : ''} ${displayMedia ? 'media-displayed' : 'media-undisplayed'}`}>
+                className={`media ${displayMedia ? 'media-displayed' : 'media-undisplayed'}`}>
                 {!displayMedia && displayMediaTimer()}
                 <div className={`media-container-${mediaContainerOpen ? 'open' : 'closed'}`}>
-                    <button className="open-close-media-btn" onClick={() => setMediaContainerOpen(!mediaContainerOpen)}><FontAwesomeIcon icon={mediaContainerOpen ? faX : faChevronLeft}/></button>
+                    <button className="open-close-media-btn" onClick={() => setMediaContainerOpen(!mediaContainerOpen)}>
+                        <FontAwesomeIcon icon={mediaContainerOpen ? faX : faChevronLeft}/></button>
                     <FontAwesomeIcon className='media-btn' icon={faFacebook} size="2x" style={{color: "#2b75f6"}}/>
                     <FontAwesomeIcon className='media-btn' icon={faYoutube} size="2x" style={{color: "#fa3333"}}/>
                     <FontAwesomeIcon className='media-btn' icon={faLaptopCode} size="2x" style={{color: "#90EE90FF"}}/>
