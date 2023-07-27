@@ -1,1 +1,32 @@
+body {
+    overflow: hidden;
+}
 
+@keyframes slideFromTop {
+    from {
+        transform: translateY(-200%);
+    }
+    to {
+        transform: translateY(0%);
+    }
+}
+
+@keyframes slideToTop {
+    from {
+        transform: translateY(50%);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+
+.ReactModal__Content--after-open {
+    animation: ease;
+    animation-duration: 1s;
+    animation-name: slideFromTop;
+}
+
+.modal-closed {
+    animation-duration: 0.3s;
+    animation-name: slideToTop;
+}
