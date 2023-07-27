@@ -3,10 +3,10 @@ package com.codecool.goMove.controller;
 import com.codecool.goMove.model.Activity;
 import com.codecool.goMove.model.ActivityType;
 import com.codecool.goMove.service.ActivityService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -24,6 +24,12 @@ public class ActivityController {
     public List<Activity> getAllActivities() {
         return activityService.getAllActivities();
     }
+
+    @GetMapping("/future")
+    public List<Activity> getFutureActivities() {
+        return activityService.getFutureActivities();
+    }
+
     @GetMapping("/{id}")
     public Activity getActivityById(@PathVariable UUID id) {
         return activityService.getActivityById(id);
@@ -41,8 +47,12 @@ public class ActivityController {
     }
 
     @PostMapping
-    public void addActivity(@RequestBody Activity activity) {
-        activityService.addActivity(activity);
+    public ResponseEntity<?> addActivity(@RequestBody Activity activity) {
+        boolean addPerformed = activityService.addActivity(activity);
+        if (addPerformed) {
+            return ResponseEntity.status(HttpStatus.OK).body("Activity added");
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Activity can't be in the past");
     }
 
     @PatchMapping("/update/{id}")
@@ -60,8 +70,8 @@ public class ActivityController {
         return activityService.getAllCities();
     }
 
-   @GetMapping("/participant/{participantId}")
-   public List<Activity> getActivitiesByParticipant(@PathVariable UUID participantId) {
+    @GetMapping("/participant/{participantId}")
+    public List<Activity> getActivitiesByParticipant(@PathVariable UUID participantId) {
         return activityService.getActivitiesByParticipantId(participantId);
-   }
+    }
 }

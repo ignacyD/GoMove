@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -25,4 +26,6 @@ public interface ActivityRepository extends JpaRepository<Activity, UUID> {
 
     @Query("SELECT a FROM Activity a WHERE :userUuid IN (SELECT u.userId FROM a.participants u)")
     List<Activity> getActivitiesByParticipantId (UUID userUuid);
+
+    List<Activity> findByDateAfter(LocalDate date);
 }
