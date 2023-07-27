@@ -22,10 +22,16 @@
     align-items: center;
 }
 
-.card .middel-section{
+.card .middle-section{
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+}
+
+.card .google-maps{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 
 .photo {

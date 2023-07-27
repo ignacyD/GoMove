@@ -7,13 +7,13 @@ import {GoogleMap, useJsApiLoader, Marker} from '@react-google-maps/api';
 const googleMapApiKey = process.env.REACT_APP_GOOGLE_MAP_API_KEY;
 const googleMapGeocodeURL = process.env.REACT_APP_GOOGLE_MAP_GEOCODE_URL;
 
-function GoogleMapComponent({address , size}) {
+function GoogleMapComponent({address , width, height}) {
     const [coordinates, setCoordinates] = useState(null);
 
 
     const containerStyle = {
-        width: size,
-        height: size
+        width: width,
+        height: height
     };
 
     useEffect(() => {
