@@ -33,7 +33,6 @@ public class Activity {
     private Set<User> participants;
     private String activityPhotoUrl;
 
-
     public Activity(ActivityType activityType, UUID ownerId, String title, String city, String street, LocalDate date, LocalTime time, String description) {
         this.activityId = UUID.randomUUID();
         this.activityType = activityType;

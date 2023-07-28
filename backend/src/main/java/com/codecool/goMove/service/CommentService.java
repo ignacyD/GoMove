@@ -4,8 +4,6 @@ import com.codecool.goMove.model.Comment;
 import com.codecool.goMove.repository.CommentRepository;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -17,7 +15,6 @@ public class CommentService {
     public CommentService(CommentRepository commentRepository) {
         this.commentRepository = commentRepository;
     }
-
 
     public List<Comment> getAllComments() {
         return commentRepository.findAll();
