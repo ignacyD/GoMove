@@ -7,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -21,29 +20,43 @@ public class ActivityController {
     }
 
     @GetMapping
-    public List<Activity> getAllActivities() {
-        return activityService.getAllActivities();
+    public ResponseEntity<?> getAllActivities() {
+        return ResponseEntity.status(HttpStatus.OK).body(activityService.getAllActivities());
     }
 
     @GetMapping("/future")
-    public List<Activity> getFutureActivities() {
-        return activityService.getFutureActivities();
+    public ResponseEntity<?> getFutureActivities() {
+        return ResponseEntity.status(HttpStatus.OK).body(activityService.getFutureActivities());
     }
 
     @GetMapping("/{id}")
-    public Activity getActivityById(@PathVariable UUID id) {
-        return activityService.getActivityById(id);
+    public ResponseEntity<?> getActivityById(@PathVariable UUID id) {
+        Activity activityById = activityService.getActivityById(id);
+        if (activityById != null) {
+            return ResponseEntity.status(HttpStatus.OK).body(activityById);
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No activity with requested id");
     }
 
     @GetMapping("/filter")
-    public List<Activity> getActivitiesByTypeAndCity(@RequestParam(required = false) String city,
-                                                     @RequestParam(required = false) ActivityType type) {
-        return activityService.getActivitiesByTypeAndCity(city, type);
+    public ResponseEntity<?> getActivitiesByTypeAndCity(@RequestParam(required = false) String city,
+                                                        @RequestParam(required = false) ActivityType type) {
+        return ResponseEntity.status(HttpStatus.OK).body(activityService.getActivitiesByTypeAndCity(city, type));
     }
 
     @GetMapping("/user/{ownerId}")
-    public List<Activity> getActivitiesByOwner(@PathVariable UUID ownerId) {
-        return activityService.getActivitiesByOwner(ownerId);
+    public ResponseEntity<?> getActivitiesByOwner(@PathVariable UUID ownerId) {
+        return ResponseEntity.status(HttpStatus.OK).body(activityService.getActivitiesByOwner(ownerId));
+    }
+
+    @GetMapping("/participant/{participantId}")
+    public ResponseEntity<?> getActivitiesByParticipant(@PathVariable UUID participantId) {
+        return ResponseEntity.status(HttpStatus.OK).body(activityService.getActivitiesByParticipantId(participantId));
+    }
+
+    @GetMapping("/cities")
+    public ResponseEntity<?> getAllCities() {
+        return ResponseEntity.status(HttpStatus.OK).body(activityService.getAllCities());
     }
 
     @PostMapping
@@ -56,22 +69,20 @@ public class ActivityController {
     }
 
     @PatchMapping("/update/{id}")
-    public void updateActivity(@RequestBody Activity activity, @PathVariable UUID id) {
-        activityService.updateActivity(activity, id);
+    public ResponseEntity<?> updateActivity(@RequestBody Activity activity, @PathVariable UUID id) {
+        boolean updatePerformed = activityService.updateActivity(activity, id);
+        if (updatePerformed) {
+            return ResponseEntity.status(HttpStatus.OK).body("Activity updated");
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No activity with requested id");
     }
 
     @DeleteMapping("/delete/{id}")
-    public void deleteActivity(@PathVariable UUID id) {
-        activityService.deleteActivity(id);
-    }
-
-    @GetMapping("/cities")
-    public List<String> getAllCities() {
-        return activityService.getAllCities();
-    }
-
-    @GetMapping("/participant/{participantId}")
-    public List<Activity> getActivitiesByParticipant(@PathVariable UUID participantId) {
-        return activityService.getActivitiesByParticipantId(participantId);
+    public ResponseEntity<?> deleteActivity(@PathVariable UUID id) {
+        boolean deletePerformed = activityService.deleteActivity(id);
+        if (deletePerformed) {
+            return ResponseEntity.status(HttpStatus.OK).body("Activity deleted");
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No activity with requested id");
     }
 }
