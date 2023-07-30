@@ -20,13 +20,17 @@ public class UserController {
     }
 
     @GetMapping
-    public List<User> getAllUsers() {
-        return userService.getAllUsers();
+    public ResponseEntity<List<User>> getAllUsers() {
+        return ResponseEntity.status(HttpStatus.OK).body(userService.getAllUsers());
     }
 
     @GetMapping("/{id}")
-    public User getUserById(@PathVariable UUID id) {
-        return userService.getUserById(id);
+    public ResponseEntity<?> getUserById(@PathVariable UUID id) {
+        User userById = userService.getUserById(id);
+        if (userById != null) {
+            return ResponseEntity.status(HttpStatus.OK).body(userById);
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No user with requested id");
     }
 
     @PostMapping
@@ -39,12 +43,20 @@ public class UserController {
     }
 
     @PatchMapping("/update/{id}")
-    public void updateUser(@RequestBody User user, @PathVariable UUID id) {
-        userService.updateUser(user, id);
+    public ResponseEntity<?> updateUser(@RequestBody User user, @PathVariable UUID id) {
+        boolean updatePerformed = userService.updateUser(user, id);
+        if (updatePerformed) {
+            return ResponseEntity.status(HttpStatus.OK).body("User updated");
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No user with requested id");
     }
 
     @PatchMapping("/enroll/{userId}/{activityId}")
-    public void enrollUser(@PathVariable UUID userId, @PathVariable UUID activityId) {
-        userService.enrollUser(userId, activityId);
+    public ResponseEntity<?> enrollUser(@PathVariable UUID userId, @PathVariable UUID activityId) {
+        boolean enrollPerformed = userService.enrollUser(userId, activityId);
+        if (enrollPerformed) {
+            return ResponseEntity.status(HttpStatus.OK).body("User enrolled to the activity");
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No user with requested id");
     }
 }

@@ -25,10 +25,7 @@ public class UserService {
 
     public User getUserById(UUID id) {
         Optional<User> optionalUser = findById(id);
-        if (optionalUser.isPresent()) {
-            return optionalUser.get();
-        }
-        throw new IllegalArgumentException("No user with requested Id");
+        return optionalUser.orElse(null);
     }
 
     public boolean addUser(User user) {
@@ -42,31 +39,46 @@ public class UserService {
         return true;
     }
 
-    public void updateUser(User user, UUID id) {
+    public boolean updateUser(User user, UUID id) {
         Optional<User> optionalUser = findById(id);
-        if (optionalUser.isPresent()) {
-            User userToUpdate = optionalUser.get();
-            userToUpdate.setUserName(user.getUserName());
-            userToUpdate.setUserEmail(user.getUserEmail());
-            userToUpdate.setPassword(user.getPassword());
-            userToUpdate.setCity(user.getCity());
-            userToUpdate.setPreferredActivity(user.getPreferredActivity());
-            userRepository.save(userToUpdate);
-        } else {
-            throw new IllegalArgumentException("No user with requested Id");
+        if (optionalUser.isEmpty()) {
+            return false;
         }
+
+        User userToUpdate = optionalUser.get();
+        if (user.getUserName() != null) {
+            userToUpdate.setUserName(user.getUserName());
+        }
+        if (user.getUserEmail() != null) {
+            userToUpdate.setUserEmail(user.getUserEmail());
+        }
+        if (user.getPassword() != null) {
+            userToUpdate.setPassword(user.getPassword());
+        }
+        if (user.getCity() != null) {
+            userToUpdate.setCity(user.getCity());
+        }
+        if (user.getPreferredActivity() != null) {
+            userToUpdate.setPreferredActivity(user.getPreferredActivity());
+        }
+        userRepository.save(userToUpdate);
+        return true;
     }
 
     private Optional<User> findById(UUID id) {
         return userRepository.findById(id);
     }
 
-    public void enrollUser(UUID userId, UUID activityId) {
+    public boolean enrollUser(UUID userId, UUID activityId) {
         User userToUpdate = getUserById(userId);
+        if (userToUpdate == null) {
+            return false;
+        }
         Set<Activity> enrolledActivities = userToUpdate.getEnrolledActivities();
         Activity activityToAdd = new Activity();
         activityToAdd.setActivityId(activityId);
         enrolledActivities.add(activityToAdd);
         userRepository.save(userToUpdate);
+        return true;
     }
 }
