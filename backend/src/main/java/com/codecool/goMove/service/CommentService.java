@@ -29,16 +29,25 @@ public class CommentService {
     }
 
     public Comment getCommentById(UUID commentId) {
-        return commentRepository.findById(commentId).orElseThrow(() -> new IllegalArgumentException("No comment with requested id"));
+        return commentRepository.findById(commentId).orElse(null);
     }
 
-    public void updateComment(Comment comment, UUID commentId) {
+    public boolean updateComment(Comment comment, UUID commentId) {
         Comment commentToUpdate = getCommentById(commentId);
-        commentToUpdate.setMessage(comment.getMessage());
-        commentRepository.save(commentToUpdate);
+        if (commentToUpdate != null) {
+            commentToUpdate.setMessage(comment.getMessage());
+            commentRepository.save(commentToUpdate);
+            return true;
+        }
+        return false;
     }
 
-    public void deleteComment(UUID commentId) {
-        commentRepository.deleteById(commentId);
+    public boolean deleteComment(UUID commentId) {
+        Comment commentToDelete = getCommentById(commentId);
+        if (commentToDelete != null) {
+            commentRepository.deleteById(commentId);
+            return true;
+        }
+        return false;
     }
 }
