@@ -8,6 +8,7 @@ import AboutUsPage from "./components/AboutUsPage/AboutUsPage";
 import HomePage from "./components/HomePage/HomePage";
 import Search from "./components/Search/Search";
 import ActivityPage from "./components/ActivityPage/ActivityPage";
+import AddActivity from "./components/AddActivity/AddActivity";
 
 const router = createBrowserRouter([
     {
@@ -31,6 +32,11 @@ const router = createBrowserRouter([
             {
                 path:"/activity-page",
                 element: <ActivityPage/>
+            },
+
+            {
+                path:"/add-activity",
+                element: <AddActivity/>
 
 
             }
