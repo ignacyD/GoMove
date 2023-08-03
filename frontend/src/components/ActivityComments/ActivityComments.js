@@ -61,12 +61,44 @@ function ActivityComments({currentActivityID}) {
         fetchActivityComments();
     }, []);
 
+    const handleDeleteComment = async (comment) => {
+        try {
+            const response = await fetch(`http://localhost:8080/comments/delete/${comment.commentId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            fetchActivityComments();
+        } catch (error) {
+            console.error('Error deleting comment:', error);
+        }
+    };
+
+
+    const handleEditComment = async () => {
+    }
+
+
+
     return (
         <div className="comments">
             <ul>
                 {activityComments.map((comment) => (
                     <li className="commentsList" key={comment.commentId}>
                         {`${comment.time} ${comment.userId}: ${comment.message}`}
+
+
+                        {comment.userId === userID && (
+                            <div>
+                                <button onClick={() => handleEditComment(comment)}>Edit</button>
+                                <button onClick={() => handleDeleteComment(comment)}>Delete</button>
+                            </div>
+                        )}
                     </li>
                 ))}
             </ul>
