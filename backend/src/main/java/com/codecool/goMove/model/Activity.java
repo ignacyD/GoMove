@@ -1,6 +1,8 @@
 package com.codecool.goMove.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,12 +22,19 @@ public class Activity {
     @Id
     private UUID activityId = UUID.randomUUID();
     @Enumerated(EnumType.STRING)
+    @NotNull(message = "activity type is mandatory")
     private ActivityType activityType;
+    @NotNull(message = "owner id type is mandatory")
     private UUID ownerId;
+    @NotBlank(message = "title is mandatory")
     private String title;
+    @NotBlank(message = "city is mandatory")
     private String city;
+    @NotBlank(message = "street is mandatory")
     private String street;
+    @NotNull(message = "date is mandatory")
     private LocalDate date;
+    @NotNull(message = "time is mandatory")
     private LocalTime time;
     private String description;
 

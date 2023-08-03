@@ -2,6 +2,7 @@ package com.codecool.goMove.controller;
 
 import com.codecool.goMove.model.User;
 import com.codecool.goMove.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,7 +35,7 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<?> addUser(@RequestBody User user) {
+    public ResponseEntity<?> addUser(@Valid @RequestBody User user) {
         boolean addPerformed = userService.addUser(user);
         if (addPerformed) {
             return ResponseEntity.status(HttpStatus.OK).body("User created");

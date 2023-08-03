@@ -2,6 +2,8 @@ package com.codecool.goMove.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,8 +22,12 @@ import java.util.UUID;
 public class User {
     @Id
     private UUID userId = UUID.randomUUID();
+    @NotBlank(message = "name is mandatory")
     private String userName;
+    @NotBlank(message = "email is mandatory")
+    @Email
     private String userEmail;
+    @NotBlank(message = "password is mandatory")
     private String password;
     private String city;
     @Enumerated(EnumType.STRING)
