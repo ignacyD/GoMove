@@ -43,7 +43,7 @@ function ActivityPage() {
                     <p>Street: {activityData.street}</p>
 
 
-                    <ActivityComments activityID={activityId}/>
+                    <ActivityComments currentActivityID={activityId}/>
 
 
                     <GoogleMapComponent height={'400px'} width={'400px'}
