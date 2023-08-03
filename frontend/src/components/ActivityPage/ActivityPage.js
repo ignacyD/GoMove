@@ -30,22 +30,27 @@ function ActivityPage() {
 
 
     return (
-        <div>
+        <div className={"activity-page"}>
             {activityData ? (
                 <div>
 
                     <p>ID: {activityData.activityId}</p>
                     <p>Name: {activityData.title}</p>
 
+
                     <h5>Address:</h5>
                     <p>City: {activityData.city}</p>
                     <p>Street: {activityData.street}</p>
+
 
                     <ActivityComments activityID={activityId}/>
 
 
                     <GoogleMapComponent height={'400px'} width={'400px'}
                                         address={`${activityData.city} ${activityData.street}`}/>
+
+
+
 
 
                 </div>

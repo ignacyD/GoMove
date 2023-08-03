@@ -5,6 +5,8 @@ function ActivityComments({activityID}) {
 
     const [activityComments, setActivityComments] = useState("");
 
+    const userID = '2222e1a7-7acf-4f50-8275-1449748e96eb'
+
 
     useEffect(() => {
         const fetchActivityComments = async () => {
@@ -24,22 +26,17 @@ function ActivityComments({activityID}) {
         fetchActivityComments();
     }, []);
 
-
-    console.log(activityComments)
-
     return (
-
         <div className={"comments"}>
             <ul>
                 {activityComments ?
 
                     activityComments.map((comment) =>
-                        (<li key={comment.commentId}>
+                        (<li className={"commentsList"} key={comment.commentId}>
                             {`${comment.time} ${comment.userId}: ${comment.message}  `}
                         </li>))
                     : <></>
                 }
-
             </ul>
         </div>
     )

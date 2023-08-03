@@ -1,0 +1,7 @@
+.activity-page{
+    display: flex;
+    justify-content: center;
+    background: url("../../assets/images/video_running.gif") no-repeat center;
+    background-size: cover;
+}
+
