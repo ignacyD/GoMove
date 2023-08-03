@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -25,8 +26,19 @@ public class ActivityService {
         return activityRepository.findAll();
     }
 
+    public List<Activity> getFutureActivities() {
+        LocalDate today = LocalDate.now();
+        LocalTime now = LocalTime.now();
+
+        return activityRepository.findByDateAfter(today.minusDays(1)).stream()
+                .filter(activity -> activity.getDate().isAfter(today)
+                        || (activity.getDate().isEqual(today) && activity.getTime().isAfter(now)))
+                .collect(Collectors.toList());
+    }
+
     public Activity getActivityById(UUID id) {
-        return activityRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("No activity with requested id"));
+        Optional<Activity> optionalActivityById = activityRepository.findById(id);
+        return optionalActivityById.orElse(null);
     }
 
     public List<Activity> getActivitiesByTypeAndCity(String city, ActivityType type) {
@@ -43,6 +55,14 @@ public class ActivityService {
         return activityRepository.findByOwnerId(ownerId);
     }
 
+    public List<Activity> getActivitiesByParticipantId(UUID uuid) {
+        return activityRepository.getActivitiesByParticipantId(uuid);
+    }
+
+    public List<String> getAllCities() {
+        return activityRepository.getAllCities();
+    }
+
     public boolean addActivity(Activity activity) {
         LocalDate today = LocalDate.now();
         LocalTime now = LocalTime.now();
@@ -54,19 +74,37 @@ public class ActivityService {
         return false;
     }
 
-    public void updateActivity(Activity activity, UUID id) {
+    public boolean updateActivity(Activity activity, UUID id) {
         Activity activityToUpdate = getActivityById(id);
-        activityToUpdate.setActivityType(activity.getActivityType());
-        activityToUpdate.setTitle(activity.getTitle());
-        activityToUpdate.setCity(activity.getCity());
-        activityToUpdate.setStreet(activity.getStreet());
-        activityToUpdate.setDate(activity.getDate());
-        activityToUpdate.setTime(activity.getTime());
-        activityToUpdate.setDescription(activity.getDescription());
+        if (activityToUpdate == null) {
+            return false;
+        }
+        if (activity.getActivityType() != null) {
+            activityToUpdate.setActivityType(activity.getActivityType());
+        }
+        if (activity.getTitle() != null) {
+            activityToUpdate.setTitle(activity.getTitle());
+        }
+        if (activity.getCity() != null) {
+            activityToUpdate.setCity(activity.getCity());
+        }
+        if (activity.getStreet() != null) {
+            activityToUpdate.setStreet(activity.getStreet());
+        }
+        if (activity.getDate() != null) {
+            activityToUpdate.setDate(activity.getDate());
+        }
+        if (activity.getTime() != null) {
+            activityToUpdate.setTime(activity.getTime());
+        }
+        if (activity.getDescription() != null) {
+            activityToUpdate.setDescription(activity.getDescription());
+        }
         activityRepository.save(activityToUpdate);
+        return true;
     }
 
-    public void deleteActivity(UUID id) {
+    public boolean deleteActivity(UUID id) {
 
         if (activityRepository.findById(id).isPresent()) {
             Activity activityToDelete = activityRepository.findById(id).get();
@@ -74,24 +112,8 @@ public class ActivityService {
                 activityToDelete.removeParticipant(user);
             }
             activityRepository.deleteById(id);
+            return true;
         }
-    }
-
-    public List<Activity> getActivitiesByParticipantId(UUID uuid) {
-        return activityRepository.getActivitiesByParticipantId(uuid);
-    }
-
-    public List<String> getAllCities() {
-        return activityRepository.getAllCities();
-    }
-
-    public List<Activity> getFutureActivities() {
-        LocalDate today = LocalDate.now();
-        LocalTime now = LocalTime.now();
-
-        return activityRepository.findByDateAfter(today.minusDays(1)).stream()
-                .filter(activity -> activity.getDate().isAfter(today)
-                        || (activity.getDate().isEqual(today) && activity.getTime().isAfter(now)))
-                .collect(Collectors.toList());
+        return false;
     }
 }

@@ -145,6 +145,26 @@
 			"response": []
 		},
 		{
+			"name": "activities - get future activities",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/activities/future",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"activities",
+						"future"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "activity - get by id",
 			"request": {
 				"method": "GET",

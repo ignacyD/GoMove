@@ -2,8 +2,6 @@ import React, {useState, useEffect} from 'react';
 import {GoogleMap, useJsApiLoader, Marker} from '@react-google-maps/api';
 
 
-
-
 const googleMapApiKey = process.env.REACT_APP_GOOGLE_MAP_API_KEY;
 const googleMapGeocodeURL = process.env.REACT_APP_GOOGLE_MAP_GEOCODE_URL;
 

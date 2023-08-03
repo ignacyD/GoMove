@@ -4,8 +4,6 @@ import com.codecool.goMove.model.Comment;
 import com.codecool.goMove.repository.CommentRepository;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -17,7 +15,6 @@ public class CommentService {
     public CommentService(CommentRepository commentRepository) {
         this.commentRepository = commentRepository;
     }
-
 
     public List<Comment> getAllComments() {
         return commentRepository.findAll();
@@ -32,16 +29,25 @@ public class CommentService {
     }
 
     public Comment getCommentById(UUID commentId) {
-        return commentRepository.findById(commentId).orElseThrow(() -> new IllegalArgumentException("No comment with requested id"));
+        return commentRepository.findById(commentId).orElse(null);
     }
 
-    public void updateComment(Comment comment, UUID commentId) {
+    public boolean updateComment(Comment comment, UUID commentId) {
         Comment commentToUpdate = getCommentById(commentId);
-        commentToUpdate.setMessage(comment.getMessage());
-        commentRepository.save(commentToUpdate);
+        if (commentToUpdate != null) {
+            commentToUpdate.setMessage(comment.getMessage());
+            commentRepository.save(commentToUpdate);
+            return true;
+        }
+        return false;
     }
 
-    public void deleteComment(UUID commentId) {
-        commentRepository.deleteById(commentId);
+    public boolean deleteComment(UUID commentId) {
+        Comment commentToDelete = getCommentById(commentId);
+        if (commentToDelete != null) {
+            commentRepository.deleteById(commentId);
+            return true;
+        }
+        return false;
     }
 }
