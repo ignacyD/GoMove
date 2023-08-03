@@ -25,6 +25,7 @@ public class User {
     private String userName;
     @NotBlank(message = "email is mandatory")
     private String userEmail;
+    @NotBlank(message = "password is mandatory")
     private String password;
     private String city;
     @Enumerated(EnumType.STRING)

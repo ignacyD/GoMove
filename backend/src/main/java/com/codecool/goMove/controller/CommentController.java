@@ -2,6 +2,7 @@ package com.codecool.goMove.controller;
 
 import com.codecool.goMove.model.Comment;
 import com.codecool.goMove.service.CommentService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,7 +31,7 @@ public class CommentController {
     }
 
     @PostMapping
-    public ResponseEntity<String> addComment(@RequestBody Comment comment) {
+    public ResponseEntity<String> addComment(@Valid @RequestBody Comment comment) {
         commentService.addComment(comment);
         return ResponseEntity.status(HttpStatus.OK).body("Comment added");
     }

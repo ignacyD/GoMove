@@ -3,6 +3,7 @@ package com.codecool.goMove.controller;
 import com.codecool.goMove.model.Activity;
 import com.codecool.goMove.model.ActivityType;
 import com.codecool.goMove.service.ActivityService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -60,7 +61,7 @@ public class ActivityController {
     }
 
     @PostMapping
-    public ResponseEntity<?> addActivity(@RequestBody Activity activity) {
+    public ResponseEntity<?> addActivity(@Valid @RequestBody Activity activity) {
         boolean addPerformed = activityService.addActivity(activity);
         if (addPerformed) {
             return ResponseEntity.status(HttpStatus.OK).body("Activity added");
