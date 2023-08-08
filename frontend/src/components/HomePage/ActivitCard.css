@@ -8,12 +8,14 @@
     color: lightgreen;
     height: 75vh;
     width: 50vh;
+    overflow: hidden;
 }
 
-.card .top-section{
+.card .top-section {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+    margin-bottom: 20px;
 }
 
 .card .top-section .title-section {
@@ -22,13 +24,39 @@
     align-items: center;
 }
 
-.card .middle-section{
+.middle-section {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+    height: calc(40vh - 200px);
 }
 
-.card .google-maps{
+.description-section {
+    height: 15vh;
+}
+
+.map-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(15vh);
+}
+
+.map-button button {
+    background-color: darkgrey;
+    height: 30px;
+    width: 140px;
+    border: none;
+    border-radius: 5px;
+    transition: background-color .5s;
+}
+
+.map-button button:hover {
+    background-color: lightgreen;
+    transition: background-color .5s;
+}
+
+.card .google-maps {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -42,9 +70,25 @@
     margin-right: 20px;
 }
 
-.card p{
+.card p {
     color: white;
 }
 
+.card-changeable-space {
+    height: calc(75vh - 220px);
+    overflow: hidden;
+}
+
+.map-side {
+    position: relative;
+    bottom: calc(60vh - 200px);
+    transition: bottom 1s;
+}
+
+.no-map-side {
+    position: relative;
+    bottom: 0px;
+    transition: bottom 1s;
+}
 
 

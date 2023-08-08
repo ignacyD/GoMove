@@ -1,5 +1,5 @@
 import './App.css';
-import Navbar from "./components/Header/Navbar";
+import Navbar from "./components/Navbar/Navbar";
 import React, {useState} from "react";
 import {Outlet} from "react-router-dom";
 import LoginForm from "./components/LoginForm/LoginForm";

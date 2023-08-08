@@ -1,3 +1,6 @@
+body{
+    overflow-y: auto;
+}
 .about-us-page .creators {
     margin-top: 50px;
     display: flex;
@@ -15,10 +18,29 @@
 .about-us-page .creators .creator {
     display: flex;
     gap: 100px;
+    position: relative;
+    right: 100vw;
+    transition: right 1s;
+}
+.about-us-page .creators .visible {
+    display: flex;
+    gap: 100px;
+    right: 0vw;
+    transition: right 1s;
 }
 
 .about-us-page .creators .creator:nth-child(2n + 1) {
+    position: relative;
+    left: 100vw;
     flex-direction: row-reverse;
+    transition: left 1s;
+}
+
+.about-us-page .creators .visible:nth-child(2n + 1) {
+    position: relative;
+    left: 0vw;
+    flex-direction: row-reverse;
+    transition: left 1s;
 }
 
 .about-us-page .creators .creator .img img {
@@ -41,7 +63,5 @@
 .about-us-page .creators .creator .content p {
     font-size: 18px;
 }
-
-
 
 
