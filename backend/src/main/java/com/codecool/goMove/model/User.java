@@ -4,10 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -18,7 +15,9 @@ import java.util.UUID;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @ToString
+@Builder
 public class User {
     @Id
     private UUID userId = UUID.randomUUID();

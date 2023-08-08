@@ -2,12 +2,14 @@ package com.codecool.goMove.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -18,6 +20,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @NoArgsConstructor
+@ToString
 public class Comment {
     @Id
     private UUID commentId = UUID.randomUUID();
@@ -25,18 +28,19 @@ public class Comment {
     private LocalDate date;
     @NotNull(message = "time is mandatory")
     private LocalTime time;
-    @NotNull(message = "user id is mandatory")
-    private UUID userId;
+    @NotNull(message = "user is mandatory")
+    @ManyToOne
+    private User user;
     @NotBlank(message = "message is mandatory")
     private String message;
     @NotNull(message = "activity id is mandatory")
     private UUID activityId;
 
-    public Comment(LocalDate date, LocalTime time, UUID userId, String message, UUID activityId) {
+    public Comment(LocalDate date, LocalTime time, User user, String message, UUID activityId) {
         this.commentId = UUID.randomUUID();
         this.date = date;
         this.time = time;
-        this.userId = userId;
+        this.user = user;
         this.message = message;
         this.activityId = activityId;
     }
