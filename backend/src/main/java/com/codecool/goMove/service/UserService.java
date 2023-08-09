@@ -30,7 +30,7 @@ public class UserService {
 
     public boolean addUser(User user) {
 
-        boolean userExists = userRepository.existsByUserNameOrUserEmail(user.getUserName(), user.getUserEmail());
+        boolean userExists = userRepository.existsByUserNameOrUserEmail(user.getUsername(), user.getUserEmail());
 
         if (userExists) {
             return false;
@@ -46,8 +46,8 @@ public class UserService {
         }
 
         User userToUpdate = optionalUser.get();
-        if (user.getUserName() != null) {
-            userToUpdate.setUserName(user.getUserName());
+        if (user.getUsername() != null) {
+            userToUpdate.setUserName(user.getUsername());
         }
         if (user.getUserEmail() != null) {
             userToUpdate.setUserEmail(user.getUserEmail());
