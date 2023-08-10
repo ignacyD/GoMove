@@ -10,7 +10,12 @@ function HomePage() {
 
     const fetchActivities = async () => {
         try {
-            const response = await fetch('http://localhost:8080/activities');
+            const response = await fetch('http://localhost:8080/activities', {
+                method: "GET",
+                "headers": {
+                    "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJaYnlzemVrIiwiaWF0IjoxNjkxNjk0MjE4LCJleHAiOjE2OTE3ODA2MTh9.X-5V0MjwN89U-DVxhIV4jpHwc1G23sbhBO1hdizXB_U",
+                }
+            });
             const data = await response.json();
             setActivities(data);
             setCurrentActivityIndex(0);

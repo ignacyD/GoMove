@@ -1,13 +1,18 @@
 import {useEffect, useState} from "react";
 
-function CitySelect({setActivitiesList, }) {
+function CitySelect({setActivitiesList,}) {
 
     const [cities, setCities] = useState([]);
     const [city, setCity] = useState("");
 
     async function getAllCities() {
         const response = await fetch(
-            "http://localhost:8080/activities/cities"
+            "http://localhost:8080/activities/cities", {
+                method: "GET",
+                "headers": {
+                    "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJaYnlzemVrIiwiaWF0IjoxNjkxNjk0MjE4LCJleHAiOjE2OTE3ODA2MTh9.X-5V0MjwN89U-DVxhIV4jpHwc1G23sbhBO1hdizXB_U",
+                }
+            }
         );
         const data = await response.json();
         setCities(data);
