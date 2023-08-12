@@ -28,15 +28,9 @@ public class UserService {
         return optionalUser.orElse(null);
     }
 
-    public boolean addUser(User user) {
-
-        boolean userExists = userRepository.existsByUserNameOrUserEmail(user.getUsername(), user.getUserEmail());
-
-        if (userExists) {
-            return false;
-        }
-        userRepository.save(user);
-        return true;
+    public User getUserByName(String name) {
+        Optional<User> optionalUser = userRepository.findByUserName(name);
+        return optionalUser.orElse(null);
     }
 
     public boolean updateUser(User user, UUID id) {
@@ -81,4 +75,5 @@ public class UserService {
         userRepository.save(userToUpdate);
         return true;
     }
+
 }
