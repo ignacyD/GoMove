@@ -29,9 +29,35 @@ function RegistrationForm({setDisplayLoginForm, setDisplayRegistrationForm}) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        //sprawdzenie, czy nie ma użytkownika o takim loginie i nazwie użytkownika
-        // validacja hasła
-        // zapisanie użytkownika do bazy danych
+
+        // TODO zablokować przycisk "Register" jeśli e-mail ma zły format, zostały puste pola albo "Password" nie zgadza się z "Confirm password"
+
+        fetch("http://localhost:8080/auth/register", {
+            "headers": {
+                "Content-Type": "application/json"
+            },
+            "method": "POST",
+            "body": JSON.stringify({
+                "username": username,
+                "email": email,
+                "password": password
+            })
+        }).then(response => {
+            if (response.status === 200) {
+                response.json()
+                    .then(data => {
+                        localStorage.setItem("jwt", "Bearer " + data.token);
+                        localStorage.setItem("username", username);
+                        setDisplayRegistrationForm(false);
+                        console.log("Registration successful");
+                        // TODO wyświetlić użytkownikowi informację o pomyślnym założeniu konta i przejść do strony głównej
+                    })
+            } else {
+                console.log("Username or E-mail already exists")
+                // TODO wyświetlić komunikat o tym, że użytkownik lub e-mail już istnieje
+            }
+        })
+
     };
 
     return (

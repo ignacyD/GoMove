@@ -1,7 +1,6 @@
 import './AboutUsPage.css'
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import testPhoto from '../../assets/images/test.jpg';
-import {useEffect} from "react";
 
 function AboutUsPage() {
     const [creators, setCreators] = useState([

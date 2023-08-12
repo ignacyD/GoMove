@@ -17,38 +17,35 @@ const router = createBrowserRouter([
         errorElement: <ErrorPage/>,
         children: [
             {
-                path:"/",
+                path: "/",
                 element: <HomePage/>
             },
             {
-                path:"/about",
+                path: "/about",
                 element: <AboutUsPage/>
             },
             {
-                path:"/search",
+                path: "/search",
                 element: <Search/>
             },
 
             {
-                path:"/activity-page",
+                path: "/activity-page",
                 element: <ActivityPage/>
             },
 
             {
-                path:"/add-activity",
+                path: "/add-activity",
                 element: <AddActivity/>
-
-
             }
-
         ]
     }
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <RouterProvider router={router}/>
-  </React.StrictMode>
+    <React.StrictMode>
+        <RouterProvider router={router}/>
+    </React.StrictMode>
 );
 

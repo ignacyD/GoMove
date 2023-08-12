@@ -20,6 +20,13 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
 
     public AuthenticationResponse register(RegisterRequest request) {
+
+        boolean userExists = userRepository.existsByUserNameOrUserEmail(request.getUsername(), request.getEmail());
+
+        if (userExists) {
+            return null;
+        }
+
         User user = new User();
         user.setUserName(request.getUsername());
         user.setUserEmail(request.getEmail());

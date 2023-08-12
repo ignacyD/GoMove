@@ -6,7 +6,7 @@ import {faFacebook, faYoutube} from "@fortawesome/free-brands-svg-icons";
 import {faChevronLeft, faLaptopCode, faX} from "@fortawesome/free-solid-svg-icons";
 import MobileMenu from "../MobileMenu/MobileMenu";
 
-function Navbar({loggedIn, setLoggedIn, setDisplayLoginForm, handleLogout}) {
+function Navbar({setDisplayLoginForm, handleLogout}) {
     const [displayMedia, setDisplayMedia] = useState(false);
     const [mediaContainerOpen, setMediaContainerOpen] = useState(true);
     const displayMediaTimer = () => {
@@ -40,29 +40,32 @@ function Navbar({loggedIn, setLoggedIn, setDisplayLoginForm, handleLogout}) {
                     className={`media ${displayMedia ? 'media-displayed' : 'media-undisplayed'}`}>
                     {!displayMedia && displayMediaTimer()}
                     <div className={`media-container-${mediaContainerOpen ? 'open' : 'closed'}`}>
-                        <button className="open-close-media-btn" onClick={() => setMediaContainerOpen(!mediaContainerOpen)}>
+                        <button className="open-close-media-btn"
+                                onClick={() => setMediaContainerOpen(!mediaContainerOpen)}>
                             <FontAwesomeIcon icon={mediaContainerOpen ? faX : faChevronLeft}/></button>
                         <FontAwesomeIcon className='media-btn' icon={faFacebook} size="2x" style={{color: "#2b75f6"}}/>
                         <FontAwesomeIcon className='media-btn' icon={faYoutube} size="2x" style={{color: "#fa3333"}}/>
-                        <FontAwesomeIcon className='media-btn' icon={faLaptopCode} size="2x" style={{color: "#90EE90FF"}}/>
+                        <FontAwesomeIcon className='media-btn' icon={faLaptopCode} size="2x"
+                                         style={{color: "#90EE90FF"}}/>
                     </div>
                 </div>
             </div>
-                {
-                    loggedIn && <Link to='/profile' className='nav-btn'>
-                        <li>Profile</li>
-                    </Link>
-                }
-                {
-                    !loggedIn && <button className='login-btn' onClick={() => setDisplayLoginForm(true)}>
-                        Login
-                    </button>
-                }
-                {
-                    loggedIn && <button className='login-btn' onClick={() => handleLogout()}>
-                        Logout
-                    </button>
-                }
+            {
+                localStorage.getItem("username") && <Link to='/profile' className='nav-btn'>
+                    <li>Profile</li>
+                </Link>
+            }
+            {
+                !localStorage.getItem("username") &&
+                <button className='login-btn' onClick={() => setDisplayLoginForm(true)}>
+                    Login
+                </button>
+            }
+            {
+                localStorage.getItem("username") && <button className='login-btn' onClick={() => handleLogout()}>
+                    Logout
+                </button>
+            }
         </nav>
     );
 }
