@@ -1,6 +1,7 @@
-body{
+body {
     overflow-y: auto;
 }
+
 .about-us-page .creators {
     margin-top: 50px;
     display: flex;
@@ -9,7 +10,7 @@ body{
     padding: 100px;
 }
 
-.about-us-page .title-section{
+.about-us-page .title-section {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -22,10 +23,11 @@ body{
     right: 100vw;
     transition: right 1s;
 }
+
 .about-us-page .creators .visible {
     display: flex;
     gap: 100px;
-    right: 0vw;
+    right: 0;
     transition: right 1s;
 }
 
@@ -38,7 +40,7 @@ body{
 
 .about-us-page .creators .visible:nth-child(2n + 1) {
     position: relative;
-    left: 0vw;
+    left: 0;
     flex-direction: row-reverse;
     transition: left 1s;
 }

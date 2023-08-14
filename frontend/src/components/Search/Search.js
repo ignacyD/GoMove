@@ -10,26 +10,36 @@ function Search() {
 
     async function getActivities() {
         const response = await fetch(
-            "http://localhost:8080/activities"
-        );
-        const data = await response.json();
-        setActivitiesList(JSON.stringify(data));
-    }
-    async function getActivityById(idToSearch) {
-        const response = await fetch(
-            `http://localhost:8080/activities/${idToSearch}`
+            "http://localhost:8080/activities/future", {
+                "headers": {
+                    "Authorization": localStorage.getItem("jwt")
+                }
+            }
         );
         const data = await response.json();
         setActivitiesList(JSON.stringify(data));
     }
 
+    async function getActivityById(idToSearch) {
+        const response = await fetch(
+            `http://localhost:8080/activities/${idToSearch}`, {
+                "headers": {
+                    "Authorization": localStorage.getItem("jwt")
+                }
+            }
+        );
+        const data = await response.json();
+        setActivitiesList(JSON.stringify(data));
+    }
 
     return (
         <div className="Search">
             <input placeholder={"get activity by id"} onChange={event => setIdToSearch(event.target.value)}/>
-            <button placeholder={"get activity by id"} onClick={() => getActivityById(idToSearch)}>get activity by id</button>
+            <button placeholder={"get activity by id"} onClick={() => getActivityById(idToSearch)}>get activity by id
+            </button>
             <button placeholder={"get all activities"} onClick={getActivities}>get all activities</button>
-            <ActivitySelect setActivitiesList={setActivitiesList} setActivityType={setActivityType} activityType={activityType}/>
+            <ActivitySelect setActivitiesList={setActivitiesList} setActivityType={setActivityType}
+                            activityType={activityType}/>
             <CitySelect setActivitiesList={setActivitiesList}/>
             <div>{activitiesList}</div>
         </div>

@@ -46,28 +46,31 @@
 			"response": []
 		},
 		{
-			"name": "user - add new",
+			"name": "user - get by username",
 			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"userName\": \"TestUser\",\r\n    \"userEmail\": \"test@gmail.com\",\r\n    \"password\": \"testPassword\",\r\n    \"city\": \"testCity\",\r\n    \"preferredActivity\": \"WALKING\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ6YnlzemVrIiwiaWF0IjoxNjkxODU4OTIzLCJleHAiOjE2OTE5NDUzMjN9.7NMM3BC2ZlBUE10K2V7zmqqWMvmYv0ApmqyrbWiqFqg",
+							"type": "string"
 						}
-					}
+					]
 				},
+				"method": "GET",
+				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/users",
+					"raw": "http://localhost:8080/users/name/Dominik",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"users"
+						"users",
+						"name",
+						"Dominik"
 					]
 				}
 			},
@@ -520,6 +523,64 @@
 						"comments",
 						"delete",
 						"44440b30-7557-4a9f-8527-3e50e933fec4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "auth - register user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"Zbyszek\",\r\n    \"email\": \"zbyszek@gmail.com\",\r\n    \"password\": \"password\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/auth/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "auth - authenticate user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"Zbyszek\",\r\n    \"password\": \"password\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/auth/authenticate",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"authenticate"
 					]
 				}
 			},

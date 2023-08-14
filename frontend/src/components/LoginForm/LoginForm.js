@@ -20,9 +20,31 @@ function LoginForm({setDisplayLoginForm, setDisplayRegistrationForm}) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        //sprawdzenie, czy nie ma użytkownika o takim loginie
-        // validacja hasła
-        // zapisanie użytkownika do bazy danych
+
+        fetch("http://localhost:8080/auth/authenticate", {
+            "headers": {
+                "Content-Type": "application/json"
+            },
+            "method": "POST",
+            "body": JSON.stringify({
+                "username": username,
+                "password": password
+            })
+        }).then(response => {
+            if (response.status === 200) {
+                response.json()
+                    .then(data => {
+                        localStorage.setItem("jwt", "Bearer " + data.token);
+                        localStorage.setItem("username", username);
+                        setDisplayLoginForm(false);
+                        console.log("Login successful");
+                        // TODO wyświetlić użytkownikowi informację o pomyślnym zalogowaniu
+                    })
+            } else {
+                console.log("Invalid Credentials")
+                // TODO wyświetlić komunikat o niepoprawnych danych
+            }
+        })
     };
 
     return (
@@ -49,9 +71,9 @@ function LoginForm({setDisplayLoginForm, setDisplayRegistrationForm}) {
             </div>
             <button className="login-submit-btn" type="submit">Login</button>
             <p>Don't have an account?<br></br>
-            <a className="register-link"
-                  onClick={() => handleOpenRegisterForm()}>Register</a> instead!</p>
+                <a className="register-link"
+                   onClick={() => handleOpenRegisterForm()}>Register</a> instead!</p>
         </form>
     );
-};
+}
 export default LoginForm;
