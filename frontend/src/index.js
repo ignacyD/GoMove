@@ -9,6 +9,7 @@ import HomePage from "./components/HomePage/HomePage";
 import Search from "./components/Search/Search";
 import ActivityPage from "./components/ActivityPage/ActivityPage";
 import AddActivity from "./components/AddActivity/AddActivity";
+import Profile from "./components/Profile/Profile";
 
 const router = createBrowserRouter([
     {
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
             {
                 path: "/search",
                 element: <Search/>
+            },
+            {
+                path: "/profile",
+                element: <Profile/>
             },
 
             {
