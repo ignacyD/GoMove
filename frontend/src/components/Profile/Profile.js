@@ -35,7 +35,7 @@ function Profile() {
 
     async function fetchUser() {
         const userResponse = await fetch(
-            "http://localhost:8080/users/4444e1a7-7acf-4f50-8275-1449748e96eb", {
+            `http://localhost:8080/users/${localStorage.getItem("userId")}`, {
                 headers: {Authorization: localStorage.getItem("jwt")}
             }
         );

@@ -1,4 +1,5 @@
 import {useState} from "react";
+import {useNavigate} from "react-router-dom";
 import './AdditionalUserInfoForm.css'
 import Modal from "react-modal";
 import loginFormStyles from "../../ModalStyles";
@@ -8,11 +9,12 @@ function AdditionalUserInfoForm() {
     const [preferredActivity, setPreferredActivity] = useState("");
     const [description, setDescription] = useState("");
     const [photoUrl, setPhotoUrl] = useState("");
+    const navigate = useNavigate();
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        fetch("http://localhost:8080/users/update/1111e1a7-7acf-4f50-8275-1449748e96eb", {
+        fetch(`http://localhost:8080/users/update/${localStorage.getItem("userId")}`, {
             headers: {Authorization: localStorage.getItem("jwt"), "Content-Type": "application/json"},
             method: "PATCH",
             body: JSON.stringify({
@@ -24,6 +26,7 @@ function AdditionalUserInfoForm() {
         }).then(response => {
             if (response.status === 200) {
                 console.log("Update info successful");
+                navigate("/profile")
             } else {
                 console.log("something went wrong")
             }

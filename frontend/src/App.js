@@ -32,7 +32,7 @@ function App() {
                 onRequestClose={() => closeForms()}
                 contentLabel="Login-modal"
                 style={loginFormStyles}
-                class="login-modal"
+                className="login-modal"
                 appElement={document.querySelector("#root") || undefined}
             >
                 {displayLoginForm && <LoginForm setDisplayLoginForm={setDisplayLoginForm}
