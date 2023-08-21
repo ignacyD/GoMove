@@ -5,7 +5,6 @@ import {Outlet, useNavigate} from "react-router-dom";
 import LoginForm from "./components/LoginForm/LoginForm";
 import Modal from "react-modal";
 import loginFormStyles from "./ModalStyles";
-import {handleBlur} from "react-modal/lib/helpers/focusManager";
 import RegistrationForm from "./components/RegistrationForm/RegistrationForm";
 
 function App() {
@@ -34,7 +33,7 @@ function App() {
                 onRequestClose={() => closeForms()}
                 contentLabel="Login-modal"
                 style={loginFormStyles}
-                class="login-modal"
+                className="login-modal"
                 appElement={document.getElementById("root") || undefined}
             >
                 {displayLoginForm && <LoginForm setDisplayLoginForm={setDisplayLoginForm} setDisplayRegistrationForm={setDisplayRegistrationForm}/>}
