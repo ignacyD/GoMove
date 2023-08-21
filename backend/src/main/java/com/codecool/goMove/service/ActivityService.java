@@ -13,6 +13,8 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import static java.util.Objects.isNull;
+
 @Service
 public class ActivityService {
 
@@ -76,28 +78,28 @@ public class ActivityService {
 
     public boolean updateActivity(Activity activity, UUID id) {
         Activity activityToUpdate = getActivityById(id);
-        if (activityToUpdate == null) {
+        if (isNull(activityToUpdate)) {
             return false;
         }
-        if (activity.getActivityType() != null) {
+        if (!isNull(activity.getActivityType())) {
             activityToUpdate.setActivityType(activity.getActivityType());
         }
-        if (activity.getTitle() != null) {
+        if (!isNull(activity.getTitle())) {
             activityToUpdate.setTitle(activity.getTitle());
         }
-        if (activity.getCity() != null) {
+        if (!isNull(activity.getCity())) {
             activityToUpdate.setCity(activity.getCity());
         }
-        if (activity.getStreet() != null) {
+        if (!isNull(activity.getStreet())) {
             activityToUpdate.setStreet(activity.getStreet());
         }
-        if (activity.getDate() != null) {
+        if (!isNull(activity.getDate())) {
             activityToUpdate.setDate(activity.getDate());
         }
-        if (activity.getTime() != null) {
+        if (!isNull(activity.getTime())) {
             activityToUpdate.setTime(activity.getTime());
         }
-        if (activity.getDescription() != null) {
+        if (!isNull(activity.getDescription())) {
             activityToUpdate.setDescription(activity.getDescription());
         }
         activityRepository.save(activityToUpdate);

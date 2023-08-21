@@ -50,7 +50,7 @@ function RegistrationForm({setDisplayLoginForm, setDisplayRegistrationForm}) {
                 response.json()
                     .then(data => {
                         localStorage.setItem("jwt", "Bearer " + data.token);
-                        localStorage.setItem("username", username);
+                        localStorage.setItem("userId", data.userId);
                         setDisplayRegistrationForm(false);
                         console.log("Registration successful");
                         // TODO wyświetlić użytkownikowi informację o pomyślnym założeniu konta i przejść do strony głównej

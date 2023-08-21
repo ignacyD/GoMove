@@ -14,13 +14,13 @@ function App() {
     let navigate = useNavigate();
 
     function handleLogout() {
-        localStorage.setItem("username", "");
+        localStorage.setItem("userId", "");
         localStorage.setItem("jwt", "");
         navigate("/");
         console.log("Logout successful");
     }
 
-    function closeForms(){
+    function closeForms() {
         setDisplayLoginForm(false);
         setDisplayRegistrationForm(false);
     }
@@ -36,8 +36,10 @@ function App() {
                 className="login-modal"
                 appElement={document.getElementById("root") || undefined}
             >
-                {displayLoginForm && <LoginForm setDisplayLoginForm={setDisplayLoginForm} setDisplayRegistrationForm={setDisplayRegistrationForm}/>}
-                {displayRegistrationForm && <RegistrationForm setDisplayLoginForm={setDisplayLoginForm} setDisplayRegistrationForm={setDisplayRegistrationForm}/>}
+                {displayLoginForm && <LoginForm setDisplayLoginForm={setDisplayLoginForm}
+                                                setDisplayRegistrationForm={setDisplayRegistrationForm}/>}
+                {displayRegistrationForm && <RegistrationForm setDisplayLoginForm={setDisplayLoginForm}
+                                                              setDisplayRegistrationForm={setDisplayRegistrationForm}/>}
             </Modal>
             <Outlet/>
         </div>
