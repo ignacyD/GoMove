@@ -24,8 +24,9 @@ public class Activity {
     @Enumerated(EnumType.STRING)
     @NotNull(message = "activity type is mandatory")
     private ActivityType activityType;
-    @NotNull(message = "owner id type is mandatory")
-    private UUID ownerId;
+    @NotNull(message = "owner is mandatory")
+    @ManyToOne
+    private User owner;
     @NotBlank(message = "title is mandatory")
     private String title;
     @NotBlank(message = "city is mandatory")
@@ -42,10 +43,10 @@ public class Activity {
     private Set<User> participants;
     private String activityPhotoUrl;
 
-    public Activity(ActivityType activityType, UUID ownerId, String title, String city, String street, LocalDate date, LocalTime time, String description) {
+    public Activity(ActivityType activityType, User owner, String title, String city, String street, LocalDate date, LocalTime time, String description) {
         this.activityId = UUID.randomUUID();
         this.activityType = activityType;
-        this.ownerId = ownerId;
+        this.owner = owner;
         this.title = title;
         this.city = city;
         this.street = street;

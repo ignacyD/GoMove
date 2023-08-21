@@ -1,7 +1,7 @@
 import './App.css';
-import Navbar from "./components/Header/Navbar";
+import Navbar from "./components/Navbar/Navbar";
 import React, {useState} from "react";
-import {Outlet} from "react-router-dom";
+import {Outlet, useNavigate} from "react-router-dom";
 import LoginForm from "./components/LoginForm/LoginForm";
 import Modal from "react-modal";
 import loginFormStyles from "./ModalStyles";
@@ -9,13 +9,16 @@ import {handleBlur} from "react-modal/lib/helpers/focusManager";
 import RegistrationForm from "./components/RegistrationForm/RegistrationForm";
 
 function App() {
-    const [loggedIn, setLoggedIn] = useState(false);
     const [displayLoginForm, setDisplayLoginForm] = useState(false)
     const [displayRegistrationForm, setDisplayRegistrationForm] = useState(false);
 
+    let navigate = useNavigate();
+
     function handleLogout() {
-        setDisplayLoginForm(false);
-        // wylogowanie użytkownika, wyjście z zakładki profile itp.
+        localStorage.setItem("username", "");
+        localStorage.setItem("jwt", "");
+        navigate("/");
+        console.log("Logout successful");
     }
 
     function closeForms(){
@@ -25,8 +28,7 @@ function App() {
 
     return (
         <div className="App">
-            <Navbar loggedIn={loggedIn} setLoggedIn={setLoggedIn} setDisplayLoginForm={setDisplayLoginForm}
-                    handleLogout={handleLogout}/>
+            <Navbar setDisplayLoginForm={setDisplayLoginForm} handleLogout={handleLogout}/>
             <Modal
                 isOpen={displayLoginForm || displayRegistrationForm}
                 onRequestClose={() => closeForms()}

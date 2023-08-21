@@ -46,28 +46,31 @@
 			"response": []
 		},
 		{
-			"name": "user - add new",
+			"name": "user - get by username",
 			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"userName\": \"TestUser\",\r\n    \"userEmail\": \"test@gmail.com\",\r\n    \"password\": \"testPassword\",\r\n    \"city\": \"testCity\",\r\n    \"preferredActivity\": \"WALKING\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ6YnlzemVrIiwiaWF0IjoxNjkxODU4OTIzLCJleHAiOjE2OTE5NDUzMjN9.7NMM3BC2ZlBUE10K2V7zmqqWMvmYv0ApmqyrbWiqFqg",
+							"type": "string"
 						}
-					}
+					]
 				},
+				"method": "GET",
+				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/users",
+					"raw": "http://localhost:8080/users/name/Dominik",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"users"
+						"users",
+						"name",
+						"Dominik"
 					]
 				}
 			},
@@ -80,7 +83,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"userName\": \"Dominik\",\r\n    \"userEmail\": \"XD@gmail.com\",\r\n    \"password\": \"XDDDD\",\r\n    \"city\": \"XDDDDD\",\r\n    \"preferredActivity\": \"SKATING\"\r\n}",
+					"raw": "{\r\n    \"userEmail\": \"XD@gmail.com\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -272,7 +275,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/activities/user/1111e1a7-7acf-4f50-8275-1449748e96eb",
+					"raw": "http://localhost:8080/activities/user/2222e1a7-7acf-4f50-8275-1449748e96eb",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -281,7 +284,7 @@
 					"path": [
 						"activities",
 						"user",
-						"1111e1a7-7acf-4f50-8275-1449748e96eb"
+						"2222e1a7-7acf-4f50-8275-1449748e96eb"
 					]
 				}
 			},
@@ -315,7 +318,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"activityType\": \"RUNNING\",\r\n    \"ownerId\": \"2222e1a7-7acf-4f50-8275-1449748e96eb\",\r\n    \"title\": \"Chodź pobiegać\",\r\n    \"city\": \"Krzeszowice\",\r\n    \"street\": \"Rynek\",\r\n    \"date\": \"2023-07-14\",\r\n    \"time\": \"16:00:00\",\r\n    \"description\": \"Zapraszam na wspólne bieganie\",\r\n    \"participants\": null,\r\n    \"activityPhotoUrl\": null\r\n}",
+					"raw": "{\r\n    \"activityType\": \"RUNNING\",\r\n    \"owner\": {\r\n        \"userId\": \"2222e1a7-7acf-4f50-8275-1449748e96eb\"\r\n    },\r\n    \"title\": \"Chodź pobiegać\",\r\n    \"city\": \"Krzeszowice\",\r\n    \"street\": \"Rynek\",\r\n    \"date\": \"2023-08-14\",\r\n    \"time\": \"16:00:00\",\r\n    \"description\": \"Zapraszam na wspólne bieganie\",\r\n    \"participants\": null,\r\n    \"activityPhotoUrl\": null\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -343,7 +346,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"activityType\": \"RUNNING\",\r\n    \"owner\": \"1111e1a7-7acf-4f50-8275-1449748e96eb\",\r\n    \"title\": \"Bieganie z Dominikem\",\r\n    \"city\": \"Radziszow\",\r\n    \"street\": \"Prosta\",\r\n    \"date\": \"2023-07-13\",\r\n    \"time\": \"22:00:00\",\r\n    \"description\": \"Zapraszam na nocne bieganie\",\r\n    \"participants\": null,\r\n    \"activityPhotoUrl\": null\r\n}",
+					"raw": "{\r\n    \"time\": \"22:00:00\",\r\n    \"description\": \"Zapraszam na nocne bieganie\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -453,7 +456,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"date\": \"2023-07-13\",\r\n    \"time\": \"09:54:19.1904854\",\r\n    \"userId\": \"2222e1a7-7acf-4f50-8275-1449748e96eb\",\r\n    \"message\": \"Tak, aktualne\",\r\n    \"activityId\": \"2222e4ee-06f5-40ab-935e-442074f939a1\"\r\n}",
+					"raw": "{\r\n    \"date\": \"2023-07-13\",\r\n    \"time\": \"09:54:19.1904854\",\r\n    \"user\": {\r\n        \"userId\": \"2222e1a7-7acf-4f50-8275-1449748e96eb\"\r\n    },\r\n    \"message\": \"Tak, aktualne\",\r\n    \"activityId\": \"2222e4ee-06f5-40ab-935e-442074f939a1\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -520,6 +523,64 @@
 						"comments",
 						"delete",
 						"44440b30-7557-4a9f-8527-3e50e933fec4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "auth - register user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"Zbyszek\",\r\n    \"email\": \"zbyszek@gmail.com\",\r\n    \"password\": \"password\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/auth/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "auth - authenticate user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"Zbyszek\",\r\n    \"password\": \"password\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/auth/authenticate",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"authenticate"
 					]
 				}
 			},
