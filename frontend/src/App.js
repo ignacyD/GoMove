@@ -5,7 +5,6 @@ import {Outlet, useNavigate} from "react-router-dom";
 import LoginForm from "./components/LoginForm/LoginForm";
 import Modal from "react-modal";
 import loginFormStyles from "./ModalStyles";
-import {handleBlur} from "react-modal/lib/helpers/focusManager";
 import RegistrationForm from "./components/RegistrationForm/RegistrationForm";
 
 function App() {
@@ -15,13 +14,13 @@ function App() {
     let navigate = useNavigate();
 
     function handleLogout() {
-        localStorage.setItem("username", "");
+        localStorage.setItem("userId", "");
         localStorage.setItem("jwt", "");
         navigate("/");
         console.log("Logout successful");
     }
 
-    function closeForms(){
+    function closeForms() {
         setDisplayLoginForm(false);
         setDisplayRegistrationForm(false);
     }
@@ -37,8 +36,10 @@ function App() {
                 class="login-modal"
                 appElement={document.getElementById("root") || undefined}
             >
-                {displayLoginForm && <LoginForm setDisplayLoginForm={setDisplayLoginForm} setDisplayRegistrationForm={setDisplayRegistrationForm}/>}
-                {displayRegistrationForm && <RegistrationForm setDisplayLoginForm={setDisplayLoginForm} setDisplayRegistrationForm={setDisplayRegistrationForm}/>}
+                {displayLoginForm && <LoginForm setDisplayLoginForm={setDisplayLoginForm}
+                                                setDisplayRegistrationForm={setDisplayRegistrationForm}/>}
+                {displayRegistrationForm && <RegistrationForm setDisplayLoginForm={setDisplayLoginForm}
+                                                              setDisplayRegistrationForm={setDisplayRegistrationForm}/>}
             </Modal>
             <Outlet/>
         </div>

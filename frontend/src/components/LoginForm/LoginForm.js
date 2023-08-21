@@ -35,7 +35,7 @@ function LoginForm({setDisplayLoginForm, setDisplayRegistrationForm}) {
                 response.json()
                     .then(data => {
                         localStorage.setItem("jwt", "Bearer " + data.token);
-                        localStorage.setItem("username", username);
+                        localStorage.setItem("userId", data.userId);
                         setDisplayLoginForm(false);
                         console.log("Login successful");
                         // TODO wyświetlić użytkownikowi informację o pomyślnym zalogowaniu

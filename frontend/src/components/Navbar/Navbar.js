@@ -51,18 +51,18 @@ function Navbar({setDisplayLoginForm, handleLogout}) {
                 </div>
             </div>
             {
-                localStorage.getItem("username") && <Link to='/profile' className='nav-btn'>
+                localStorage.getItem("userId") && <Link to='/profile' className='nav-btn'>
                     <li>Profile</li>
                 </Link>
             }
             {
-                !localStorage.getItem("username") &&
+                !localStorage.getItem("userId") &&
                 <button className='login-btn' onClick={() => setDisplayLoginForm(true)}>
                     Login
                 </button>
             }
             {
-                localStorage.getItem("username") && <button className='login-btn' onClick={() => handleLogout()}>
+                localStorage.getItem("userId") && <button className='login-btn' onClick={() => handleLogout()}>
                     Logout
                 </button>
             }
