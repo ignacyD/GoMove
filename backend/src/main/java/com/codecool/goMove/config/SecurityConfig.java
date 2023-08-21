@@ -31,7 +31,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorizeHttpRequests ->
                         authorizeHttpRequests
-                                .requestMatchers("/auth/**", "/activities/future")
+                                .requestMatchers("/auth/**", "/activities/future" , "/activities/**" , "/comments/**")
                                 .permitAll()
                                 .anyRequest()
                                 .authenticated())

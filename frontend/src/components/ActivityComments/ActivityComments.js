@@ -8,12 +8,15 @@ function ActivityComments({currentActivityID}) {
     const [editingComment, setEditingComment] = useState(null);
     const [editedMessage, setEditedMessage] = useState("");
 
+
+    const loggedUserName = localStorage.username;
+
+
+
     const currentDate = new Date();
     const formattedDate = format(currentDate, 'yyyy-MM-dd');
     const formattedTime = currentDate.toLocaleTimeString();
 
-    //TODO zmienić na id zalogowanego użytkownika
-    const userID = '2222e1a7-7acf-4f50-8275-1449748e96eb';
 
     const fetchActivityComments = async () => {
         try {
@@ -120,6 +123,7 @@ function ActivityComments({currentActivityID}) {
         }
     };
 
+    console.log(activityComments)
     return (
         <div className="comments">
             <ul>
@@ -144,9 +148,9 @@ function ActivityComments({currentActivityID}) {
                             ) : (
                                 <div>
                                     <span>
-                                        {`${comment.time} ${comment.userId}: ${comment.message}`}
+                                        {`${comment.time} ${comment.user.userId}: ${comment.message}`}
                                     </span>
-                                    {comment.userId === userID && (
+                                    {comment.user.username === loggedUserName && (
                                         <div>
                                             <button onClick={() => handleEditComment(comment)}>Edit</button>
                                             <button onClick={() => handleDeleteComment(comment)}>Delete</button>
