@@ -5,13 +5,11 @@ import {Outlet, useNavigate} from "react-router-dom";
 import LoginForm from "./components/LoginForm/LoginForm";
 import Modal from "react-modal";
 import loginFormStyles from "./ModalStyles";
-import {handleBlur} from "react-modal/lib/helpers/focusManager";
 import RegistrationForm from "./components/RegistrationForm/RegistrationForm";
 
 function App() {
     const [displayLoginForm, setDisplayLoginForm] = useState(false)
     const [displayRegistrationForm, setDisplayRegistrationForm] = useState(false);
-
     let navigate = useNavigate();
 
     function handleLogout() {
@@ -35,7 +33,7 @@ function App() {
                 contentLabel="Login-modal"
                 style={loginFormStyles}
                 class="login-modal"
-                appElement={document.getElementById("root") || undefined}
+                appElement={document.querySelector("#root") || undefined}
             >
                 {displayLoginForm && <LoginForm setDisplayLoginForm={setDisplayLoginForm} setDisplayRegistrationForm={setDisplayRegistrationForm}/>}
                 {displayRegistrationForm && <RegistrationForm setDisplayLoginForm={setDisplayLoginForm} setDisplayRegistrationForm={setDisplayRegistrationForm}/>}
