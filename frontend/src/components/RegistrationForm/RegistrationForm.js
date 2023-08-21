@@ -1,7 +1,8 @@
-import React, {useEffect, useState} from "react";
+import {useState} from "react";
+import {useNavigate} from "react-router-dom";
 import './RegistrationForm.css'
 
-function RegistrationForm({setDisplayLoginForm, setDisplayRegistrationForm}) {
+function RegistrationForm({setDisplayLoginForm, setDisplayRegistrationForm, setDisplayAdditionalInfoForm}) {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -9,6 +10,7 @@ function RegistrationForm({setDisplayLoginForm, setDisplayRegistrationForm}) {
     const [errorMessage, setErrorMessage] = useState([]);
     const [passwordErrorMessage, setPasswordErrorMessage] = useState([]);
     const [modalSize, setModalSize] = useState('40vh');
+    const navigate = useNavigate();
 
     const handleUsernameChange = (e) => {
         setUsername(e.target.value);
@@ -55,6 +57,7 @@ function RegistrationForm({setDisplayLoginForm, setDisplayRegistrationForm}) {
                         console.log("Registration successful");
                         // TODO wyświetlić użytkownikowi informację o pomyślnym założeniu konta i przejść do strony głównej
                     })
+                navigate("/additional-info-form")
             } else {
                 console.log("Username or E-mail already exists")
                 // TODO wyświetlić komunikat o tym, że użytkownik lub e-mail już istnieje
