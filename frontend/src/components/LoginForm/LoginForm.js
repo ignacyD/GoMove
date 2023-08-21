@@ -4,7 +4,7 @@ import './LoginForm.css'
 function LoginForm({setDisplayLoginForm, setDisplayRegistrationForm}) {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-
+    const [showErrorMessage, setShowErrorMessage] = useState(false);
     const handleUsernameChange = (e) => {
         setUsername(e.target.value);
     };
@@ -34,14 +34,16 @@ function LoginForm({setDisplayLoginForm, setDisplayRegistrationForm}) {
             if (response.status === 200) {
                 response.json()
                     .then(data => {
+                        setShowErrorMessage(false);
                         localStorage.setItem("jwt", "Bearer " + data.token);
-                        localStorage.setItem("username", username);
+                        localStorage.setItem("userId", data.userId);
                         setDisplayLoginForm(false);
                         console.log("Login successful");
                         // TODO wyświetlić użytkownikowi informację o pomyślnym zalogowaniu
                     })
             } else {
                 console.log("Invalid Credentials")
+                setShowErrorMessage(true);
                 // TODO wyświetlić komunikat o niepoprawnych danych
             }
         })
@@ -69,6 +71,11 @@ function LoginForm({setDisplayLoginForm, setDisplayRegistrationForm}) {
                     onChange={handlePasswordChange}
                 ></input>
             </div>
+            {showErrorMessage &&
+                <div className="log-error-message">
+                    Incorrect username or password
+                </div>
+            }
             <button className="login-submit-btn" type="submit">Login</button>
             <p>Don't have an account?<br></br>
                 <a className="register-link"
@@ -76,4 +83,5 @@ function LoginForm({setDisplayLoginForm, setDisplayRegistrationForm}) {
         </form>
     );
 }
+
 export default LoginForm;

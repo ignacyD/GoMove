@@ -7,6 +7,9 @@ function RegistrationForm({setDisplayLoginForm, setDisplayRegistrationForm, setD
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [errorMessage, setErrorMessage] = useState([]);
+    const [passwordErrorMessage, setPasswordErrorMessage] = useState([]);
+    const [modalSize, setModalSize] = useState('40vh');
     const navigate = useNavigate();
 
     const handleUsernameChange = (e) => {
@@ -22,7 +25,6 @@ function RegistrationForm({setDisplayLoginForm, setDisplayRegistrationForm, setD
 
     const handleConfirmPasswordChange = (e) => {
         setConfirmPassword(e.target.value);
-        //sprawdzenie czy hasła są zgodne
     };
     const handleOpenLoginForm = () => {
         setDisplayRegistrationForm(false);
@@ -31,8 +33,10 @@ function RegistrationForm({setDisplayLoginForm, setDisplayRegistrationForm, setD
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // TODO zablokować przycisk "Register" jeśli e-mail ma zły format, zostały puste pola albo "Password" nie zgadza się z "Confirm password"
-
+        setErrorMessage([]);
+        if (!validateRegisterForm()) {
+            return;
+        }
         fetch("http://localhost:8080/auth/register", {
             "headers": {
                 "Content-Type": "application/json"
@@ -48,7 +52,7 @@ function RegistrationForm({setDisplayLoginForm, setDisplayRegistrationForm, setD
                 response.json()
                     .then(data => {
                         localStorage.setItem("jwt", "Bearer " + data.token);
-                        localStorage.setItem("username", username);
+                        localStorage.setItem("userId", data.userId);
                         setDisplayRegistrationForm(false);
                         console.log("Registration successful");
                         // TODO wyświetlić użytkownikowi informację o pomyślnym założeniu konta i przejść do strony głównej
@@ -59,8 +63,80 @@ function RegistrationForm({setDisplayLoginForm, setDisplayRegistrationForm, setD
                 // TODO wyświetlić komunikat o tym, że użytkownik lub e-mail już istnieje
             }
         })
-
     };
+
+    function validateRegisterForm() {
+        const errors = [];
+        if (username.trim().length < 4) {
+            errors.push("username has to be at least 4 characters long");
+        }
+        if (!validateEmail(email)) {
+            errors.push("provided e-mail adress is incorrect");
+        }
+        if (password !== confirmPassword) {
+            errors.push("passwords doesn't match")
+        }
+        setErrorMessage(errors);
+        if (!validatePassword(password) || errorMessage.length > 0) {
+            return false;
+        }
+        return true;
+    }
+
+    function validateEmail(email) {
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailPattern.test(email);
+    }
+
+    function validatePassword(password) {
+        const minLength = 8;
+        const minLowercase = 1;
+        const minUppercase = 1;
+        const minDigits = 1;
+        const minSpecialChars = 1;
+        const specialChars = /[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]/;
+        const errors = [];
+
+        if (password.length < minLength) {
+            errors.push("be " + minLength + " characters long");
+        }
+
+        const lowercaseCount = (password.match(/[a-z]/g) || []).length;
+        if (lowercaseCount < minLowercase) {
+            errors.push("have " + minLowercase + " lowercase characters");
+        }
+
+        const uppercaseCount = (password.match(/[A-Z]/g) || []).length;
+        if (uppercaseCount < minUppercase) {
+            errors.push("have " + minUppercase + " uppercase characters");
+        }
+
+        const digitCount = (password.match(/\d/g) || []).length;
+        if (digitCount < minDigits) {
+            errors.push("have at least " + minDigits + " digits");
+        }
+
+        const specialCharCount = (password.match(specialChars) || []).length;
+        if (specialCharCount < minSpecialChars) {
+            errors.push("have at least " + minSpecialChars + " special characters");
+        }
+
+        setPasswordErrorMessage(errors);
+
+        return errors.length === 0;
+    }
+
+    useEffect(() => {
+        const registrationForm = document.querySelector('.registration-form');
+        const newModalSize = registrationForm.scrollHeight + 40 + 'px';
+
+        setModalSize(newModalSize);
+
+        const modal = document.querySelector('.login-modal');
+        modal.style.height = newModalSize;
+        modal.style.top = `calc(50vh - ${newModalSize}/2)`;
+    }, [errorMessage, passwordErrorMessage]);
+
 
     return (
         <form className="registration-form" onSubmit={handleSubmit}>
@@ -105,11 +181,35 @@ function RegistrationForm({setDisplayLoginForm, setDisplayRegistrationForm, setD
                 ></input>
             </div>
             <button className="register-submit-btn" type="submit">Register</button>
+            <div className={errorMessage.length > 0 || passwordErrorMessage.length > 0 ?"errors-space" : ""}>
+                {errorMessage.length > 0 && (
+                    <div >
+                        <ul>
+                            {errorMessage.map((message, index) => (
+                                <li className="error-mesage" key={index}>{message}</li>
+                            ))}
+                        </ul>
+                    </div>
+                )
+                }
+                {
+                    passwordErrorMessage.length > 0 && (
+                        <div>
+                            <p>Password has to:</p>
+                            <ul>
+                                {passwordErrorMessage.map((message, index) => (
+                                    <li className="error-mesage" key={index}>{message}</li>
+                                ))}
+                            </ul>
+                        </div>
+                    )
+                }
+            </div>
             <p>Already have an account?<br></br>
                 <a className="register-link"
                    onClick={() => handleOpenLoginForm()}>Login</a> instead!</p>
         </form>
-    );
+    )
 }
 
 export default RegistrationForm;

@@ -47,6 +47,11 @@
     box-shadow: 0 0 5px yellowgreen;
 }
 
+.log-error-message{
+    color: grey;
+    font-size: 14px;
+}
+
 .register-link {
     color: yellowgreen;
 }
