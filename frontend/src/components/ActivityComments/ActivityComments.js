@@ -9,7 +9,7 @@ function ActivityComments({currentActivityID}) {
     const [editedMessage, setEditedMessage] = useState("");
 
 
-    const loggedUserId = localStorage.userId;
+    const loggedUserId = localStorage.getItem("userId");
 
     console.log(localStorage)
 
@@ -51,7 +51,7 @@ function ActivityComments({currentActivityID}) {
                 },
                 body: JSON.stringify({
                     activityId: currentActivityID,
-                    user: {userId : loggedUserId},
+                    user: {userId: loggedUserId},
                     message: newComment,
                     date: formattedDate,
                     time: formattedTime
@@ -112,7 +112,7 @@ function ActivityComments({currentActivityID}) {
                     "Authorization": localStorage.getItem("jwt"),
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({message : editedMessage})
+                body: JSON.stringify({message: editedMessage})
 
             });
 
@@ -170,18 +170,24 @@ function ActivityComments({currentActivityID}) {
                 ))}
             </ul>
             <div>
-                <textarea
-                    placeholder="Add a new comment..."
-                    value={newComment}
-                    onChange={(e) => setNewComment(e.target.value)}
-                    onKeyPress={(e) => {
-                        if (e.key === 'Enter') {
-                            handleCommentSubmit();
-                        }
-                    }}
-                    style={{width: '100%'}}
-                    rows={4}
-                />
+                {loggedUserId !== "" ? (
+
+
+                    <textarea
+                        placeholder="Add a new comment..."
+                        value={newComment}
+                        onChange={(e) => setNewComment(e.target.value)}
+                        onKeyPress={(e) => {
+                            if (e.key === 'Enter') {
+                                handleCommentSubmit();
+                            }
+                        }}
+                        style={{width: '100%'}}
+                        rows={4}
+                    />
+                ) : <></>
+                }
+
             </div>
         </div>
     );
