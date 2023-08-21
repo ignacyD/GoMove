@@ -35,7 +35,7 @@ function ActivityCard({activity}) {
             <br/>
             <h2>Google Maps</h2>
             <div className="google-maps">
-                <GoogleMapComponent height={'350px'} width={'650px'} address={`${activity.city} ${activity.street}`}/>
+                <GoogleMapComponent height={'27vh'} width={'50vh'} address={`${activity.city} ${activity.street}`}/>
             </div>
         </div>
     )
