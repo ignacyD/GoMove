@@ -1,47 +1,37 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import CitySelect from "./CitySelect";
 import ActivitySelect from "./ActivitySelect";
 
 function Search() {
-    const [activitiesList, setActivitiesList] = useState([]);
-    const [idToSearch, setIdToSearch] = useState("");
+    const [activities, setActivities] = useState([]);
     const [activityType, setActivityType] = useState("");
 
+    useEffect(() => {
+        getActivities();
+    }, [])
+
+    console.log(activities)
 
     async function getActivities() {
-        const response = await fetch(
-            "http://localhost:8080/activities/future", {
-                "headers": {
-                    "Authorization": localStorage.getItem("jwt")
-                }
-            }
-        );
-        const data = await response.json();
-        setActivitiesList(JSON.stringify(data));
-    }
-
-    async function getActivityById(idToSearch) {
-        const response = await fetch(
-            `http://localhost:8080/activities/${idToSearch}`, {
-                "headers": {
-                    "Authorization": localStorage.getItem("jwt")
-                }
-            }
-        );
-        const data = await response.json();
-        setActivitiesList(JSON.stringify(data));
+        const response = await fetch("http://localhost:8080/activities/future");
+        const activitiesData = await response.json();
+        setActivities(activitiesData);
     }
 
     return (
         <div className="Search">
-            <input placeholder={"get activity by id"} onChange={event => setIdToSearch(event.target.value)}/>
-            <button placeholder={"get activity by id"} onClick={() => getActivityById(idToSearch)}>get activity by id
-            </button>
-            <button placeholder={"get all activities"} onClick={getActivities}>get all activities</button>
-            <ActivitySelect setActivitiesList={setActivitiesList} setActivityType={setActivityType}
+            <ActivitySelect setActivitiesList={setActivities} setActivityType={setActivityType}
                             activityType={activityType}/>
-            <CitySelect setActivitiesList={setActivitiesList}/>
-            <div>{activitiesList}</div>
+            <CitySelect setActivitiesList={setActivities}/>
+            {activities.map(activity => (
+                <div>
+                    <div>{activity.title}</div>
+                    <div>{activity.activityType}</div>
+                    <div>{activity.city}, {activity.street}</div>
+                    <div>{activity.date}, {activity.time}</div>
+                    <div>---------</div>
+                </div>
+            ))}
         </div>
     );
 }
