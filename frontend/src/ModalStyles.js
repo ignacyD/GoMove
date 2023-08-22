@@ -11,7 +11,7 @@ const loginFormStyles = {
         flexDirection: "column",
         border: "4px solid #90ee90",
         color: "90ee90",
-        'box-shadow': "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+        boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
         transition: 'height 0.5s, top 0.5s'
     }
 };

@@ -2,37 +2,82 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    position: relative;
-    top: 7vh;
+    margin-top: 4vh;
+    top: 4vh;
+    width: 30vw;
     text-align: center;
 }
 
+.additional-info-form div {
+    width: 30vw;
+}
+
 .city-field, .photo-url-field, .description-field, .preferred-activity-field {
+    height: 21.6px;
+    font-size: 16px;
     display: flex;
     margin-bottom: 10px;
 }
 
-.city-label, .photo-url-label, .description-label, .preferred-activity-label {
-    margin-right: 10px;
-    min-width: 7vw;
-    max-width: 7vw;
-    display: block;
+.additional-info-title {
+    margin-bottom: 0;
+    height: 6vh;
+    text-align: center;
 }
 
 .additional-info-submit-btn {
     margin-top: 10px;
     margin-bottom: 10px;
     display: inline-block;
+    position: absolute;
+    bottom: 3vh;
     padding: 10px 20px;
     background-color: lightgreen;
     color: #2a2a2a;
     text-decoration: none;
     border-radius: 4px;
     border: 0 solid black;
-    transition: transform .5s;
+    transition: transform .5s, background-color .5s;
+}
+.additional-info-submit-btn:hover {
+    transform: scale(1.1);
+    background-color: greenyellow;
+transition: transform .5s, background-color .5s;
 }
 
-.city-input, .photo-url-input, .description-input,.preferred-activity-input {
-    min-width: 12.5vw;
-    max-width: 12.5vw;
+
+.city-input, .description-input {
+    width: 13vw;
+}
+
+.custom-file-button, .preferred-activity-select {
+    width: 6.5vw;
+    text-align: center;
+}
+
+.city-label, .photo-url-label, .description-label, .preferred-activity-label {
+    width: 13vw;
+    margin-left: 2vw;
+    text-align: left;
+}
+.city-input:hover, .description-input:hover, .custom-file-button:hover, .preferred-activity-select:hover  {
+    box-shadow: 0 0 5px yellowgreen;
+}
+.selected-photo {
+    max-width: 7.5vw;
+    max-height: 5vh;
+    position: relative;
+    bottom: 73.2px;
+    left: 10vw;
+    text-align: center;
+    justify-content: center;
+}
+
+.selected-photo h2 {
+    font-size: 10px;
+}
+
+.selected-photo img {
+    max-width: 5vw;
+    max-height: 5vw;
 }

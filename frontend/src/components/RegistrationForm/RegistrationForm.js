@@ -55,12 +55,11 @@ function RegistrationForm({setDisplayLoginForm, setDisplayRegistrationForm, setD
                         localStorage.setItem("userId", data.userId);
                         setDisplayRegistrationForm(false);
                         console.log("Registration successful");
-                        // TODO wyświetlić użytkownikowi informację o pomyślnym założeniu konta i przejść do strony głównej
                     })
                 navigate("/additional-info-form")
             } else {
                 console.log("Username or E-mail already exists")
-                // TODO wyświetlić komunikat o tym, że użytkownik lub e-mail już istnieje
+                setErrorMessage(["Username or E-mail already in use"])
             }
         })
     };
@@ -139,76 +138,78 @@ function RegistrationForm({setDisplayLoginForm, setDisplayRegistrationForm, setD
 
 
     return (
-        <form className="registration-form" onSubmit={handleSubmit}>
-            <div className="username-field">
-                <label className="username-label">Username</label>
-                <input
-                    className="username-input"
-                    type="text"
-                    id="username"
-                    value={username}
-                    onChange={handleUsernameChange}
-                ></input>
-            </div>
-            <div className="e-mail-field">
-                <label className="e-mail-label">E-mail</label>
-                <input
-                    className="e-mail-input"
-                    type="text"
-                    id="e-mail"
-                    value={email}
-                    onChange={handleEmailChange}
-                ></input>
-            </div>
-            <div className="password-field">
-                <label className="password-label">Password</label>
-                <input
-                    className="password-input"
-                    type="password"
-                    id="password"
-                    value={password}
-                    onChange={handlePasswordChange}
-                ></input>
-            </div>
-            <div className="confirm-password-field">
-                <label className="confirm-password-label">Confirm password</label>
-                <input
-                    className="confirm-password-input"
-                    type="password"
-                    id="confirm-password"
-                    value={confirmPassword}
-                    onChange={handleConfirmPasswordChange}
-                ></input>
-            </div>
-            <button className="register-submit-btn" type="submit">Register</button>
-            <div className={errorMessage.length > 0 || passwordErrorMessage.length > 0 ?"errors-space" : ""}>
-                {errorMessage.length > 0 && (
-                    <div >
-                        <ul>
-                            {errorMessage.map((message, index) => (
-                                <li className="error-mesage" key={index}>{message}</li>
-                            ))}
-                        </ul>
-                    </div>
-                )
-                }
-                {
-                    passwordErrorMessage.length > 0 && (
+        <div>
+            <form className="registration-form" onSubmit={handleSubmit}>
+                <div className="username-field">
+                    <label className="username-label">Username</label>
+                    <input
+                        className="username-input"
+                        type="text"
+                        id="username"
+                        value={username}
+                        onChange={handleUsernameChange}
+                    ></input>
+                </div>
+                <div className="e-mail-field">
+                    <label className="e-mail-label">E-mail</label>
+                    <input
+                        className="e-mail-input"
+                        type="text"
+                        id="e-mail"
+                        value={email}
+                        onChange={handleEmailChange}
+                    ></input>
+                </div>
+                <div className="password-field">
+                    <label className="password-label">Password</label>
+                    <input
+                        className="password-input"
+                        type="password"
+                        id="password"
+                        value={password}
+                        onChange={handlePasswordChange}
+                    ></input>
+                </div>
+                <div className="confirm-password-field">
+                    <label className="confirm-password-label">Confirm password</label>
+                    <input
+                        className="confirm-password-input"
+                        type="password"
+                        id="confirm-password"
+                        value={confirmPassword}
+                        onChange={handleConfirmPasswordChange}
+                    ></input>
+                </div>
+                <button className="register-submit-btn" type="submit">Register</button>
+                <div className={errorMessage.length > 0 || passwordErrorMessage.length > 0 ? "errors-space" : ""}>
+                    {errorMessage.length > 0 && (
                         <div>
-                            <p>Password has to:</p>
                             <ul>
-                                {passwordErrorMessage.map((message, index) => (
+                                {errorMessage.map((message, index) => (
                                     <li className="error-mesage" key={index}>{message}</li>
                                 ))}
                             </ul>
                         </div>
                     )
-                }
-            </div>
-            <p>Already have an account?<br></br>
-                <a className="register-link"
-                   onClick={() => handleOpenLoginForm()}>Login</a> instead!</p>
-        </form>
+                    }
+                    {
+                        passwordErrorMessage.length > 0 && (
+                            <div>
+                                <p>Password has to:</p>
+                                <ul>
+                                    {passwordErrorMessage.map((message, index) => (
+                                        <li className="error-mesage" key={index}>{message}</li>
+                                    ))}
+                                </ul>
+                            </div>
+                        )
+                    }
+                </div>
+                <p>Already have an account?<br></br>
+                    <a className="register-link"
+                       onClick={() => handleOpenLoginForm()}>Login</a> instead!</p>
+            </form>
+        </div>
     )
 }
 
