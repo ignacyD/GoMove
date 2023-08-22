@@ -8,6 +8,8 @@ function Search() {
     const [dateFrom, setDateFrom] = useState("");
     const [dateTo, setDateTo] = useState("");
 
+    const today = new Date().toISOString().split("T")[0];
+
     useEffect(() => {
         getActivities();
         getAllCities();
@@ -26,20 +28,20 @@ function Search() {
     }
 
     async function getFilteredActivities() {
-        let response;
-        if (selectedCity === "" && selectedActivityType === "") {
-            response = await fetch("http://localhost:8080/activities/future");
-        }
-        else {
-            let url = "http://localhost:8080/activities/filter?";
+
+        let url = "http://localhost:8080/activities/future";
+
+        if (selectedCity !== "" || selectedActivityType !== "") {
+            url = "http://localhost:8080/activities/filter";
             if (selectedCity !== "") {
-                url += `city=${selectedCity}&`
+                url += `?city=${selectedCity}`;
             }
             if (selectedActivityType !== "") {
-                url += `type=${selectedActivityType}`
+                url += selectedCity !== "" ? `&type=${selectedActivityType}` : `?type=${selectedActivityType}`;
             }
-            response = await fetch(url);
         }
+
+        const response = await fetch(url);
 
         let filteredActivities = await response.json();
 
@@ -99,6 +101,7 @@ function Search() {
                     type="date"
                     id="dateFrom"
                     name="dateFrom"
+                    min={today}
                     onChange={(e) => setDateFrom(e.target.value)}
                 />
             </div>
@@ -110,6 +113,7 @@ function Search() {
                     type="date"
                     id="dateTo"
                     name="dateTo"
+                    min={today}
                     onChange={(e) => setDateTo(e.target.value)}/>
             </div>
 
@@ -121,17 +125,21 @@ function Search() {
                 <button onClick={() => resetFilter()}>Reset Filter</button>
             </div>
 
-            <div>
-                {activities.map(activity => (
-                    <div key={activity.activityId}>
-                        <div>{activity.title}</div>
-                        <div>{activity.activityType}</div>
-                        <div>{activity.city}, {activity.street}</div>
-                        <div>{activity.date}, {activity.time}</div>
-                        <div>---------</div>
-                    </div>
-                ))}
-            </div>
+            {activities.length > 0 ?
+                <div>
+                    {activities.map(activity => (
+                        <div key={activity.activityId}>
+                            <div>{activity.title}</div>
+                            <div>{activity.activityType}</div>
+                            <div>{activity.city}, {activity.street}</div>
+                            <div>{activity.date}, {activity.time}</div>
+                            <div>---------</div>
+                        </div>
+                    ))}
+                </div>
+                :
+                <div>No activities found for requested criteria</div>
+            }
         </div>
     );
 }
