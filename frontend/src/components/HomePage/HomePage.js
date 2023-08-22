@@ -1,13 +1,21 @@
 import './HomePage.css';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCheck, faXmark} from "@fortawesome/free-solid-svg-icons";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import ActivityCard from "./ActivityCard";
+import LoginForm from "../LoginForm/LoginForm";
+import App from "../../App";
+import Navbar from "../Navbar/Navbar";
+import Modal from "react-modal";
+import loginFormStyles from "../../ModalStyles";
+import RegistrationForm from "../RegistrationForm/RegistrationForm";
 
 function HomePage() {
     const [activities, setActivities] = useState([]);
     const [currentActivityIndex, setCurrentActivityIndex] = useState(0);
 
+    const [displayLoginForm, setDisplayLoginForm] = useState(false)
+    const [displayRegistrationForm, setDisplayRegistrationForm] = useState(false);
 
     const loggedUserId = localStorage.getItem("userId");
 
@@ -56,6 +64,12 @@ function HomePage() {
             });
     }
 
+
+    function closeForms() {
+        setDisplayLoginForm(false);
+        setDisplayRegistrationForm(false);
+    }
+
     return (
         <div className='home-page'>
             <div className='delete-activity' onClick={() => fetchNextActivity()}>
@@ -69,12 +83,35 @@ function HomePage() {
                 )}
             </div>
             <div className='accept-activity' onClick={() => {
-                fetchNextActivity();
-                enrollUserToActivity();
-                alert('Dodano do ulubionych!');
+                if (loggedUserId !== "") {
+                    fetchNextActivity();
+                    enrollUserToActivity();
+                    alert('Dodano do ulubionych!');
+                } else {
+
+
+                    setDisplayLoginForm(true);
+
+                }
             }}>
                 <FontAwesomeIcon icon={faCheck} size="2xl" style={{color: "#000000",}}/>
             </div>
+
+            <Modal
+                isOpen={displayLoginForm || displayRegistrationForm}
+                onRequestClose={() => closeForms()}
+                contentLabel="Login-modal"
+                style={loginFormStyles}
+                className="login-modal"
+                appElement={document.querySelector("#root") || undefined}
+            >
+                {displayLoginForm && <LoginForm setDisplayLoginForm={setDisplayLoginForm}
+                                                setDisplayRegistrationForm={setDisplayRegistrationForm}/>}
+                {displayRegistrationForm && <RegistrationForm setDisplayLoginForm={setDisplayLoginForm}
+                                                              setDisplayRegistrationForm={setDisplayRegistrationForm}/>}
+            </Modal>
+
+
         </div>
     )
 }
