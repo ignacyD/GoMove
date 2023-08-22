@@ -5,6 +5,8 @@ function Search() {
     const [cities, setCities] = useState([]);
     const [selectedActivityType, setSelectedActivityType] = useState("")
     const [selectedCity, setSelectedCity] = useState("");
+    const [dateFrom, setDateFrom] = useState("");
+    const [dateTo, setDateTo] = useState("");
 
     useEffect(() => {
         getActivities();
@@ -18,31 +20,56 @@ function Search() {
     }
 
     async function getAllCities() {
-        const response = await fetch(
-            "http://localhost:8080/activities/cities");
+        const response = await fetch("http://localhost:8080/activities/cities");
         const data = await response.json();
         setCities(data);
     }
 
     async function getFilteredActivities() {
-        let url = "http://localhost:8080/activities/filter?";
-        if (selectedCity !== "") {
-            url += `city=${selectedCity}&`
+        let response;
+        if (selectedCity === "" && selectedActivityType === "") {
+            response = await fetch("http://localhost:8080/activities/future");
         }
-        if (selectedActivityType !== "") {
-            url += `type=${selectedActivityType}`
+        else {
+            let url = "http://localhost:8080/activities/filter?";
+            if (selectedCity !== "") {
+                url += `city=${selectedCity}&`
+            }
+            if (selectedActivityType !== "") {
+                url += `type=${selectedActivityType}`
+            }
+            response = await fetch(url);
         }
-        const response = await fetch(url);
-        const data = await response.json();
-        setActivities(data);
+
+        let filteredActivities = await response.json();
+
+        if (dateFrom !== "") {
+            filteredActivities = filteredActivities.filter(activity => activity.date >= dateFrom);
+        }
+
+        if (dateTo !== "") {
+            filteredActivities = filteredActivities.filter(activity => activity.date <= dateTo);
+        }
+
+        setActivities(filteredActivities);
+    }
+
+    function resetFilter() {
+        setSelectedActivityType("");
+        setSelectedCity("");
+        setDateFrom("");
+        setDateTo("");
+        getActivities();
     }
 
     return (
         <div>
             <div>
+                Select activity type:
                 <select
                     name="activitySelect"
                     onChange={event => setSelectedActivityType(event.target.value)}
+                    value={selectedActivityType}
                 >
                     <option value="">Select Activity Type</option>
                     <option value="RUNNING">Running</option>
@@ -54,8 +81,10 @@ function Search() {
 
             <div>
                 <div>
+                    Select City:
                     <select name="citySelect"
                             onChange={event => setSelectedCity(event.target.value)}
+                            value={selectedCity}
                     >
                         <option value="">Select City</option>
                         {cities.map(city => <option key={city} value={city}>{city}</option>)}
@@ -64,11 +93,32 @@ function Search() {
             </div>
 
             <div>
+                <label htmlFor="dateFrom">Date from:</label>
+                <input
+                    value={dateFrom}
+                    type="date"
+                    id="dateFrom"
+                    name="dateFrom"
+                    onChange={(e) => setDateFrom(e.target.value)}
+                />
+            </div>
+
+            <div>
+                <label htmlFor="dateTo">Date to:</label>
+                <input
+                    value={dateTo}
+                    type="date"
+                    id="dateTo"
+                    name="dateTo"
+                    onChange={(e) => setDateTo(e.target.value)}/>
+            </div>
+
+            <div>
                 <button onClick={() => getFilteredActivities()}>Filter</button>
             </div>
 
             <div>
-                <button onClick={() => getActivities()}>Reset Filter</button>
+                <button onClick={() => resetFilter()}>Reset Filter</button>
             </div>
 
             <div>
