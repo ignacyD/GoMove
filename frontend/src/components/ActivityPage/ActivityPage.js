@@ -34,27 +34,31 @@ function ActivityPage() {
             {activityData ? (
                 <div>
 
-                    <p>Name: {activityData.title}</p>
+                    <h1>{activityData.title}</h1>
 
                     <img src={activityData.activityPhotoUrl} alt={activityData.title} className="activity-image"/>
 
-                    <p>>What?</p>
+                    <h3>What?</h3>
                     <p>{activityData.description}</p>
 
-                    <h5>When?:</h5>
+                    <h3>When?:</h3>
                     <p>{activityData.date}, {activityData.time}</p>
 
-                    <h5>Where?</h5>
+                    <h3>Where?</h3>
                     <p>City: {activityData.city}</p>
                     <p>Street: {activityData.street}</p>
 
                     <GoogleMapComponent height={'400px'} width={'400px'}
                                         address={`${activityData.city} ${activityData.street}`}/>
 
+                    <h3>Who?</h3>
 
 
+                    <p>
+                        {activityData.participants.map((participant) => participant.username).join(', ')}
+                    </p>
 
-                    <p>Leave a message:</p>
+                    <h3>Leave a message:</h3>
                     <ActivityComments currentActivityID={activityId}/>
 
 
