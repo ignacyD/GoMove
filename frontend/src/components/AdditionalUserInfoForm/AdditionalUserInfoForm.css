@@ -1,4 +1,4 @@
-.login-form {
+.additional-info-form {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -7,19 +7,19 @@
     text-align: center;
 }
 
-.username-field, .password-field {
+.city-field, .photo-url-field, .description-field, .preferred-activity-field {
     display: flex;
     margin-bottom: 10px;
 }
 
-.username-label, .password-label {
+.city-label, .photo-url-label, .description-label, .preferred-activity-label {
     margin-right: 10px;
     min-width: 7vw;
     max-width: 7vw;
     display: block;
 }
 
-.login-submit-btn {
+.additional-info-submit-btn {
     margin-top: 10px;
     margin-bottom: 10px;
     display: inline-block;
@@ -32,33 +32,7 @@
     transition: transform .5s;
 }
 
-.login-submit-btn:hover {
-    background-color: greenyellow;
-    transform: scale(1.1);
-    transition: transform .5s;
-}
-
-.username-input, .password-input {
+.city-input, .photo-url-input, .description-input,.preferred-activity-input {
     min-width: 12.5vw;
     max-width: 12.5vw;
 }
-
-.username-input:hover, .password-input:hover {
-    box-shadow: 0 0 5px yellowgreen;
-}
-
-.log-error-message{
-    color: grey;
-    font-size: 14px;
-}
-
-.register-link {
-    color: yellowgreen;
-}
-
-.register-link:hover {
-    text-decoration: underline;
-}
-
-
-

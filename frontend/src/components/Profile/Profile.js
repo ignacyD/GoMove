@@ -1,10 +1,12 @@
 import {useEffect, useState} from "react";
+import {Navigate, useNavigate} from "react-router-dom";
 import './Profile.css';
 
 function Profile() {
     const [userData, setUserData] = useState({});
     const [ownedActivities, setOwnedActivities] = useState([]);
     const [allUserActivities, setAllUserActivities] = useState([]);
+    const navigate = useNavigate();
 
     function displayActivities(activities) {
         if (activities.length > 0) {
@@ -33,7 +35,7 @@ function Profile() {
 
     async function fetchUser() {
         const userResponse = await fetch(
-            "http://localhost:8080/users/4444e1a7-7acf-4f50-8275-1449748e96eb", {
+            `http://localhost:8080/users/${localStorage.getItem("userId")}`, {
                 headers: {Authorization: localStorage.getItem("jwt")}
             }
         );
@@ -82,6 +84,7 @@ function Profile() {
             {displayActivities(allUserActivities)}
             {displayActivities(ownedActivities)}
             <img src={userData.userPhotoUrl} width="500" height="500"/>
+            <button onClick={() => navigate("/additional-info-form")}>Update info</button>
         </div>
     )
 }

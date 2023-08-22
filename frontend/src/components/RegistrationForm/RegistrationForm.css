@@ -31,7 +31,7 @@
     transition: transform .5s;
 }
 
-.login-submit-btn:hover {
+.register-submit-btn:hover {
     background-color: greenyellow;
     transform: scale(1.1);
     transition: transform .5s;
@@ -42,8 +42,12 @@
     max-width: 12.5vw;
 }
 
-.username-input:hover, .password-input:hover {
+.username-input:hover, .password-input:hover, .e-mail-input:hover, .confirm-password-input:hover {
     box-shadow: 0 0 5px yellowgreen;
+}
+
+.error-mesage {
+    text-align: left;
 }
 
 .register-link {
@@ -58,4 +62,8 @@
     text-align: center;
 }
 
+.errors-space {
+    border-top: 1px solid grey;
+    border-bottom: 1px solid grey;
+}
 

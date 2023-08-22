@@ -55,6 +55,12 @@ public class UserService {
         if (user.getPreferredActivity() != null) {
             userToUpdate.setPreferredActivity(user.getPreferredActivity());
         }
+        if (user.getDescription() != null) {
+            userToUpdate.setDescription(user.getDescription());
+        }
+        if (user.getUserPhotoUrl() != null) {
+            userToUpdate.setUserPhotoUrl(user.getUserPhotoUrl());
+        }
         userRepository.save(userToUpdate);
         return true;
     }

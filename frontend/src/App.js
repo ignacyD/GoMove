@@ -10,7 +10,6 @@ import RegistrationForm from "./components/RegistrationForm/RegistrationForm";
 function App() {
     const [displayLoginForm, setDisplayLoginForm] = useState(false)
     const [displayRegistrationForm, setDisplayRegistrationForm] = useState(false);
-
     let navigate = useNavigate();
 
     function handleLogout() {
@@ -33,8 +32,8 @@ function App() {
                 onRequestClose={() => closeForms()}
                 contentLabel="Login-modal"
                 style={loginFormStyles}
-                class="login-modal"
-                appElement={document.getElementById("root") || undefined}
+                className="login-modal"
+                appElement={document.querySelector("#root") || undefined}
             >
                 {displayLoginForm && <LoginForm setDisplayLoginForm={setDisplayLoginForm}
                                                 setDisplayRegistrationForm={setDisplayRegistrationForm}/>}
