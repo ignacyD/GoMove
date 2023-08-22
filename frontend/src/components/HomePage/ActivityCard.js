@@ -39,7 +39,7 @@ function ActivityCard({activity}) {
                         <button onClick={() => setShowMap(!showMap)}>{showMap ? "Back to details" : "See on map"}</button>
                     </div>
                     <div className="google-maps">
-                        <GoogleMapComponent height={'calc(60vh - 200px)'} width={'650px'}
+                        <GoogleMapComponent height={'33vh'} width={'27vw'}
                                             address={`${activity.city} ${activity.street}`}/>
                     </div>
                 </div>

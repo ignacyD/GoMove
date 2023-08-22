@@ -7,7 +7,7 @@
     background-color: rgba(42, 42, 42, 0.93);
     color: lightgreen;
     height: 75vh;
-    width: 50vh;
+    width: 27vw;
     overflow: hidden;
 }
 
@@ -15,11 +15,13 @@
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-    margin-bottom: 20px;
+    height:27vh;
+    margin-bottom: 3vh;
 }
 
 .card .top-section .title-section {
     display: flex;
+    text-align: center;
     flex-direction: column;
     align-items: center;
 }
@@ -27,12 +29,26 @@
 .middle-section {
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
-    height: calc(40vh - 200px);
+    height: 15vh;
+    margin-bottom: 0px;
+}
+
+.location p, .datatime p{
+    margin-bottom: 0;
+}
+.location{
+    margin-right: 4vw;
 }
 
 .description-section {
     height: 15vh;
+    justify-content: space-around;
+}
+.description-section p {
+    margin-bottom: 0;
+}
+.description-section h3 {
+margin-top: 0;
 }
 
 .map-button {
@@ -63,8 +79,8 @@
 }
 
 .photo {
-    width: 200px;
-    height: 200px;
+    width: 27vh;
+    height: 27vh;
     object-fit: cover;
     border-radius: 4px;
     margin-right: 20px;
@@ -81,7 +97,7 @@
 
 .map-side {
     position: relative;
-    bottom: calc(60vh - 200px);
+    bottom: calc(33vh);
     transition: bottom 1s;
 }
 
