@@ -4,8 +4,10 @@ import {GoogleMap, useJsApiLoader, Marker} from '@react-google-maps/api';
 
 const googleMapApiKey = process.env.REACT_APP_GOOGLE_MAP_API_KEY;
 const googleMapGeocodeURL = process.env.REACT_APP_GOOGLE_MAP_GEOCODE_URL;
+const googleMapsLibraries = ["places"];
 
-function GoogleMapComponent({address , width, height}) {
+
+function GoogleMapComponent({address, width, height}) {
     const [coordinates, setCoordinates] = useState(null);
 
 
@@ -42,7 +44,8 @@ function GoogleMapComponent({address , width, height}) {
 
     const {isLoaded} = useJsApiLoader({
         id: 'google-map-script',
-        googleMapsApiKey: googleMapApiKey
+        googleMapsApiKey: googleMapApiKey,
+        libraries: googleMapsLibraries
     });
 
 

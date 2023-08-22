@@ -8,12 +8,15 @@ function ActivityComments({currentActivityID}) {
     const [editingComment, setEditingComment] = useState(null);
     const [editedMessage, setEditedMessage] = useState("");
 
+
+    const loggedUserId = localStorage.getItem("userId");
+
+    console.log(localStorage)
+
     const currentDate = new Date();
     const formattedDate = format(currentDate, 'yyyy-MM-dd');
     const formattedTime = currentDate.toLocaleTimeString();
 
-    //TODO zmienić na id zalogowanego użytkownika
-    const userID = '2222e1a7-7acf-4f50-8275-1449748e96eb';
 
     const fetchActivityComments = async () => {
         try {
@@ -42,11 +45,13 @@ function ActivityComments({currentActivityID}) {
             const response = await fetch('http://localhost:8080/comments', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    "Authorization": localStorage.getItem("jwt"),
+                    'Content-Type': 'application/json',
+
                 },
                 body: JSON.stringify({
                     activityId: currentActivityID,
-                    userId: userID,
+                    user: {userId: loggedUserId},
                     message: newComment,
                     date: formattedDate,
                     time: formattedTime
@@ -70,6 +75,7 @@ function ActivityComments({currentActivityID}) {
             const response = await fetch(`http://localhost:8080/comments/delete/${comment.commentId}`, {
                 method: 'DELETE',
                 headers: {
+                    "Authorization": localStorage.getItem("jwt"),
                     'Content-Type': 'application/json'
                 }
             });
@@ -103,10 +109,14 @@ function ActivityComments({currentActivityID}) {
             const response = await fetch(`http://localhost:8080/comments/update/${editingComment.commentId}`, {
                 method: 'PATCH',
                 headers: {
+                    "Authorization": localStorage.getItem("jwt"),
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(updatedComment)
+                body: JSON.stringify({message: editedMessage})
+
             });
+
+            console.log(updatedComment)
 
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -120,6 +130,7 @@ function ActivityComments({currentActivityID}) {
         }
     };
 
+    console.log(activityComments)
     return (
         <div className="comments">
             <ul>
@@ -144,9 +155,9 @@ function ActivityComments({currentActivityID}) {
                             ) : (
                                 <div>
                                     <span>
-                                        {`${comment.time} ${comment.userId}: ${comment.message}`}
+                                        {`${comment.time} ${comment.user.userId}: ${comment.message}`}
                                     </span>
-                                    {comment.userId === userID && (
+                                    {comment.user.userId === loggedUserId && (
                                         <div>
                                             <button onClick={() => handleEditComment(comment)}>Edit</button>
                                             <button onClick={() => handleDeleteComment(comment)}>Delete</button>
@@ -159,18 +170,24 @@ function ActivityComments({currentActivityID}) {
                 ))}
             </ul>
             <div>
-                <textarea
-                    placeholder="Add a new comment..."
-                    value={newComment}
-                    onChange={(e) => setNewComment(e.target.value)}
-                    onKeyPress={(e) => {
-                        if (e.key === 'Enter') {
-                            handleCommentSubmit();
-                        }
-                    }}
-                    style={{width: '100%'}}
-                    rows={4}
-                />
+                {loggedUserId !== "" ? (
+
+
+                    <textarea
+                        placeholder="Add a new comment..."
+                        value={newComment}
+                        onChange={(e) => setNewComment(e.target.value)}
+                        onKeyPress={(e) => {
+                            if (e.key === 'Enter') {
+                                handleCommentSubmit();
+                            }
+                        }}
+                        style={{width: '100%'}}
+                        rows={4}
+                    />
+                ) : <></>
+                }
+
             </div>
         </div>
     );
