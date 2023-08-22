@@ -8,6 +8,9 @@ function HomePage() {
     const [activities, setActivities] = useState([]);
     const [currentActivityIndex, setCurrentActivityIndex] = useState(0);
 
+
+    const loggedUserId = localStorage.getItem("userId");
+
     const fetchActivities = async () => {
         try {
             const response = await fetch('http://localhost:8080/activities/future');
@@ -33,6 +36,26 @@ function HomePage() {
     }, []);
 
 
+    const enrollUserToActivity = () => {
+        fetch(`http://localhost:8080/users/enroll/${loggedUserId}/${activities[currentActivityIndex].activityId}`, {
+            method: 'PATCH',
+            headers: {
+                "Authorization": localStorage.getItem("jwt"),
+                'Content-Type': 'application/json'
+            },
+        })
+            .then(response => {
+                if (response.ok) {
+                    return response.text();
+                } else {
+                    throw new Error('Enrollment failed');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
+
     return (
         <div className='home-page'>
             <div className='delete-activity' onClick={() => fetchNextActivity()}>
@@ -47,6 +70,7 @@ function HomePage() {
             </div>
             <div className='accept-activity' onClick={() => {
                 fetchNextActivity();
+                enrollUserToActivity();
                 alert('Dodano do ulubionych!');
             }}>
                 <FontAwesomeIcon icon={faCheck} size="2xl" style={{color: "#000000",}}/>
