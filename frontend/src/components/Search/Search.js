@@ -1,4 +1,5 @@
 import {useEffect, useState} from "react";
+import ActivitySmallCard from "./ActivitySmallCard";
 
 function Search() {
     const [activities, setActivities] = useState([]);
@@ -128,13 +129,10 @@ function Search() {
             {activities.length > 0 ?
                 <div>
                     {activities.map(activity => (
-                        <div key={activity.activityId}>
-                            <div>{activity.title}</div>
-                            <div>{activity.activityType}</div>
-                            <div>{activity.city}, {activity.street}</div>
-                            <div>{activity.date}, {activity.time}</div>
-                            <div>---------</div>
-                        </div>
+                        <ActivitySmallCard
+                            key={activity.activityId}
+                            activity={activity}
+                        />
                     ))}
                 </div>
                 :
