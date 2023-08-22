@@ -82,20 +82,26 @@ function HomePage() {
                     <p>Pobieranie aktywności...</p>
                 )}
             </div>
-            <div className='accept-activity' onClick={() => {
-                if (loggedUserId !== "") {
+
+
+            {loggedUserId !== "" ? (
+                <div className='accept-activity' onClick={() => {
                     fetchNextActivity();
                     enrollUserToActivity();
                     alert('Dodano do ulubionych!');
-                } else {
-
-
+                }}>
+                    <FontAwesomeIcon icon={faCheck} size="2xl" style={{color: "#000000"}}/>
+                </div>
+            ) : (
+                <div className='accept-activity' onClick={() => {
                     setDisplayLoginForm(true);
+                }}>
+                    <FontAwesomeIcon icon={faCheck} size="2xl" style={{color: "#000000"}}/>
+                </div>
+            )}
 
-                }
-            }}>
-                <FontAwesomeIcon icon={faCheck} size="2xl" style={{color: "#000000",}}/>
-            </div>
+
+
 
             <Modal
                 isOpen={displayLoginForm || displayRegistrationForm}
