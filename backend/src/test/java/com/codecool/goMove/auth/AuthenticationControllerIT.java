@@ -9,6 +9,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.UUID;
+
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -30,7 +32,10 @@ class AuthenticationControllerIT {
     @Test
     void testRegister_SuccessfulRegistration() throws Exception {
         RegisterRequest registerRequest = new RegisterRequest("testuser", "test@example.com", "password");
-        AuthenticationResponse authenticationResponse = new AuthenticationResponse("testToken");
+        AuthenticationResponse authenticationResponse = AuthenticationResponse.builder()
+                .token("testToken")
+                .userId(UUID.randomUUID())
+                .build();
 
         when(authenticationService.register(registerRequest)).thenReturn(authenticationResponse);
         String jsonResponse = objectMapper.writeValueAsString(registerRequest);
@@ -62,7 +67,10 @@ class AuthenticationControllerIT {
     @Test
     void testAuthenticate_SuccessfulAuthentication() throws Exception {
         AuthenticationRequest authenticationRequest = new AuthenticationRequest("testuser", "password");
-        AuthenticationResponse authenticationResponse = new AuthenticationResponse("testToken");
+        AuthenticationResponse authenticationResponse = AuthenticationResponse.builder()
+                .token("testToken")
+                .userId(UUID.randomUUID())
+                .build();
 
         when(authenticationService.authenticate(authenticationRequest)).thenReturn(authenticationResponse);
         String jsonResponse = objectMapper.writeValueAsString(authenticationRequest);
