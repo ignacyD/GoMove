@@ -3,14 +3,23 @@ import {useNavigate} from "react-router-dom";
 import './AdditionalUserInfoForm.css'
 import Modal from "react-modal";
 import loginFormStyles from "../../ModalStyles";
-
+import {useRef} from 'react';
 function AdditionalUserInfoForm() {
     const [city, setCity] = useState("");
     const [preferredActivity, setPreferredActivity] = useState("");
     const [description, setDescription] = useState("");
-    const [photoUrl, setPhotoUrl] = useState("");
     const navigate = useNavigate();
-
+    const [selectedImage, setSelectedImage] = useState(null);
+    const fileInputRef = useRef(null);
+    const handleImageUpload = (event) => {
+        const imageFile = event.target.files[0];
+        console.log(imageFile);
+        console.log(URL.createObjectURL(imageFile))
+        setSelectedImage(URL.createObjectURL(imageFile));
+    };
+    const handleImageButtonClick = () => {
+        fileInputRef.current.click();
+    };
     const handleSubmit = (e) => {
         e.preventDefault();
 
@@ -21,7 +30,7 @@ function AdditionalUserInfoForm() {
                 "city": city,
                 "preferredActivity": preferredActivity,
                 "description": description,
-                "userPhotoUrl": photoUrl
+                "userPhotoUrl": selectedImage
             })
         }).then(response => {
             if (response.status === 200) {
@@ -34,12 +43,12 @@ function AdditionalUserInfoForm() {
     }
     return (
         <div className="additional-info">
-            <h1>Please fill this form to give us info, so we can provide you personalized activities</h1>
             <Modal
                 isOpen={true}
                 style={loginFormStyles}
                 class="additional-info-modal"
             >
+            <h4 className="additional-info-title">Please fill this form to give us info, so we can provide you more personalized activities</h4>
                 <form className="additional-info-form" onSubmit={handleSubmit}>
                     <div className="city-field">
                         <label className="city-label">City</label>
@@ -49,6 +58,16 @@ function AdditionalUserInfoForm() {
                             id="city"
                             value={city}
                             onChange={e => setCity(e.target.value)}
+                        ></input>
+                    </div>
+                    <div className="description-field">
+                        <label className="description-label">Description</label>
+                        <input
+                            className="description-input"
+                            type="text"
+                            id="description"
+                            value={description}
+                            onChange={e => setDescription(e.target.value)}
                         ></input>
                     </div>
                     <div className="preferred-activity-field">
@@ -65,26 +84,25 @@ function AdditionalUserInfoForm() {
                             <option value="RUNNING">Running</option>
                         </select>
                     </div>
-                    <div className="description-field">
-                        <label className="description-label">Description</label>
-                        <input
-                            className="description-input"
-                            type="text"
-                            id="description"
-                            value={description}
-                            onChange={e => setDescription(e.target.value)}
-                        ></input>
-                    </div>
                     <div className="photo-url-field">
                         <label className="photo-url-label">Photo url</label>
+                        <button className="custom-file-button" onClick={handleImageButtonClick}>
+                            Choose photo
+                        </button>
                         <input
-                            className="photo-url-input"
-                            type="text"
-                            id="photo-url"
-                            value={photoUrl}
-                            onChange={e => setPhotoUrl(e.target.value)}
-                        ></input>
+                            ref={fileInputRef}
+                            type="file"
+                            accept="image/*"
+                            onChange={handleImageUpload}
+                            style={{ display: 'none' }}
+                        />
                     </div>
+                    {selectedImage && (
+                            <div className="selected-photo">
+                                <h2>Uploaded Image:</h2>
+                                <img src={selectedImage} alt="Uploaded"/>
+                            </div>
+                        )}
                     <button className="additional-info-submit-btn" type="submit">Update</button>
                 </form>
             </Modal>
