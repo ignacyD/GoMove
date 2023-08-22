@@ -34,12 +34,12 @@ function AdditionalUserInfoForm() {
     }
     return (
         <div className="additional-info">
-            <h1>Please fill this form to give us info, so we can provide you personalized activities</h1>
             <Modal
                 isOpen={true}
                 style={loginFormStyles}
                 class="additional-info-modal"
             >
+                <h1>Please fill this form to give us info, so we can provide you personalized activities</h1>
                 <form className="additional-info-form" onSubmit={handleSubmit}>
                     <div className="city-field">
                         <label className="city-label">City</label>
