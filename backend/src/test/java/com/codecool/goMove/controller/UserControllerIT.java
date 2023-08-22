@@ -1,6 +1,5 @@
 package com.codecool.goMove.controller;
 
-import com.codecool.goMove.config.JwtAuthenticationFilter;
 import com.codecool.goMove.model.Role;
 import com.codecool.goMove.model.User;
 import com.codecool.goMove.repository.UserRepository;
@@ -14,21 +13,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import org.springframework.security.test.context.support.WithMockUser;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
@@ -47,7 +44,7 @@ class UserControllerIT {
     private UserRepository userRepository;
 
     @AfterEach
-    void cleanUpEach(){
+    void cleanUpEach() {
         userRepository.deleteAll();
     }
 
