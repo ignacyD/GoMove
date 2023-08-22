@@ -34,23 +34,28 @@ function ActivityPage() {
             {activityData ? (
                 <div>
 
-                    <p>ID: {activityData.activityId}</p>
                     <p>Name: {activityData.title}</p>
 
+                    <img src={activityData.activityPhotoUrl} alt={activityData.title} className="activity-image"/>
 
-                    <h5>Address:</h5>
+                    <p>>What?</p>
+                    <p>{activityData.description}</p>
+
+                    <h5>When?:</h5>
+                    <p>{activityData.date}, {activityData.time}</p>
+
+                    <h5>Where?</h5>
                     <p>City: {activityData.city}</p>
                     <p>Street: {activityData.street}</p>
-
-
-                    <ActivityComments currentActivityID={activityId}/>
-
 
                     <GoogleMapComponent height={'400px'} width={'400px'}
                                         address={`${activityData.city} ${activityData.street}`}/>
 
 
 
+
+                    <p>Leave a message:</p>
+                    <ActivityComments currentActivityID={activityId}/>
 
 
                 </div>
