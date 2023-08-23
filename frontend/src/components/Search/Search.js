@@ -8,7 +8,9 @@ function Search() {
     const [selectedCity, setSelectedCity] = useState("");
     const [dateFrom, setDateFrom] = useState("");
     const [dateTo, setDateTo] = useState("");
-    const [selectedActivityType, setSelectedActivityType] = useState(null);
+    const [selectedActivityType, setSelectedActivityType] = useState("");
+    const [cityOptionsVisible, setCityOptionsVisible] = useState(false);
+    const [cityOptionsSuggestions, setCityOptionsSuggestions] = useState("");
 
     const today = new Date().toISOString().split("T")[0];
 
@@ -70,10 +72,37 @@ function Search() {
     const handleOptionChange = (event) => {
         setSelectedActivityType(event.target.value);
     };
+    const closeSelectCity = () => {
+        setCityOptionsVisible(false);
+    };
+
+    useEffect(() => {
+        const handleBodyClick = (event) => {
+            if (!event.target.classList.contains('city-select')) {
+                closeSelectCity();
+            }
+        };
+
+        window.addEventListener("click", (event) => handleBodyClick(event));
+
+        return () => {
+            window.removeEventListener("click", (event) => handleBodyClick(event));
+        };
+    }, []);
+    useEffect(() => {
+        const cityOptionsSpace = document.querySelector(".city-options-field");
+        cityOptionsSpace.style.height = cityOptionsVisible ? '100px' : '0px';
+        cityOptionsSpace.style.border = cityOptionsVisible ? '1px solid yellowgreen' : 'none';
+    }, [cityOptionsVisible])
+    const handleCityClick = (selectedCity) => {
+        setCityOptionsSuggestions(selectedCity);
+        setSelectedCity(selectedCity);
+    };
 
     return (
         <div className="activity-search-page">
             <div className="activity-search-filters">
+
                 <h2>Activity search filters</h2>
                 <div className="choose-activity">
                     <h4>Choose activity type</h4>
@@ -119,13 +148,22 @@ function Search() {
                         <h4>
                             Select City:
                         </h4>
-                        <select name="citySelect"
-                                onChange={event => setSelectedCity(event.target.value)}
-                                value={selectedCity}
-                        >
-                            <option value="">Select City</option>
-                            {cities.map(city => <option key={city} value={city}>{city}</option>)}
-                        </select>
+                        <input type="text" value={cityOptionsSuggestions}
+                               placeholder="Select city"
+                               onChange={(event) => setCityOptionsSuggestions(event.target.value)}
+                               className="city-select" onClick={() => {
+                            setCityOptionsVisible(true)
+                        }} />
+                        <div className="city-options-field">
+                            {cityOptionsVisible &&
+                                <div className="city-options">
+                                    {cities.filter(city => city.toString().toLowerCase().includes(cityOptionsSuggestions.toLocaleLowerCase())).map(city => <div
+                                        onClick={() => handleCityClick(city)} key={city}
+                                        value={city}>{city}</div>
+                                    )}
+                                </div>
+                            }
+                        </div>
                     </div>
                 </div>
                 <div className="date-filters">
