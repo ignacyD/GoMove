@@ -8,7 +8,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 function ActivityPage() {
     const [activityData, setActivityData] = useState("");
-
+    const [isUserEnrolled, setIsUserEnrolled] = useState(true);
 
     const activityId = '1111e4ee-06f5-40ab-935e-442074f939a1'
 
@@ -20,6 +20,7 @@ function ActivityPage() {
         .then(response => {
             if (response.status === 200) {
                 console.log("User unsubscribed successfully");
+                setIsUserEnrolled(false);
             } else {
                 console.log("something went wrong")
             }
@@ -37,6 +38,7 @@ function ActivityPage() {
         .then(response => {
             if (response.status === 200) {
                 console.log("User enrolled successfully");
+                setIsUserEnrolled(true);
             } else {
                 console.log("something went wrong")
             }
@@ -56,10 +58,21 @@ function ActivityPage() {
         }
     };
 
+    const checkIsUserEnrolled = () => {
+        setIsUserEnrolled(activityData.participants.filter(participant =>
+            participant.userId === localStorage.getItem("userId")
+        ).length > 0)
+    }
 
     useEffect(() => {
         fetchActivityData();
-    }, []);
+    }, [isUserEnrolled]);
+
+    useEffect(() => {
+        if (Object.keys(activityData).length !== 0) {
+            checkIsUserEnrolled();
+        }
+    },[activityData])
 
 
     return (
@@ -100,12 +113,8 @@ function ActivityPage() {
                     <br/>
                     <div className="info-users">
                         <div className="minus">
-                            <FontAwesomeIcon icon={faUserMinus} size="2xl" style={{color: "#90EE90FF"}}
-                                             onClick={() => handleUnsubscribeButton()}/>
-                        </div>
-                        <div className="plus">
-                            <FontAwesomeIcon icon={faUserPlus} size="2xl" style={{color: "#90EE90FF",}}
-                                             onClick={() => handleEnrollButton()}/>
+                            <FontAwesomeIcon icon={isUserEnrolled ? faUserMinus : faUserPlus} size="2xl" style={{color: "#90EE90FF"}}
+                                             onClick={() => isUserEnrolled ? handleUnsubscribeButton() : handleEnrollButton()}/>
                         </div>
                     </div>
                     <hr/>
