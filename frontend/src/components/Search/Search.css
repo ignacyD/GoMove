@@ -7,6 +7,9 @@
     display: flex;
     flex-direction: column;
 }
+.activity-search-page{
+    display: flex;
+}
 .activity-search-filters h4, .activity-search-filters h2{
     text-align: center;
 }
@@ -29,7 +32,7 @@
     margin-top: 10px;
     color: #2a2a2a;
     text-decoration: none;
-    border-color: grey;
+    border-color: black;
     border-radius: 6px;
     transition: transform .4s ease, background-color .4s ease;
 }
@@ -63,4 +66,22 @@ margin-left: 65px;
     position: absolute;
     left: 254px;
     background-color: green;
+}
+.select-city{
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+}
+.city-select{
+    border: 1px solid black;
+    width: 200px;
+}
+.city-options-field{
+    overflow-x: auto;
+    width: 204px;
+    height: 0;
+    transition: height .5s;
+}
+.city-options{
+    overflow-x: auto;
 }
