@@ -52,7 +52,7 @@ const AddActivity = () => {
                     },
                     "title": title,
                     "city": city,
-                    "street": selectedAddress,
+                    "address": selectedAddress,
                     "date": date,
                     "time": time,
                     "description": description,
@@ -113,7 +113,7 @@ const AddActivity = () => {
                     </Autocomplete>
                 </div>
                 <div className="activity-type-field">
-                    <label className="activity-type-label">City</label>
+                    <label className="activity-type-label">Activity type</label>
                     <select required={true}
                             className="activity-select"
                             id="activity-select"

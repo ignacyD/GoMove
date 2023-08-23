@@ -7,7 +7,7 @@ import Modal from "react-modal";
 import loginFormStyles from "./ModalStyles";
 import RegistrationForm from "./components/RegistrationForm/RegistrationForm";
 
-export const UserContext = React.createContext();
+export const Context = React.createContext();
 
 function App() {
     const [isUserLogged, setIsUserLogged] = useState(false);
@@ -35,7 +35,11 @@ function App() {
     }
 
     return (
-        <UserContext.Provider value={{getter: isUserLogged, setter: setIsUserLogged}}>
+        <Context.Provider value={{
+            isUserLogged: isUserLogged,
+            setIsUserLogged: setIsUserLogged,
+            setDisplayLoginForm: setDisplayLoginForm
+        }}>
             <div className="App">
                 <Navbar setDisplayLoginForm={setDisplayLoginForm} handleLogout={handleLogout}/>
                 <Modal
@@ -55,7 +59,7 @@ function App() {
                 </Modal>
                 <Outlet/>
             </div>
-        </UserContext.Provider>
+        </Context.Provider>
     );
 }
 

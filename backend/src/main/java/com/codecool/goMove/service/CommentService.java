@@ -1,12 +1,9 @@
 package com.codecool.goMove.service;
 
 import com.codecool.goMove.model.Comment;
-import com.codecool.goMove.model.User;
 import com.codecool.goMove.repository.CommentRepository;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.List;
 import java.util.UUID;
 

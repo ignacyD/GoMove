@@ -3,20 +3,14 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCheck, faXmark} from "@fortawesome/free-solid-svg-icons";
 import React, {useContext, useEffect, useState} from "react";
 import ActivityCard from "./ActivityCard";
-import LoginForm from "../LoginForm/LoginForm";
-import Modal from "react-modal";
-import loginFormStyles from "../../ModalStyles";
-import RegistrationForm from "../RegistrationForm/RegistrationForm";
-import {UserContext} from "../../App";
+import {Context} from "../../App";
 
 function HomePage() {
-    const isUserLogged = useContext(UserContext).getter
+    const isUserLogged = useContext(Context).isUserLogged;
+    const setDisplayLoginForm = useContext(Context).setDisplayLoginForm;
 
     const [activities, setActivities] = useState([]);
     const [currentActivityIndex, setCurrentActivityIndex] = useState(0);
-
-    const [displayLoginForm, setDisplayLoginForm] = useState(false)
-    const [displayRegistrationForm, setDisplayRegistrationForm] = useState(false);
 
     const loggedUserId = localStorage.getItem("userId");
 
@@ -65,12 +59,6 @@ function HomePage() {
             });
     }
 
-
-    function closeForms() {
-        setDisplayLoginForm(false);
-        setDisplayRegistrationForm(false);
-    }
-
     return (
         <div className='home-page'>
             <div className='delete-activity' onClick={() => fetchNextActivity()}>
@@ -83,7 +71,6 @@ function HomePage() {
                     <p>Pobieranie aktywności...</p>
                 )}
             </div>
-
 
             {isUserLogged ?
                 <div className='accept-activity' onClick={() => {
@@ -100,25 +87,6 @@ function HomePage() {
                     <FontAwesomeIcon icon={faCheck} size="2xl" style={{color: "#000000"}}/>
                 </div>
             }
-
-
-            <Modal
-                isOpen={displayLoginForm || displayRegistrationForm}
-                onRequestClose={() => closeForms()}
-                contentLabel="Login-modal"
-                style={loginFormStyles}
-                className="login-modal"
-                appElement={document.querySelector("#root") || undefined}
-            >
-                {displayLoginForm && <LoginForm setDisplayLoginForm={setDisplayLoginForm}
-                                                setDisplayRegistrationForm={setDisplayRegistrationForm}
-                />}
-                {displayRegistrationForm && <RegistrationForm setDisplayLoginForm={setDisplayLoginForm}
-                                                              setDisplayRegistrationForm={setDisplayRegistrationForm}
-                />}
-            </Modal>
-
-
         </div>
     )
 }

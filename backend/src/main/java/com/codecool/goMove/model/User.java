@@ -41,8 +41,9 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "activity_id")
     )
     private Set<Activity> enrolledActivities;
-    private String gender;
+    @Column(columnDefinition = "TEXT")
     private String description;
+    @Column(columnDefinition = "TEXT")
     private String userPhotoUrl;
     @Enumerated(EnumType.STRING)
     private Role role;
