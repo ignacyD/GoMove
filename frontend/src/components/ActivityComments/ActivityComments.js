@@ -181,7 +181,7 @@ function ActivityComments({currentActivityID}) {
                                 handleCommentSubmit();
                             }
                         }}
-                        style={{width: '100%'}}
+                        style={{width: '99%'}}
                         rows={4}
                     />
                 ) : <></>
