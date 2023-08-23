@@ -90,8 +90,8 @@ public class ActivityService {
         if (!isNull(activity.getCity())) {
             activityToUpdate.setCity(activity.getCity());
         }
-        if (!isNull(activity.getStreet())) {
-            activityToUpdate.setStreet(activity.getStreet());
+        if (!isNull(activity.getAddress())) {
+            activityToUpdate.setAddress(activity.getAddress());
         }
         if (!isNull(activity.getDate())) {
             activityToUpdate.setDate(activity.getDate());

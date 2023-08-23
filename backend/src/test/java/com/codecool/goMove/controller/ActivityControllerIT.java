@@ -145,7 +145,7 @@ class ActivityControllerIT {
         activity.setOwner(owner);
         activity.setTitle("Bieg rano");
         activity.setCity("Kraków");
-        activity.setStreet("Ruczaj");
+        activity.setAddress("Ruczaj");
         activity.setDate(LocalDate.of(2023, 9, 1));
         activity.setTime(LocalTime.of(8, 0));
         activity.setDescription("Bieg poranny po okolicy");
@@ -166,7 +166,7 @@ class ActivityControllerIT {
         UUID activityIdToUpdate = UUID.fromString("1111e4ee-06f5-40ab-935e-442074f939a1");
         Activity updatedActivity = new Activity();
         updatedActivity.setActivityType(ActivityType.RUNNING);
-        updatedActivity.setStreet("Ruczaj");
+        updatedActivity.setAddress("Ruczaj");
         updatedActivity.setDate(LocalDate.of(2023, 9, 1));
         updatedActivity.setTime(LocalTime.of(8, 0));
         updatedActivity.setDescription("Bieg poranny po okolicy");
