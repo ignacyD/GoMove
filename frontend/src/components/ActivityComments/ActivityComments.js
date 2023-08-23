@@ -1,6 +1,7 @@
 import './ActivityComments.css';
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {format} from 'date-fns';
+import {UserContext} from "../../App";
 
 function ActivityComments({currentActivityID}) {
     const [activityComments, setActivityComments] = useState([]);
@@ -8,7 +9,7 @@ function ActivityComments({currentActivityID}) {
     const [editingComment, setEditingComment] = useState(null);
     const [editedMessage, setEditedMessage] = useState("");
 
-
+    const isUserLogged = useContext(UserContext).getter;
     const loggedUserId = localStorage.getItem("userId");
 
     console.log(localStorage)
@@ -170,9 +171,7 @@ function ActivityComments({currentActivityID}) {
                 ))}
             </ul>
             <div>
-                {loggedUserId !== "" ? (
-
-
+                {isUserLogged ? (
                     <textarea
                         placeholder="Add a new comment..."
                         value={newComment}

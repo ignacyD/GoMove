@@ -1,10 +1,15 @@
-import {useState} from "react";
+import {useContext, useState} from "react";
 import './LoginForm.css'
+import {UserContext} from "../../App";
 
 function LoginForm({setDisplayLoginForm, setDisplayRegistrationForm}) {
+
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [showErrorMessage, setShowErrorMessage] = useState(false);
+
+    const setIsUserLogged = useContext(UserContext).setter
+
     const handleUsernameChange = (e) => {
         setUsername(e.target.value);
     };
@@ -38,6 +43,7 @@ function LoginForm({setDisplayLoginForm, setDisplayRegistrationForm}) {
                         localStorage.setItem("jwt", "Bearer " + data.token);
                         localStorage.setItem("userId", data.userId);
                         setDisplayLoginForm(false);
+                        setIsUserLogged(true);
                         console.log("Login successful");
                         // TODO wyświetlić użytkownikowi informację o pomyślnym zalogowaniu
                     })

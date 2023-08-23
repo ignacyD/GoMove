@@ -1,12 +1,15 @@
 import './Navbar.css'
 import {Link} from "react-router-dom";
-import React, {useState} from "react";
+import React, {useContext, useState} from "react";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faFacebook, faYoutube} from "@fortawesome/free-brands-svg-icons";
 import {faChevronLeft, faLaptopCode, faX} from "@fortawesome/free-solid-svg-icons";
 import MobileMenu from "../MobileMenu/MobileMenu";
+import {UserContext} from "../../App";
 
 function Navbar({setDisplayLoginForm, handleLogout}) {
+    const isUserLogged = useContext(UserContext).getter;
+
     const [displayMedia, setDisplayMedia] = useState(false);
     const [mediaContainerOpen, setMediaContainerOpen] = useState(true);
     const displayMediaTimer = () => {
@@ -51,18 +54,18 @@ function Navbar({setDisplayLoginForm, handleLogout}) {
                 </div>
             </div>
             {
-                localStorage.getItem("userId") && <Link to='/profile' className='nav-btn'>
+                isUserLogged && <Link to='/profile' className='nav-btn'>
                     <li>Profile</li>
                 </Link>
             }
             {
-                !localStorage.getItem("userId") &&
+                !isUserLogged &&
                 <button className='login-btn' onClick={() => setDisplayLoginForm(true)}>
                     Login
                 </button>
             }
             {
-                localStorage.getItem("userId") && <button className='login-btn' onClick={() => handleLogout()}>
+                isUserLogged && <button className='login-btn' onClick={() => handleLogout()}>
                     Logout
                 </button>
             }

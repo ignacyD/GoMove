@@ -1,16 +1,17 @@
 import './HomePage.css';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCheck, faXmark} from "@fortawesome/free-solid-svg-icons";
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import ActivityCard from "./ActivityCard";
 import LoginForm from "../LoginForm/LoginForm";
-import App from "../../App";
-import Navbar from "../Navbar/Navbar";
 import Modal from "react-modal";
 import loginFormStyles from "../../ModalStyles";
 import RegistrationForm from "../RegistrationForm/RegistrationForm";
+import {UserContext} from "../../App";
 
 function HomePage() {
+    const isUserLogged = useContext(UserContext).getter
+
     const [activities, setActivities] = useState([]);
     const [currentActivityIndex, setCurrentActivityIndex] = useState(0);
 
@@ -84,7 +85,7 @@ function HomePage() {
             </div>
 
 
-            {loggedUserId !== "" ? (
+            {isUserLogged ?
                 <div className='accept-activity' onClick={() => {
                     fetchNextActivity();
                     enrollUserToActivity();
@@ -92,15 +93,13 @@ function HomePage() {
                 }}>
                     <FontAwesomeIcon icon={faCheck} size="2xl" style={{color: "#000000"}}/>
                 </div>
-            ) : (
+                :
                 <div className='accept-activity' onClick={() => {
                     setDisplayLoginForm(true);
                 }}>
                     <FontAwesomeIcon icon={faCheck} size="2xl" style={{color: "#000000"}}/>
                 </div>
-            )}
-
-
+            }
 
 
             <Modal
@@ -112,9 +111,11 @@ function HomePage() {
                 appElement={document.querySelector("#root") || undefined}
             >
                 {displayLoginForm && <LoginForm setDisplayLoginForm={setDisplayLoginForm}
-                                                setDisplayRegistrationForm={setDisplayRegistrationForm}/>}
+                                                setDisplayRegistrationForm={setDisplayRegistrationForm}
+                />}
                 {displayRegistrationForm && <RegistrationForm setDisplayLoginForm={setDisplayLoginForm}
-                                                              setDisplayRegistrationForm={setDisplayRegistrationForm}/>}
+                                                              setDisplayRegistrationForm={setDisplayRegistrationForm}
+                />}
             </Modal>
 
 

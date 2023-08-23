@@ -1,8 +1,10 @@
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import './RegistrationForm.css'
+import {UserContext} from "../../App";
 
-function RegistrationForm({setDisplayLoginForm, setDisplayRegistrationForm, setDisplayAdditionalInfoForm}) {
+function RegistrationForm({setDisplayLoginForm, setDisplayRegistrationForm}) {
+
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -11,6 +13,9 @@ function RegistrationForm({setDisplayLoginForm, setDisplayRegistrationForm, setD
     const [passwordErrorMessage, setPasswordErrorMessage] = useState([]);
     const [modalSize, setModalSize] = useState('40vh');
     const navigate = useNavigate();
+
+    const setIsUserLogged = useContext(UserContext).setter
+
 
     const handleUsernameChange = (e) => {
         setUsername(e.target.value);
@@ -54,6 +59,7 @@ function RegistrationForm({setDisplayLoginForm, setDisplayRegistrationForm, setD
                         localStorage.setItem("jwt", "Bearer " + data.token);
                         localStorage.setItem("userId", data.userId);
                         setDisplayRegistrationForm(false);
+                        setIsUserLogged(true)
                         console.log("Registration successful");
                     })
                 navigate("/additional-info-form")
