@@ -1,7 +1,7 @@
 import {useContext, useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import './RegistrationForm.css'
-import {UserContext} from "../../App";
+import {Context} from "../../App";
 
 function RegistrationForm({setDisplayLoginForm, setDisplayRegistrationForm}) {
 
@@ -14,8 +14,7 @@ function RegistrationForm({setDisplayLoginForm, setDisplayRegistrationForm}) {
     const [modalSize, setModalSize] = useState('40vh');
     const navigate = useNavigate();
 
-    const setIsUserLogged = useContext(UserContext).setter
-
+    const setIsUserLogged = useContext(Context).setIsUserLogged;
 
     const handleUsernameChange = (e) => {
         setUsername(e.target.value);

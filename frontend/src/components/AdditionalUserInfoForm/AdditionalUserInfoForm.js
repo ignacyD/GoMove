@@ -78,6 +78,7 @@ function AdditionalUserInfoForm() {
                             value={preferredActivity}
                             onChange={e => setPreferredActivity(e.target.value)}
                         >
+                            <option value="">Select preferred activity</option>
                             <option value="SKATING">Skating</option>
                             <option value="CYCLING">Cycling</option>
                             <option value="WALKING">Walking</option>

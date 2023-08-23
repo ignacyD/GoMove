@@ -1,6 +1,6 @@
 import {useContext, useState} from "react";
 import './LoginForm.css'
-import {UserContext} from "../../App";
+import {Context} from "../../App";
 
 function LoginForm({setDisplayLoginForm, setDisplayRegistrationForm}) {
 
@@ -8,7 +8,7 @@ function LoginForm({setDisplayLoginForm, setDisplayRegistrationForm}) {
     const [password, setPassword] = useState('');
     const [showErrorMessage, setShowErrorMessage] = useState(false);
 
-    const setIsUserLogged = useContext(UserContext).setter
+    const setIsUserLogged = useContext(Context).setIsUserLogged;
 
     const handleUsernameChange = (e) => {
         setUsername(e.target.value);

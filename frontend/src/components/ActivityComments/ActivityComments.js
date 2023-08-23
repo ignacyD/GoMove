@@ -1,7 +1,7 @@
 import './ActivityComments.css';
 import React, {useContext, useEffect, useState} from "react";
 import {format} from 'date-fns';
-import {UserContext} from "../../App";
+import {Context} from "../../App";
 
 function ActivityComments({currentActivityID}) {
     const [activityComments, setActivityComments] = useState([]);
@@ -9,7 +9,7 @@ function ActivityComments({currentActivityID}) {
     const [editingComment, setEditingComment] = useState(null);
     const [editedMessage, setEditedMessage] = useState("");
 
-    const isUserLogged = useContext(UserContext).getter;
+    const isUserLogged = useContext(Context).isUserLogged;
     const loggedUserId = localStorage.getItem("userId");
 
     console.log(localStorage)
