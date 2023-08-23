@@ -4,13 +4,30 @@ import GoogleMapComponent from "../GoogleMap/GoogleMap";
 import ActivityComments from "../ActivityComments/ActivityComments";
 import {faCalendarDays, faLocationPin, faUser, faUserMinus, faUserPlus} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {useParams} from "react-router-dom";
 
 
 function ActivityPage() {
     const [activityData, setActivityData] = useState("");
+    const {activityId} = useParams();
 
+    useEffect(() => {
+        fetchActivityData();
+    }, []);
 
-    const activityId = '1111e4ee-06f5-40ab-935e-442074f939a1'
+    const fetchActivityData = async () => {
+        try {
+            const response = await fetch(`http://localhost:8080/activities/${activityId}`);
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const data = await response.json();
+            setActivityData(data);
+        } catch (error) {
+            console.error('Error fetching activity data:', error);
+        }
+    };
 
     const handleUnsubscribeButton = async () => {
         fetch(`http://localhost:8080/activities/unsubscribe-user/${localStorage.getItem("userId")}/${activityId}`, {
@@ -42,25 +59,6 @@ function ActivityPage() {
             }
         })
     }
-    const fetchActivityData = async () => {
-        try {
-            const response = await fetch(`http://localhost:8080/activities/${activityId}`);
-
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            const data = await response.json();
-            setActivityData(data);
-        } catch (error) {
-            console.error('Error fetching activity data:', error);
-        }
-    };
-
-
-    useEffect(() => {
-        fetchActivityData();
-    }, []);
-
 
     return (
         <div className={"activity-page"}>

@@ -1,6 +1,5 @@
-
 .activity-page {
-    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
     width: 1024px;
     margin: 0 auto;
     padding: 20px;
@@ -13,8 +12,6 @@
     margin-bottom: 10px;
     justify-content: center;
 }
-
-
 
 .activity-page .activity-image {
     max-width: 100%;
@@ -44,23 +41,23 @@
     font-size: 16px;
 }
 
-.activity-page .place-date{
+.activity-page .place-date {
     display: flex;
     align-items: stretch;
     justify-content: flex-start;
     flex-direction: column;
 }
 
-.activity-page .place-date .place, .date{
+.activity-page .place-date .place, .date {
     display: flex;
     align-items: center;
 }
 
-.activity-page .place-date .date p{
+.activity-page .place-date .date p {
     padding-left: 20px;
 }
 
-.activity-page .place-date .place p{
+.activity-page .place-date .place p {
     padding-left: 20px;
 }
 
@@ -73,17 +70,17 @@
     padding-left: 20px;
 }
 
-.activity-page .users p{
+.activity-page .users p {
     padding-left: 20px;
 }
 
-.activity-page .info-users{
+.activity-page .info-users {
     display: flex;
     align-items: center;
     justify-content: space-evenly;
 }
 
-.activity-page .info-users .minus, .plus{
+.activity-page .info-users .minus, .plus {
     background-color: #2a2a2a;
     border: 2px solid #2a2a2a;
     padding: 15px;
@@ -92,19 +89,23 @@
     cursor: pointer;
 }
 
-.activity-page .info-users .plus:hover{
+.activity-page .info-users .plus:hover {
     background-color: rgba(175, 175, 175, 0.91);
     transform: scale(1.2);
     transition: transform .3s;
 }
 
-.activity-page .info-users .minus:hover{
+.activity-page .info-users .minus:hover {
     background-color: rgba(175, 175, 175, 0.91);
     transform: scale(1.2);
     transition: transform .3s;
 }
 
-.activity-page .google-maps{
+.activity-page .google-maps {
     border: 1px solid rgba(175, 175, 175, 0.91);
     border-radius: 5px;
+}
+
+.top-section {
+    cursor: pointer;
 }
