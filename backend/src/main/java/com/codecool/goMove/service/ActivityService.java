@@ -8,9 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static java.util.Objects.isNull;
@@ -19,9 +17,11 @@ import static java.util.Objects.isNull;
 public class ActivityService {
 
     private final ActivityRepository activityRepository;
+    private final UserService userService;
 
-    public ActivityService(ActivityRepository activityRepository) {
+    public ActivityService(ActivityRepository activityRepository, UserService userService) {
         this.activityRepository = activityRepository;
+        this.userService = userService;
     }
 
     public List<Activity> getAllActivities() {
@@ -70,6 +70,7 @@ public class ActivityService {
         LocalTime now = LocalTime.now();
         if (activity.getDate().isAfter(today)
                 || activity.getDate().equals(today) && activity.getTime().isAfter(now)) {
+            userService.enrollUser(activity.getOwner().getUserId(), activity.getActivityId());
             activityRepository.save(activity);
             return true;
         }
@@ -114,6 +115,17 @@ public class ActivityService {
                 activityToDelete.removeParticipant(user);
             }
             activityRepository.deleteById(id);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean unsubscribeFromActivity(UUID userId, UUID activityId) {
+        Activity activity = getActivityById(activityId);
+        User user = userService.getUserById(userId);
+        if (activity.getParticipants().contains(user)) {
+            activity.removeParticipant(user);
+            activityRepository.save(activity);
             return true;
         }
         return false;
