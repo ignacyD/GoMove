@@ -31,25 +31,27 @@ public class Activity {
     private String title;
     @NotBlank(message = "city is mandatory")
     private String city;
-    @NotBlank(message = "street is mandatory")
-    private String street;
+    @NotBlank(message = "address is mandatory")
+    private String address;
     @NotNull(message = "date is mandatory")
     private LocalDate date;
     @NotNull(message = "time is mandatory")
     private LocalTime time;
+    @Column(columnDefinition = "TEXT")
     private String description;
 
     @ManyToMany(mappedBy = "enrolledActivities")
     private Set<User> participants;
+    @Column(columnDefinition = "TEXT")
     private String activityPhotoUrl;
 
-    public Activity(ActivityType activityType, User owner, String title, String city, String street, LocalDate date, LocalTime time, String description) {
+    public Activity(ActivityType activityType, User owner, String title, String city, String address, LocalDate date, LocalTime time, String description) {
         this.activityId = UUID.randomUUID();
         this.activityType = activityType;
         this.owner = owner;
         this.title = title;
         this.city = city;
-        this.street = street;
+        this.address = address;
         this.date = date;
         this.time = time;
         this.description = description;
