@@ -1,0 +1,66 @@
+.activity-search-filters {
+    width: 250px;
+    position: fixed;
+    height: 100vh;
+    border-right: 4px solid lightgreen;
+    box-shadow: 0 4px 18px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    display: flex;
+    flex-direction: column;
+}
+.activity-search-filters h4, .activity-search-filters h2{
+    text-align: center;
+}
+.activity-search-filters h4{
+    margin-top: 0;
+}
+.choose-activity, .select-city, .date-filters {
+    padding: 20px;
+    border-bottom: 1px grey solid;
+}
+.filter-buttons {
+    padding: 20px;
+    display: flex;
+    justify-content: space-around;
+}
+.filter-button, .reset-filters-button {
+    background-color: lightgreen;
+    display: inline-block;
+    padding: 10px 20px;
+    margin-top: 10px;
+    color: #2a2a2a;
+    text-decoration: none;
+    border-color: grey;
+    border-radius: 6px;
+    transition: transform .4s ease, background-color .4s ease;
+}
+
+.filter-button:hover, .reset-filters-button:hover {
+    background-color: greenyellow;
+    transform: scale(1.1);
+    transition: transform .4s ease, background-color .4s ease;
+}
+.select-city {
+    text-align: center;
+}
+.date-filters{
+    display: flex;
+    flex-direction: column;
+}
+.date-from-filter, .date-to-filter {
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+}
+.date-from-filter div, .date-to-filter div{
+    width: 100px;
+}
+.choose-activity div{
+    display: flex;
+margin-left: 65px;
+    align-items: center;
+ }
+.found-activities{
+    position: absolute;
+    left: 254px;
+    background-color: green;
+}
