@@ -1,10 +1,9 @@
 .comments {
-    width: 100%;
-    border: 2px solid green;
+    border: 1px solid #8d8d8d;
     padding: 5px;
-    border-radius: 10px;
+    border-radius: 5px;
     margin: 10px;
-    background-color: #90EE90;
+    background-color: rgba(175, 175, 175, 0.91);
 }
 
 .comments-list {

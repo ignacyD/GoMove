@@ -2,6 +2,8 @@ import './ActivityPage.css';
 import {useEffect, useState} from "react";
 import GoogleMapComponent from "../GoogleMap/GoogleMap";
 import ActivityComments from "../ActivityComments/ActivityComments";
+import {faCalendarDays, faLocationPin, faUser, faUserMinus, faUserPlus} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 
 function ActivityPage() {
@@ -33,35 +35,62 @@ function ActivityPage() {
         <div className={"activity-page"}>
             {activityData ? (
                 <div>
-
                     <h1>{activityData.title}</h1>
+                    <hr/>
+                    <h2>Information</h2>
+                    <br/>
+                    <br/>
+                    {activityData.activityPhotoUrl ?
+                        <img src={activityData.activityPhotoUrl} alt={activityData.title} className="activity-image"/>
+                        : null}
 
-                    <img src={activityData.activityPhotoUrl} alt={activityData.title} className="activity-image"/>
-
-                    <h3>What?</h3>
+                    <h3>Description</h3>
                     <p>{activityData.description}</p>
-
-                    <h3>When?:</h3>
-                    <p>{activityData.date}, {activityData.time}</p>
-
-                    <h3>Where?</h3>
-                    <p>City: {activityData.city}</p>
-                    <p>Street: {activityData.street}</p>
-
-                    <GoogleMapComponent height={'400px'} width={'400px'}
-                                        address={`${activityData.city} ${activityData.street}`}/>
-
-                    <h3>Who?</h3>
-
-
+                    <br/>
+                    <br/>
+                    <br/>
+                    <div className="place-date">
+                        <h3>Place of meeting:</h3>
+                        <div className="place">
+                            <FontAwesomeIcon icon={faLocationPin} size="2xl" style={{color: "#2a2a2a",}}/>
+                            <p>{activityData.city}, {activityData.street}</p>
+                        </div>
+                        <div className="date">
+                            <FontAwesomeIcon icon={faCalendarDays} size="2xl" style={{color: "#2a2a2a",}}/>
+                            <p>{activityData.date}, {activityData.time}</p>
+                        </div>
+                    </div>
+                    <br/>
+                    <div className="google-maps">
+                        <GoogleMapComponent height={'400px'} width={'1020px'}
+                                            address={`${activityData.city} ${activityData.street}`}/>
+                    </div>
+                    <br/>
+                    <br/>
+                    <div className="info-users">
+                        <div className="minus">
+                            <FontAwesomeIcon icon={faUserMinus} size="2xl" style={{color: "#90EE90FF",}}/>
+                        </div>
+                        <div className="plus">
+                            <FontAwesomeIcon icon={faUserPlus} size="2xl" style={{color: "#90EE90FF",}}/>
+                        </div>
+                    </div>
+                    <hr/>
+                    <br/>
+                    <h3>Participants</h3>
                     <p>
-                        {activityData.participants.map((participant) => participant.username).join(', ')}
+                        {activityData.participants.map(participant => (
+                            <div className="users">
+                                <FontAwesomeIcon icon={faUser} size="2xl" style={{color: "#2a2a2a",}}/>
+                                <p>{participant.username}</p>
+                            </div>
+                        ))}
                     </p>
 
                     <h3>Leave a message:</h3>
-                    <ActivityComments currentActivityID={activityId}/>
-
-
+                    <div className="activity-comments">
+                        <ActivityComments currentActivityID={activityId}/>
+                    </div>
                 </div>
             ) : (
                 <p>Loading...</p>
