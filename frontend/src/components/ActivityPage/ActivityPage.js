@@ -12,21 +12,52 @@ function ActivityPage() {
 
     const activityId = '1111e4ee-06f5-40ab-935e-442074f939a1'
 
+    const handleUnsubscribeButton = async () => {
+        fetch(`http://localhost:8080/activities/unsubscribe-user/${localStorage.getItem("userId")}/${activityId}`, {
+            headers: {Authorization: localStorage.getItem("jwt"), "Content-Type": "application/json"},
+            method: "PATCH",
+        })
+        .then(response => {
+            if (response.status === 200) {
+                console.log("User unsubscribed successfully");
+            } else {
+                console.log("something went wrong")
+            }
+        })
+    }
+
+    const handleEnrollButton = () => {
+        fetch(`http://localhost:8080/users/enroll/${localStorage.getItem("userId")}/${activityId}`, {
+            method: 'PATCH',
+            headers: {
+                "Authorization": localStorage.getItem("jwt"),
+                'Content-Type': 'application/json'
+            },
+        })
+        .then(response => {
+            if (response.status === 200) {
+                console.log("User enrolled successfully");
+            } else {
+                console.log("something went wrong")
+            }
+        })
+    }
+    const fetchActivityData = async () => {
+        try {
+            const response = await fetch(`http://localhost:8080/activities/${activityId}`);
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const data = await response.json();
+            setActivityData(data);
+        } catch (error) {
+            console.error('Error fetching activity data:', error);
+        }
+    };
+
 
     useEffect(() => {
-        const fetchActivityData = async () => {
-            try {
-                const response = await fetch(`http://localhost:8080/activities/${activityId}`,);
-
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                const data = await response.json();
-                setActivityData(data);
-            } catch (error) {
-                console.error('Error fetching activity data:', error);
-            }
-        };
         fetchActivityData();
     }, []);
 
@@ -69,10 +100,12 @@ function ActivityPage() {
                     <br/>
                     <div className="info-users">
                         <div className="minus">
-                            <FontAwesomeIcon icon={faUserMinus} size="2xl" style={{color: "#90EE90FF",}}/>
+                            <FontAwesomeIcon icon={faUserMinus} size="2xl" style={{color: "#90EE90FF"}}
+                                             onClick={() => handleUnsubscribeButton()}/>
                         </div>
                         <div className="plus">
-                            <FontAwesomeIcon icon={faUserPlus} size="2xl" style={{color: "#90EE90FF",}}/>
+                            <FontAwesomeIcon icon={faUserPlus} size="2xl" style={{color: "#90EE90FF",}}
+                                             onClick={() => handleEnrollButton()}/>
                         </div>
                     </div>
                     <hr/>
