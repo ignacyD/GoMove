@@ -2,6 +2,7 @@ package com.codecool.goMove.controller;
 
 import com.codecool.goMove.model.Activity;
 import com.codecool.goMove.model.ActivityType;
+import com.codecool.goMove.model.User;
 import com.codecool.goMove.service.ActivityService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -83,6 +84,15 @@ public class ActivityController {
         boolean deletePerformed = activityService.deleteActivity(id);
         if (deletePerformed) {
             return ResponseEntity.status(HttpStatus.OK).body("Activity deleted");
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No activity with requested id");
+    }
+
+    @PatchMapping("/unsubscribe-user/{userId}/{activityId}")
+    public ResponseEntity<?> unsubscribeFromActivity(@PathVariable UUID userId, @PathVariable UUID activityId) {
+        boolean isUnsubscribed = activityService.unsubscribeFromActivity(userId, activityId);
+        if (isUnsubscribed) {
+            return ResponseEntity.status(HttpStatus.OK).body("the user has signed out of the activity");
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No activity with requested id");
     }
