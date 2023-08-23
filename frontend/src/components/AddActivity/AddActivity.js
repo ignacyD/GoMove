@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {Autocomplete, useJsApiLoader} from '@react-google-maps/api';
 import GoogleMapComponent from "../GoogleMap/GoogleMap";
+import {useNavigate} from "react-router-dom";
 
 const googleMapApiKey = process.env.REACT_APP_GOOGLE_MAP_API_KEY;
 const googleMapsLibraries = ["places"];
@@ -14,6 +15,8 @@ const AddActivity = () => {
     const [time, setTime] = useState("");
     const [city, setCity] = useState("");
     const [timeDisable, setTimeDisable] = useState(true);
+
+    const navigate = useNavigate();
 
     const userId = localStorage.getItem("userId");
     const today = new Date().toISOString().substring(0, 10);
@@ -61,7 +64,8 @@ const AddActivity = () => {
                 })
         }).then(response => {
             if (response.status === 200) {
-                console.log("Activity added");
+                navigate("/activity-page")
+                alert("Activity added");
             } else {
                 console.log("something went wrong")
             }

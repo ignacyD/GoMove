@@ -70,8 +70,8 @@ public class ActivityService {
         LocalTime now = LocalTime.now();
         if (activity.getDate().isAfter(today)
                 || activity.getDate().equals(today) && activity.getTime().isAfter(now)) {
-            userService.enrollUser(activity.getOwner().getUserId(), activity.getActivityId());
             activityRepository.save(activity);
+            userService.enrollUser(activity.getOwner().getUserId(), activity.getActivityId());
             return true;
         }
         return false;
