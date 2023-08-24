@@ -1,5 +1,5 @@
-function ActivityAddedModal({setDisplayActivityAddedModal}) {
-    return <div className="info-modal">Activity added</div>
+function ActivityAddedModal() {
+    return <div className="modal-content">Activity added</div>
 }
 
 export default ActivityAddedModal;

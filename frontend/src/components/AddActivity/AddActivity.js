@@ -2,7 +2,6 @@ import React, {useContext, useEffect, useState} from 'react';
 import {Autocomplete, useJsApiLoader} from '@react-google-maps/api';
 import GoogleMapComponent from "../GoogleMap/GoogleMap";
 import {useNavigate} from "react-router-dom";
-import Modal from "react-modal";
 import {Context} from "../../App";
 import { v4 as UUID } from 'uuid';
 

@@ -7,6 +7,7 @@ import Modal from "react-modal";
 import loginFormStyles from "./ModalStyles";
 import RegistrationForm from "./components/RegistrationForm/RegistrationForm";
 import ActivityAddedModal from "./components/ActivityAddedModal/ActivityAddedModal";
+import ModalStyles from "./ModalStyles";
 
 export const Context = React.createContext();
 
@@ -49,7 +50,7 @@ function App() {
                     isOpen={displayLoginForm || displayRegistrationForm}
                     onRequestClose={() => closeForms()}
                     contentLabel="Login-modal"
-                    style={loginFormStyles}
+                    style={ModalStyles.loginFormStyles}
                     className="login-modal"
                     appElement={document.querySelector("#root") || undefined}
                 >
@@ -61,7 +62,10 @@ function App() {
                     />}
                 </Modal>
                 <Modal
-                    isOpen={displayActivityAddedModal}>
+                    isOpen={displayActivityAddedModal}
+                    style={ModalStyles.activityAddedModalStyles}
+                    appElement={document.querySelector("#root") || undefined}
+                >
                     {displayActivityAddedModal && <ActivityAddedModal/>}
                 </Modal>
                 <Outlet/>
