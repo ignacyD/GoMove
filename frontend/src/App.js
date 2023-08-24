@@ -4,10 +4,9 @@ import React, {useEffect, useState} from "react";
 import {Outlet, useNavigate} from "react-router-dom";
 import LoginForm from "./components/LoginForm/LoginForm";
 import Modal from "react-modal";
-import loginFormStyles from "./ModalStyles";
+import ModalStyles from "./ModalStyles";
 import RegistrationForm from "./components/RegistrationForm/RegistrationForm";
 import ActivityAddedModal from "./components/ActivityAddedModal/ActivityAddedModal";
-import ModalStyles from "./ModalStyles";
 
 export const Context = React.createContext();
 
@@ -17,7 +16,7 @@ function App() {
     const [displayRegistrationForm, setDisplayRegistrationForm] = useState(false);
     const [displayActivityAddedModal, setDisplayActivityAddedModal] = useState(false);
     const [userData, setUserData] = useState({});
-  
+
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -31,7 +30,7 @@ function App() {
                 .then(response => response.json())
                 .then(userData => setUserData(userData));
         }
-    }, [])
+    }, [isUserLogged])
 
     function handleLogout() {
         localStorage.setItem("userId", "");
