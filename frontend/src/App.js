@@ -6,6 +6,8 @@ import LoginForm from "./components/LoginForm/LoginForm";
 import Modal from "react-modal";
 import loginFormStyles from "./ModalStyles";
 import RegistrationForm from "./components/RegistrationForm/RegistrationForm";
+import ActivityAddedModal from "./components/ActivityAddedModal/ActivityAddedModal";
+import ModalStyles from "./ModalStyles";
 
 export const Context = React.createContext();
 
@@ -13,8 +15,9 @@ function App() {
     const [isUserLogged, setIsUserLogged] = useState(localStorage.getItem("userId") !== "" );
     const [displayLoginForm, setDisplayLoginForm] = useState(false)
     const [displayRegistrationForm, setDisplayRegistrationForm] = useState(false);
+    const [displayActivityAddedModal, setDisplayActivityAddedModal] = useState(false);
     const [userData, setUserData] = useState({});
-
+  
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -48,6 +51,7 @@ function App() {
             isUserLogged: isUserLogged,
             setIsUserLogged: setIsUserLogged,
             setDisplayLoginForm: setDisplayLoginForm,
+            setDisplayActivityAddedModal: setDisplayActivityAddedModal
             userData: userData
         }}>
             <div className="App">
@@ -56,7 +60,7 @@ function App() {
                     isOpen={displayLoginForm || displayRegistrationForm}
                     onRequestClose={() => closeForms()}
                     contentLabel="Login-modal"
-                    style={loginFormStyles}
+                    style={ModalStyles.loginFormStyles}
                     className="login-modal"
                     appElement={document.querySelector("#root") || undefined}
                 >
@@ -66,6 +70,13 @@ function App() {
                     {displayRegistrationForm && <RegistrationForm setDisplayLoginForm={setDisplayLoginForm}
                                                                   setDisplayRegistrationForm={setDisplayRegistrationForm}
                     />}
+                </Modal>
+                <Modal
+                    isOpen={displayActivityAddedModal}
+                    style={ModalStyles.activityAddedModalStyles}
+                    appElement={document.querySelector("#root") || undefined}
+                >
+                    {displayActivityAddedModal && <ActivityAddedModal/>}
                 </Modal>
                 <Outlet/>
             </div>
