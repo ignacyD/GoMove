@@ -47,7 +47,7 @@ const AddActivity = () => {
 
     function handleSubmit(e) {
         e.preventDefault();
-        const activityId = UUID()
+        const activityId = UUID();
         fetch("http://localhost:8080/activities", {
             headers: {Authorization: localStorage.getItem("jwt"), "Content-Type": "application/json"},
             method: "POST",
@@ -71,8 +71,8 @@ const AddActivity = () => {
                 setDisplayActivityAddedModal(true);
                 setTimeout(() => {
                     setDisplayActivityAddedModal(false)
-                }, 4000)
-                navigate(`/activity-page/${activityId}`)
+                    navigate(`/activity-page/${activityId}`)
+                }, 3000)
             } else {
                 console.log("something went wrong")
             }
