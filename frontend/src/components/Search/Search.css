@@ -103,8 +103,7 @@
 .found-activities {
     overflow: hidden;
     position: absolute;
-    width: calc(100vw - 508px);
-    padding-right: 254px;
+    width: calc(100vw - 254px);
     height: calc(95vh - 40px);
     left: 254px;
     background-color: #D5FFD0;
