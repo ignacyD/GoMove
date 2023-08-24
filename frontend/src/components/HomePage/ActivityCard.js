@@ -2,14 +2,20 @@ import React, {useState} from 'react';
 import './ActivitCard.css';
 import testPhoto from '../../assets/images/test.jpg'
 import GoogleMapComponent from "../GoogleMap/GoogleMap";
+import {useNavigate} from "react-router-dom";
 
 function ActivityCard({activity}) {
 
     const [showMap, setShowMap] = useState(false);
 
+    const navigate = useNavigate();
+
     return (
         <div className="card">
-            <div className="top-section">
+            <div
+                className="top-section"
+                onClick={() => navigate(`/activity-page/${activity.activityId}`)}
+            >
                 {activity.photoUrl ?
                     <img className="photo" src={activity.photoUrl} alt="Activity"/> :
                     <img className="photo" src={testPhoto} alt="Activity"/>
@@ -36,7 +42,8 @@ function ActivityCard({activity}) {
                         <p>{activity.description}</p>
                     </div>
                     <div className="map-button">
-                        <button onClick={() => setShowMap(!showMap)}>{showMap ? "Back to details" : "See on map"}</button>
+                        <button
+                            onClick={() => setShowMap(!showMap)}>{showMap ? "Back to details" : "See on map"}</button>
                     </div>
                     <div className="google-maps">
                         <GoogleMapComponent height={'33vh'} width={'27vw'}
