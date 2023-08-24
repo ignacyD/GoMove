@@ -7,24 +7,30 @@
     display: flex;
     flex-direction: column;
 }
-.activity-search-page{
+
+.activity-search-page {
     display: flex;
 }
-.activity-search-filters h4, .activity-search-filters h2{
+
+.activity-search-filters h4, .activity-search-filters h2 {
     text-align: center;
 }
-.activity-search-filters h4{
+
+.activity-search-filters h4 {
     margin-top: 0;
 }
+
 .choose-activity, .select-city, .date-filters {
     padding: 20px;
     border-bottom: 1px grey solid;
 }
+
 .filter-buttons {
     padding: 20px;
     display: flex;
     justify-content: space-around;
 }
+
 .filter-button, .reset-filters-button {
     background-color: lightgreen;
     display: inline-block;
@@ -42,46 +48,117 @@
     transform: scale(1.1);
     transition: transform .4s ease, background-color .4s ease;
 }
+
 .select-city {
     text-align: center;
 }
-.date-filters{
+
+.date-filters {
     display: flex;
     flex-direction: column;
 }
+
 .date-from-filter, .date-to-filter {
     display: flex;
     flex-direction: row;
     text-align: center;
 }
-.date-from-filter div, .date-to-filter div{
+
+.date-from-filter div, .date-to-filter div {
     width: 100px;
 }
-.choose-activity div{
+
+.choose-activity div {
     display: flex;
-margin-left: 65px;
+    margin-left: 65px;
     align-items: center;
- }
-.found-activities{
-    position: absolute;
-    left: 254px;
-    background-color: green;
 }
-.select-city{
+
+.select-city {
     justify-content: center;
     display: flex;
     flex-direction: column;
 }
-.city-select{
+
+.city-select {
     border: 1px solid black;
     width: 200px;
 }
-.city-options-field{
+
+.city-options-field {
     overflow-x: auto;
     width: 204px;
     height: 0;
     transition: height .5s;
 }
-.city-options{
+
+.city-options {
     overflow-x: auto;
+}
+
+.found-activities {
+    position: absolute;
+    left: 254px;
+    width: calc(100vw - 508px);
+    /*width: calc(100vw - 254px);*/
+    padding-right: 254px;
+    height: calc(95vh - 40px);
+    background-color: #D5FFD0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.activities-carousel {
+    overflow: hidden;
+    display: flex;
+    height: 620px;
+    width: 500px;
+    justify-content: center;
+}
+
+.activities-carousel-visible {
+    position: relative;
+    transition: bottom .7s;
+}
+
+.active-card{
+    opacity: 1;
+    transform: scale(1.2);
+    transition: transform .5s, opacity .5s;
+}
+.non-active-card{
+    transform: scale(1);
+    opacity: 0.7;
+    transition: transform .5s, opacity .5s;
+}
+
+.manage-searched-buttons{
+    display: flex;
+    flex-direction: column;
+}
+
+.manage-searched-buttons button{
+    background-color: white;
+    transition: transform .5s, background-color .5s;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid grey;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.manage-searched-buttons button:nth-child(2) svg{
+    position: relative;
+    top: 2px;
+}
+
+.manage-searched-buttons button:hover{
+    background-color: greenyellow;
+    transform: scale(1.1);
+    transition: transform .5s, background-color .5s;
 }

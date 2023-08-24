@@ -1,6 +1,8 @@
 import {useEffect, useState} from "react";
 import ActivitySmallCard from "./ActivitySmallCard";
 import "./Search.css";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faAngleDown, faAngleUp} from "@fortawesome/free-solid-svg-icons";
 
 function Search() {
     const [activities, setActivities] = useState([]);
@@ -11,8 +13,25 @@ function Search() {
     const [selectedActivityType, setSelectedActivityType] = useState("");
     const [cityOptionsVisible, setCityOptionsVisible] = useState(false);
     const [cityOptionsSuggestions, setCityOptionsSuggestions] = useState("");
+    const [carouselIndex, setCarouselIndex] = useState(0);
 
     const today = new Date().toISOString().split("T")[0];
+    const handleCarouselPrev = () => {
+        if (carouselIndex > 0) {
+            setCarouselIndex(carouselIndex - 1);
+        }
+    };
+
+    const handleCarouselNext = () => {
+        if (carouselIndex < activities.length - 1) {
+            setCarouselIndex(carouselIndex + 1);
+        }
+    };
+    useEffect(() => {
+        const carousel = document.querySelector('.activities-carousel-visible')
+        carousel.style.bottom = `${(carouselIndex - 1) * 220}px`;
+        console.log(carousel)
+    }, [carouselIndex])
 
     useEffect(() => {
         getActivities();
@@ -32,6 +51,7 @@ function Search() {
     }
 
     async function getFilteredActivities() {
+        setCarouselIndex(0);
 
         let url = "http://localhost:8080/activities/future";
 
@@ -153,13 +173,14 @@ function Search() {
                                onChange={(event) => setCityOptionsSuggestions(event.target.value)}
                                className="city-select" onClick={() => {
                             setCityOptionsVisible(true)
-                        }} />
+                        }}/>
                         <div className="city-options-field">
                             {cityOptionsVisible &&
                                 <div className="city-options">
-                                    {cities.filter(city => city.toString().toLowerCase().includes(cityOptionsSuggestions.toLocaleLowerCase())).map(city => <div
-                                        onClick={() => handleCityClick(city)} key={city}
-                                        value={city}>{city}</div>
+                                    {cities.filter(city => city.toString().toLowerCase().includes(cityOptionsSuggestions.toLocaleLowerCase())).map(city =>
+                                        <div
+                                            onClick={() => handleCityClick(city)} key={city}
+                                            value={city}>{city}</div>
                                     )}
                                 </div>
                             }
@@ -201,23 +222,32 @@ function Search() {
                 </div>
             </div>
             <div className="found-activities">
-                {
-                    activities.length > 0 ?
-                        <div>
-                            {activities.map(activity => (
-                                <ActivitySmallCard
-                                    key={activity.activityId}
-                                    activity={activity}
-                                />
-                            ))}
+                <div className="activities-carousel">
+                    <div className="activities-carousel-visible">
+                        {
+                            activities.length > 0 ?
+                                <div>
+                                    {activities.map((activity, index) => (
+                                        <div className={index === carouselIndex ? 'active-card' : 'non-active-card'}>
+                                            <ActivitySmallCard
+                                                key={activity.activityId}
+                                                activity={activity}
+                                            />
+                                        </div>
+                                    ))}
+                                </div>
+                                :
+                                <div>No activities found for requested criteria</div>
+                        }
+                    </div>
+                </div>
+                        <div className="manage-searched-buttons">
+                            <button onClick={handleCarouselPrev}><FontAwesomeIcon icon={faAngleUp} /></button>
+                            <button onClick={handleCarouselNext}><FontAwesomeIcon icon={faAngleDown} /></button>
                         </div>
-                        :
-                        <div>No activities found for requested criteria</div>
-                }
             </div>
         </div>
-    )
-        ;
+    );
 }
 
 export default Search;

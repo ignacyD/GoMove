@@ -131,6 +131,7 @@
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
     position: absolute;
+    z-index: 15;
 }
 
 .media-container-open {
