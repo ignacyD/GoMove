@@ -7,6 +7,8 @@
     margin-bottom: 40px;
     display: flex;
     flex-direction: row;
+    text-align: center;
+    cursor: pointer;
 }
 
 .activity-photo{
@@ -30,7 +32,7 @@
 .activity-type, .activity-city, .activity-date{
     margin-bottom: 10px;
 }
-.join-button{
+.join-button, .details-button{
     padding: 3px 10px;
     background-color: lightgreen;
     width: 70px;
@@ -39,10 +41,13 @@
     border: none;
     transition: background-color .4s, transform .4s;
 }
-.join-button:hover{
+.join-button:hover,.details-button:hover {
     background-color: #00da00;
     transform: scale(1.1);
     transition: background-color .4s, transform .4s;
-.activity-small-card {
-    cursor: pointer;
+}
+.searched-card-buttons{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
 }
