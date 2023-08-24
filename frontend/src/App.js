@@ -12,7 +12,7 @@ import ModalStyles from "./ModalStyles";
 export const Context = React.createContext();
 
 function App() {
-    const [isUserLogged, setIsUserLogged] = useState(localStorage.getItem("userId") !== "" );
+    const [isUserLogged, setIsUserLogged] = useState(localStorage.getItem("userId") !== "" && localStorage.getItem("userId") !== null);
     const [displayLoginForm, setDisplayLoginForm] = useState(false)
     const [displayRegistrationForm, setDisplayRegistrationForm] = useState(false);
     const [displayActivityAddedModal, setDisplayActivityAddedModal] = useState(false);
