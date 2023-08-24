@@ -9,11 +9,9 @@ import {useParams} from "react-router-dom";
 
 function ActivityPage() {
     const [activityData, setActivityData] = useState("");
-    const {activityId} = useParams();
+    const [isUserEnrolled, setIsUserEnrolled] = useState(true);
 
-    useEffect(() => {
-        fetchActivityData();
-    }, []);
+    const {activityId} = useParams();
 
     const fetchActivityData = async () => {
         try {
@@ -37,6 +35,7 @@ function ActivityPage() {
         .then(response => {
             if (response.status === 200) {
                 console.log("User unsubscribed successfully");
+                setIsUserEnrolled(false);
             } else {
                 console.log("something went wrong")
             }
@@ -54,11 +53,42 @@ function ActivityPage() {
         .then(response => {
             if (response.status === 200) {
                 console.log("User enrolled successfully");
+                setIsUserEnrolled(true);
             } else {
                 console.log("something went wrong")
             }
         })
     }
+    
+    const fetchActivityData = async () => {
+        try {
+            const response = await fetch(`http://localhost:8080/activities/${activityId}`);
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const data = await response.json();
+            setActivityData(data);
+        } catch (error) {
+            console.error('Error fetching activity data:', error);
+        }
+    };
+
+    const checkIsUserEnrolled = () => {
+        setIsUserEnrolled(activityData.participants.filter(participant =>
+            participant.userId === localStorage.getItem("userId")
+        ).length > 0)
+    }
+
+    useEffect(() => {
+        fetchActivityData();
+    }, [isUserEnrolled]);
+
+    useEffect(() => {
+        if (Object.keys(activityData).length !== 0) {
+            checkIsUserEnrolled();
+        }
+    },[activityData])
 
     return (
         <div className={"activity-page"}>
@@ -98,12 +128,8 @@ function ActivityPage() {
                     <br/>
                     <div className="info-users">
                         <div className="minus">
-                            <FontAwesomeIcon icon={faUserMinus} size="2xl" style={{color: "#90EE90FF"}}
-                                             onClick={() => handleUnsubscribeButton()}/>
-                        </div>
-                        <div className="plus">
-                            <FontAwesomeIcon icon={faUserPlus} size="2xl" style={{color: "#90EE90FF",}}
-                                             onClick={() => handleEnrollButton()}/>
+                            <FontAwesomeIcon icon={isUserEnrolled ? faUserMinus : faUserPlus} size="2xl" style={{color: "#90EE90FF"}}
+                                             onClick={() => isUserEnrolled ? handleUnsubscribeButton() : handleEnrollButton()}/>
                         </div>
                     </div>
                     <hr/>

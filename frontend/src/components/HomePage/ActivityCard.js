@@ -34,7 +34,7 @@ function ActivityCard({activity}) {
                         </div>
                         <div className="datetime">
                             <h3>Date: </h3>
-                            <p>{activity.date}, {activity.time}</p>
+                            <p>{activity.date}, {activity.time.substring(0,5)}</p>
                         </div>
                     </div>
                     <div className="description-section">
