@@ -240,11 +240,11 @@ function Search() {
                                 <div>No activities found for requested criteria</div>
                         }
                     </div>
-                </div>
                         <div className="manage-searched-buttons">
                             <button onClick={handleCarouselPrev}><FontAwesomeIcon icon={faAngleUp} /></button>
                             <button onClick={handleCarouselNext}><FontAwesomeIcon icon={faAngleDown} /></button>
                         </div>
+                </div>
             </div>
         </div>
     );

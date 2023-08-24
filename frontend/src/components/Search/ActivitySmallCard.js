@@ -8,8 +8,7 @@ const ActivitySmallCard = ({activity}) => {
     const navigate = useNavigate();
 
     return (
-        <div className="searched-activity-card"
-        >
+        <div className="searched-activity-card">
             <div className="activity-photo">{activity.photoUrl ?
                 <img src={activity.photoUrl} alt="Activity"/> :
                 <img src={testPhoto} alt="Activity"/>

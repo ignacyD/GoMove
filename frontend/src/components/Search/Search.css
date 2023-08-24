@@ -109,13 +109,19 @@
     left: 254px;
     background-color: #D5FFD0;
     display: flex;
-    justify-content: center;
     align-items: center;
 }
 
 .activities-carousel-visible {
+    display: flex;
     position: relative;
     transition: bottom .5s;
+}
+.activities-carousel{
+    display: flex;
+    justify-content: center;
+    width: calc(100vw - 254px);
+    overflow: hidden;
 }
 
 .active-card {
@@ -132,26 +138,31 @@
 .manage-searched-buttons {
     display: flex;
     flex-direction: column;
+    position: relative;
+    top:246px;
     padding: 10px;
-    margin-left: 40px;
 }
 
-.manage-searched-buttons button{
+.manage-searched-buttons button {
+    align-self: center;
     background-color: white;
     border-radius: 50%;
     width: 40px;
     height: 40px;
     border: none;
     margin: 10px 0;
+    margin-left: 60px;
     transition: transform .5s, background-color .5s;
 
 }
-.manage-searched-buttons button:hover{
+
+.manage-searched-buttons button:hover {
     transform: scale(1.2);
-background-color: green;
+    background-color: green;
     transition: transform .5s, background-color .5s;
 }
-.manage-searched-buttons button:nth-child(2) svg{
+
+.manage-searched-buttons button:nth-child(2) svg {
     position: relative;
-    top:2px;
+    top: 2px;
 }
