@@ -7,24 +7,30 @@
     display: flex;
     flex-direction: column;
 }
-.activity-search-page{
+
+.activity-search-page {
     display: flex;
 }
-.activity-search-filters h4, .activity-search-filters h2{
+
+.activity-search-filters h4, .activity-search-filters h2 {
     text-align: center;
 }
-.activity-search-filters h4{
+
+.activity-search-filters h4 {
     margin-top: 0;
 }
+
 .choose-activity, .select-city, .date-filters {
     padding: 20px;
     border-bottom: 1px grey solid;
 }
+
 .filter-buttons {
     padding: 20px;
     display: flex;
     justify-content: space-around;
 }
+
 .filter-button, .reset-filters-button {
     background-color: lightgreen;
     display: inline-block;
@@ -42,46 +48,56 @@
     transform: scale(1.1);
     transition: transform .4s ease, background-color .4s ease;
 }
+
 .select-city {
     text-align: center;
 }
-.date-filters{
+
+.date-filters {
     display: flex;
     flex-direction: column;
 }
+
 .date-from-filter, .date-to-filter {
     display: flex;
     flex-direction: row;
     text-align: center;
 }
-.date-from-filter div, .date-to-filter div{
+
+.date-from-filter div, .date-to-filter div {
     width: 100px;
 }
-.choose-activity div{
+
+.choose-activity div {
     display: flex;
-margin-left: 65px;
+    margin-left: 65px;
     align-items: center;
- }
-.found-activities{
+}
+
+.found-activities {
     position: absolute;
     left: 254px;
     background-color: green;
 }
-.select-city{
+
+.select-city {
     justify-content: center;
     display: flex;
     flex-direction: column;
 }
-.city-select{
+
+.city-select {
     border: 1px solid black;
     width: 200px;
 }
-.city-options-field{
+
+.city-options-field {
     overflow-x: auto;
     width: 204px;
     height: 0;
     transition: height .5s;
 }
-.city-options{
+
+.city-options {
     overflow-x: auto;
 }
