@@ -12,7 +12,6 @@ function ActivityComments({currentActivityID}) {
     const isUserLogged = useContext(Context).isUserLogged;
     const loggedUserId = localStorage.getItem("userId");
 
-    console.log(localStorage)
 
     const currentDate = new Date();
     const formattedDate = format(currentDate, 'yyyy-MM-dd');
@@ -131,7 +130,6 @@ function ActivityComments({currentActivityID}) {
         }
     };
 
-    console.log(activityComments)
     return (
         <div className="comments">
             <ul>
