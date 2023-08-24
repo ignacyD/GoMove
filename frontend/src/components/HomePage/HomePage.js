@@ -4,22 +4,39 @@ import {faCheck, faXmark} from "@fortawesome/free-solid-svg-icons";
 import React, {useContext, useEffect, useState} from "react";
 import ActivityCard from "./ActivityCard";
 import {Context} from "../../App";
+import {Link} from 'react-router-dom';
 
 function HomePage() {
     const isUserLogged = useContext(Context).isUserLogged;
     const setDisplayLoginForm = useContext(Context).setDisplayLoginForm;
+    const userData = useContext(Context).userData;
 
     const [activities, setActivities] = useState([]);
     const [currentActivityIndex, setCurrentActivityIndex] = useState(0);
 
-    const loggedUserId = localStorage.getItem("userId");
+    useEffect(() => {
+        fetchActivities();
+    }, [userData, isUserLogged]);
+
+    function filterActivities(activities) {
+        return activities
+            .filter(activity => !activity.participants.map(participant => participant.userId).includes(userData.userId))
+            .filter(activity => activity.city === userData.city)
+            .filter(activity => activity.activityType === userData.preferredActivity);
+    }
 
     const fetchActivities = async () => {
         try {
             const response = await fetch('http://localhost:8080/activities/future');
-            const data = await response.json();
-            setActivities(data);
+            const activitiesData = await response.json();
+            if (isUserLogged) {
+                let filteredActivities = filterActivities(activitiesData)
+                setActivities(filteredActivities)
+            } else {
+                setActivities(activitiesData);
+            }
             setCurrentActivityIndex(0);
+
         } catch (error) {
             console.error('Błąd podczas pobierania aktywności:', error);
         }
@@ -30,17 +47,12 @@ function HomePage() {
             setCurrentActivityIndex(currentActivityIndex + 1);
         } else {
             alert('Nie ma więcej aktywności. Chcesz wrócić do pierwszej?');
-            setCurrentActivityIndex(0);
+            fetchActivities();
         }
     };
 
-    useEffect(() => {
-        fetchActivities();
-    }, []);
-
-
     const enrollUserToActivity = () => {
-        fetch(`http://localhost:8080/users/enroll/${loggedUserId}/${activities[currentActivityIndex].activityId}`, {
+        fetch(`http://localhost:8080/users/enroll/${userData.userId}/${activities[currentActivityIndex].activityId}`, {
             method: 'PATCH',
             headers: {
                 "Authorization": localStorage.getItem("jwt"),
@@ -59,6 +71,13 @@ function HomePage() {
             });
     }
 
+
+    const handleAcceptActivity = async () => {
+        await enrollUserToActivity();
+        alert('Dodano do ulubionych!');
+        await fetchNextActivity();
+    };
+
     return (
         <div className='home-page'>
             <div className='delete-activity' onClick={() => fetchNextActivity()}>
@@ -68,16 +87,24 @@ function HomePage() {
                 {activities.length > 0 ? (
                     <ActivityCard activity={activities[currentActivityIndex]}/>
                 ) : (
-                    <p>Pobieranie aktywności...</p>
+                    <div>
+                        <h3>
+                            We don't have more activities with Your preferences
+                        </h3>
+
+                        <Link to="/search" className={"go-to-search"}>
+                            <p>Go to search to find more</p>
+                        </Link>
+
+
+                    </div>
+
+
                 )}
             </div>
 
             {isUserLogged ?
-                <div className='accept-activity' onClick={() => {
-                    fetchNextActivity();
-                    enrollUserToActivity();
-                    alert('Dodano do ulubionych!');
-                }}>
+                <div className='accept-activity' onClick={handleAcceptActivity}>
                     <FontAwesomeIcon icon={faCheck} size="2xl" style={{color: "#000000"}}/>
                 </div>
                 :

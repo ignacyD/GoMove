@@ -1,11 +1,15 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Autocomplete, useJsApiLoader} from '@react-google-maps/api';
 import GoogleMapComponent from "../GoogleMap/GoogleMap";
+import {useNavigate} from "react-router-dom";
+import {Context} from "../../App";
+import { v4 as UUID } from 'uuid';
 
 const googleMapApiKey = process.env.REACT_APP_GOOGLE_MAP_API_KEY;
 const googleMapsLibraries = ["places"];
 
 const AddActivity = () => {
+    const setDisplayActivityAddedModal = useContext(Context).setDisplayActivityAddedModal;
     const [title, setTitle] = useState("");
     const [selectedAddress, setSelectedAddress] = useState("");
     const [activityType, setActivityType] = useState("");
@@ -14,6 +18,8 @@ const AddActivity = () => {
     const [time, setTime] = useState("");
     const [city, setCity] = useState("");
     const [timeDisable, setTimeDisable] = useState(true);
+
+    const navigate = useNavigate();
 
     const userId = localStorage.getItem("userId");
     const today = new Date().toISOString().substring(0, 10);
@@ -41,11 +47,12 @@ const AddActivity = () => {
 
     function handleSubmit(e) {
         e.preventDefault();
-
+        const activityId = UUID();
         fetch("http://localhost:8080/activities", {
             headers: {Authorization: localStorage.getItem("jwt"), "Content-Type": "application/json"},
             method: "POST",
                 body: JSON.stringify({
+                    "activityId": activityId,
                     "activityType": activityType,
                     "owner": {
                         "userId": userId
@@ -61,7 +68,11 @@ const AddActivity = () => {
                 })
         }).then(response => {
             if (response.status === 200) {
-                console.log("Activity added");
+                setDisplayActivityAddedModal(true);
+                setTimeout(() => {
+                    setDisplayActivityAddedModal(false)
+                    navigate(`/activity-page/${activityId}`)
+                }, 3000)
             } else {
                 console.log("something went wrong")
             }

@@ -21,7 +21,7 @@ import java.util.UUID;
 @NoArgsConstructor
 public class Activity {
     @Id
-    private UUID activityId = UUID.randomUUID();
+    private UUID activityId;
     @Enumerated(EnumType.STRING)
     @NotNull(message = "activity type is mandatory")
     private ActivityType activityType;
@@ -47,6 +47,20 @@ public class Activity {
     private String activityPhotoUrl;
 
     public Activity(ActivityType activityType, User owner, String title, String city, String address, LocalDate date, LocalTime time, String description) {
+        this.activityId = UUID.randomUUID();
+        this.activityType = activityType;
+        this.owner = owner;
+        this.title = title;
+        this.city = city;
+        this.address = address;
+        this.date = date;
+        this.time = time;
+        this.description = description;
+        this.participants = new HashSet<>();
+    }
+
+    public Activity(UUID activityId, ActivityType activityType, User owner, String title, String city, String address, LocalDate date, LocalTime time, String description) {
+        this.activityId = activityId;
         this.activityId = UUID.randomUUID();
         this.activityType = activityType;
         this.owner = owner;

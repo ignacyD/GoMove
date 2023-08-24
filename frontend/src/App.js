@@ -4,22 +4,33 @@ import React, {useEffect, useState} from "react";
 import {Outlet, useNavigate} from "react-router-dom";
 import LoginForm from "./components/LoginForm/LoginForm";
 import Modal from "react-modal";
-import loginFormStyles from "./ModalStyles";
+import ModalStyles from "./ModalStyles";
 import RegistrationForm from "./components/RegistrationForm/RegistrationForm";
+import ActivityAddedModal from "./components/ActivityAddedModal/ActivityAddedModal";
 
 export const Context = React.createContext();
 
 function App() {
-    const [isUserLogged, setIsUserLogged] = useState(false);
+    const [isUserLogged, setIsUserLogged] = useState(localStorage.getItem("userId") !== "" && localStorage.getItem("userId") !== null);
     const [displayLoginForm, setDisplayLoginForm] = useState(false)
     const [displayRegistrationForm, setDisplayRegistrationForm] = useState(false);
-    let navigate = useNavigate();
+    const [displayActivityAddedModal, setDisplayActivityAddedModal] = useState(false);
+    const [userData, setUserData] = useState({});
+
+    const navigate = useNavigate();
 
     useEffect(() => {
-        if (localStorage.getItem("userId")) {
-            setIsUserLogged(true)
+        if (isUserLogged) {
+            fetch(`http://localhost:8080/users/${localStorage.getItem("userId")}`, {
+                headers: {
+                    Authorization: localStorage.getItem("jwt"),
+                    "Content-Type": "application/json"
+                }
+            })
+                .then(response => response.json())
+                .then(userData => setUserData(userData));
         }
-    }, [])
+    }, [isUserLogged])
 
     function handleLogout() {
         localStorage.setItem("userId", "");
@@ -38,7 +49,9 @@ function App() {
         <Context.Provider value={{
             isUserLogged: isUserLogged,
             setIsUserLogged: setIsUserLogged,
-            setDisplayLoginForm: setDisplayLoginForm
+            setDisplayLoginForm: setDisplayLoginForm,
+            setDisplayActivityAddedModal: setDisplayActivityAddedModal,
+            userData: userData
         }}>
             <div className="App">
                 <Navbar setDisplayLoginForm={setDisplayLoginForm} handleLogout={handleLogout}/>
@@ -46,7 +59,7 @@ function App() {
                     isOpen={displayLoginForm || displayRegistrationForm}
                     onRequestClose={() => closeForms()}
                     contentLabel="Login-modal"
-                    style={loginFormStyles}
+                    style={ModalStyles.loginFormStyles}
                     className="login-modal"
                     appElement={document.querySelector("#root") || undefined}
                 >
@@ -56,6 +69,13 @@ function App() {
                     {displayRegistrationForm && <RegistrationForm setDisplayLoginForm={setDisplayLoginForm}
                                                                   setDisplayRegistrationForm={setDisplayRegistrationForm}
                     />}
+                </Modal>
+                <Modal
+                    isOpen={displayActivityAddedModal}
+                    style={ModalStyles.activityAddedModalStyles}
+                    appElement={document.querySelector("#root") || undefined}
+                >
+                    {displayActivityAddedModal && <ActivityAddedModal/>}
                 </Modal>
                 <Outlet/>
             </div>

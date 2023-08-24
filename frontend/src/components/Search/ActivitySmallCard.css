@@ -43,4 +43,6 @@
     background-color: #00da00;
     transform: scale(1.1);
     transition: background-color .4s, transform .4s;
+.activity-small-card {
+    cursor: pointer;
 }

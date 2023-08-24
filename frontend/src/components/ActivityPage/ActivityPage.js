@@ -1,30 +1,31 @@
 import './ActivityPage.css';
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import GoogleMapComponent from "../GoogleMap/GoogleMap";
 import ActivityComments from "../ActivityComments/ActivityComments";
 import {faCalendarDays, faLocationPin, faUser, faUserMinus, faUserPlus} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {useParams} from "react-router-dom";
+import {Context} from "../../App";
 
 
 function ActivityPage() {
+    const userData = useContext(Context).userData;
+
     const [activityData, setActivityData] = useState("");
+    const [isUserEnrolled, setIsUserEnrolled] = useState(true);
+    const [enrolledUsers, setEnrolledUsers] = useState([]);
 
+    const {activityId} = useParams();
 
-    const activityId = '1111e4ee-06f5-40ab-935e-442074f939a1'
+    useEffect(() => {
+        fetchActivityData()
+    },[])
 
-    const handleUnsubscribeButton = async () => {
-        fetch(`http://localhost:8080/activities/unsubscribe-user/${localStorage.getItem("userId")}/${activityId}`, {
-            headers: {Authorization: localStorage.getItem("jwt"), "Content-Type": "application/json"},
-            method: "PATCH",
-        })
-        .then(response => {
-            if (response.status === 200) {
-                console.log("User unsubscribed successfully");
-            } else {
-                console.log("something went wrong")
-            }
-        })
-    }
+    useEffect(() => {
+        if (Object.keys(activityData).length !== 0) {
+            checkIsUserEnrolled();
+        }
+    },[activityData])
 
     const handleEnrollButton = () => {
         fetch(`http://localhost:8080/users/enroll/${localStorage.getItem("userId")}/${activityId}`, {
@@ -34,14 +35,38 @@ function ActivityPage() {
                 'Content-Type': 'application/json'
             },
         })
+            .then(response => {
+                if (response.status === 200) {
+                    console.log("User enrolled successfully");
+                    setIsUserEnrolled(true);
+                    let newEnrolledUsers = [...enrolledUsers];
+                    newEnrolledUsers.push(userData.username);
+                    setEnrolledUsers(newEnrolledUsers);
+                } else {
+                    console.log("something went wrong")
+                }
+            })
+    }
+
+    const handleUnsubscribeButton = async () => {
+        fetch(`http://localhost:8080/activities/unsubscribe-user/${localStorage.getItem("userId")}/${activityId}`, {
+            headers: {Authorization: localStorage.getItem("jwt"), "Content-Type": "application/json"},
+            method: "PATCH",
+        })
         .then(response => {
             if (response.status === 200) {
-                console.log("User enrolled successfully");
+                console.log("User unsubscribed successfully");
+                setIsUserEnrolled(false);
+                let newEnrolledUsers = [...enrolledUsers];
+                let indexOfUser = newEnrolledUsers.indexOf(userData.username);
+                newEnrolledUsers.splice(indexOfUser, 1)
+                setEnrolledUsers(newEnrolledUsers);
             } else {
                 console.log("something went wrong")
             }
         })
     }
+    
     const fetchActivityData = async () => {
         try {
             const response = await fetch(`http://localhost:8080/activities/${activityId}`);
@@ -51,15 +76,17 @@ function ActivityPage() {
             }
             const data = await response.json();
             setActivityData(data);
+            setEnrolledUsers(data.participants.map(participant => participant.username));
         } catch (error) {
             console.error('Error fetching activity data:', error);
         }
     };
 
-
-    useEffect(() => {
-        fetchActivityData();
-    }, []);
+    const checkIsUserEnrolled = () => {
+        setIsUserEnrolled(activityData.participants.filter(participant =>
+            participant.userId === localStorage.getItem("userId")
+        ).length > 0)
+    }
 
 
     return (
@@ -100,25 +127,22 @@ function ActivityPage() {
                     <br/>
                     <div className="info-users">
                         <div className="minus">
-                            <FontAwesomeIcon icon={faUserMinus} size="2xl" style={{color: "#90EE90FF"}}
-                                             onClick={() => handleUnsubscribeButton()}/>
-                        </div>
-                        <div className="plus">
-                            <FontAwesomeIcon icon={faUserPlus} size="2xl" style={{color: "#90EE90FF",}}
-                                             onClick={() => handleEnrollButton()}/>
+                            <FontAwesomeIcon icon={isUserEnrolled ? faUserMinus : faUserPlus} size="2xl" style={{color: "#90EE90FF"}}
+                                             onClick={() => isUserEnrolled ? handleUnsubscribeButton() : handleEnrollButton()}/>
                         </div>
                     </div>
                     <hr/>
                     <br/>
                     <h3>Participants</h3>
-                    <p>
-                        {activityData.participants.map(participant => (
-                            <div className="users">
+                    <div>
+                        {enrolledUsers.length > 0 ? enrolledUsers.map(participant => (
+                            <div className="users" key={participant}>
                                 <FontAwesomeIcon icon={faUser} size="2xl" style={{color: "#2a2a2a",}}/>
-                                <p>{participant.username}</p>
+                                <p>{participant}</p>
                             </div>
-                        ))}
-                    </p>
+                        )) : <div className="users">
+                        </div> }
+                    </div>
 
                     <h3>Leave a message:</h3>
                     <div className="activity-comments">
