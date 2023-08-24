@@ -75,8 +75,6 @@ function ActivityPage() {
         const userData = await userResponse.json();
         setUserData(userData);
     }
-
-
     
     const fetchActivityData = async () => {
         try {
@@ -98,8 +96,6 @@ function ActivityPage() {
             participant.userId === localStorage.getItem("userId")
         ).length > 0)
     }
-
-
 
 
     return (

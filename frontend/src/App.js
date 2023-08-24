@@ -12,15 +12,24 @@ import ModalStyles from "./ModalStyles";
 export const Context = React.createContext();
 
 function App() {
-    const [isUserLogged, setIsUserLogged] = useState(false);
+    const [isUserLogged, setIsUserLogged] = useState(localStorage.getItem("userId") !== "" );
     const [displayLoginForm, setDisplayLoginForm] = useState(false)
     const [displayRegistrationForm, setDisplayRegistrationForm] = useState(false);
     const [displayActivityAddedModal, setDisplayActivityAddedModal] = useState(false);
-    let navigate = useNavigate();
+    const [userData, setUserData] = useState({});
+  
+    const navigate = useNavigate();
 
     useEffect(() => {
-        if (localStorage.getItem("userId")) {
-            setIsUserLogged(true)
+        if (isUserLogged) {
+            fetch(`http://localhost:8080/users/${localStorage.getItem("userId")}`, {
+                headers: {
+                    Authorization: localStorage.getItem("jwt"),
+                    "Content-Type": "application/json"
+                }
+            })
+                .then(response => response.json())
+                .then(userData => setUserData(userData));
         }
     }, [])
 
@@ -43,6 +52,7 @@ function App() {
             setIsUserLogged: setIsUserLogged,
             setDisplayLoginForm: setDisplayLoginForm,
             setDisplayActivityAddedModal: setDisplayActivityAddedModal
+            userData: userData
         }}>
             <div className="App">
                 <Navbar setDisplayLoginForm={setDisplayLoginForm} handleLogout={handleLogout}/>
