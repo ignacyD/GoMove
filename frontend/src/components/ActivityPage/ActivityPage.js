@@ -1,22 +1,23 @@
 import './ActivityPage.css';
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import GoogleMapComponent from "../GoogleMap/GoogleMap";
 import ActivityComments from "../ActivityComments/ActivityComments";
 import {faCalendarDays, faLocationPin, faUser, faUserMinus, faUserPlus} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {useParams} from "react-router-dom";
+import {Context} from "../../App";
 
 
 function ActivityPage() {
+    const userData = useContext(Context).userData;
+
     const [activityData, setActivityData] = useState("");
     const [isUserEnrolled, setIsUserEnrolled] = useState(true);
     const [enrolledUsers, setEnrolledUsers] = useState([]);
-    const [userData, setUserData] = useState({});
 
     const {activityId} = useParams();
 
     useEffect(() => {
-        fetchUser();
         fetchActivityData()
     },[])
 
@@ -64,16 +65,6 @@ function ActivityPage() {
                 console.log("something went wrong")
             }
         })
-    }
-
-    async function fetchUser() {
-        const userResponse = await fetch(
-            `http://localhost:8080/users/${localStorage.getItem("userId")}`, {
-                headers: {Authorization: localStorage.getItem("jwt")}
-            }
-        );
-        const userData = await userResponse.json();
-        setUserData(userData);
     }
     
     const fetchActivityData = async () => {

@@ -51,7 +51,7 @@ function App() {
             isUserLogged: isUserLogged,
             setIsUserLogged: setIsUserLogged,
             setDisplayLoginForm: setDisplayLoginForm,
-            setDisplayActivityAddedModal: setDisplayActivityAddedModal
+            setDisplayActivityAddedModal: setDisplayActivityAddedModal,
             userData: userData
         }}>
             <div className="App">
