@@ -8,18 +8,34 @@ import {Context} from "../../App";
 function HomePage() {
     const isUserLogged = useContext(Context).isUserLogged;
     const setDisplayLoginForm = useContext(Context).setDisplayLoginForm;
+    const userData = useContext(Context).userData;
 
     const [activities, setActivities] = useState([]);
     const [currentActivityIndex, setCurrentActivityIndex] = useState(0);
 
-    const loggedUserId = localStorage.getItem("userId");
+    useEffect(() => {
+        fetchActivities();
+    }, [userData, isUserLogged]);
+
+    function filterActivities(activities) {
+        return activities
+            .filter(activity => !activity.participants.map(participant => participant.userId).includes(userData.userId))
+            .filter(activity => activity.city === userData.city)
+            .filter(activity => activity.activityType === userData.preferredActivity);
+    }
 
     const fetchActivities = async () => {
         try {
             const response = await fetch('http://localhost:8080/activities/future');
-            const data = await response.json();
-            setActivities(data);
+            const activitiesData = await response.json();
+            if (isUserLogged) {
+                let filteredActivities = filterActivities(activitiesData)
+                setActivities(filteredActivities)
+            } else {
+                setActivities(activitiesData);
+            }
             setCurrentActivityIndex(0);
+
         } catch (error) {
             console.error('Błąd podczas pobierania aktywności:', error);
         }
@@ -34,13 +50,8 @@ function HomePage() {
         }
     };
 
-    useEffect(() => {
-        fetchActivities();
-    }, []);
-
-
     const enrollUserToActivity = () => {
-        fetch(`http://localhost:8080/users/enroll/${loggedUserId}/${activities[currentActivityIndex].activityId}`, {
+        fetch(`http://localhost:8080/users/enroll/${userData.userId}/${activities[currentActivityIndex].activityId}`, {
             method: 'PATCH',
             headers: {
                 "Authorization": localStorage.getItem("jwt"),
