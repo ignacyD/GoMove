@@ -6,6 +6,7 @@ import LoginForm from "./components/LoginForm/LoginForm";
 import Modal from "react-modal";
 import loginFormStyles from "./ModalStyles";
 import RegistrationForm from "./components/RegistrationForm/RegistrationForm";
+import ActivityAddedModal from "./components/ActivityAddedModal/ActivityAddedModal";
 
 export const Context = React.createContext();
 
@@ -13,6 +14,7 @@ function App() {
     const [isUserLogged, setIsUserLogged] = useState(false);
     const [displayLoginForm, setDisplayLoginForm] = useState(false)
     const [displayRegistrationForm, setDisplayRegistrationForm] = useState(false);
+    const [displayActivityAddedModal, setDisplayActivityAddedModal] = useState(false);
     let navigate = useNavigate();
 
     useEffect(() => {
@@ -38,7 +40,8 @@ function App() {
         <Context.Provider value={{
             isUserLogged: isUserLogged,
             setIsUserLogged: setIsUserLogged,
-            setDisplayLoginForm: setDisplayLoginForm
+            setDisplayLoginForm: setDisplayLoginForm,
+            setDisplayActivityAddedModal: setDisplayActivityAddedModal
         }}>
             <div className="App">
                 <Navbar setDisplayLoginForm={setDisplayLoginForm} handleLogout={handleLogout}/>
@@ -56,6 +59,10 @@ function App() {
                     {displayRegistrationForm && <RegistrationForm setDisplayLoginForm={setDisplayLoginForm}
                                                                   setDisplayRegistrationForm={setDisplayRegistrationForm}
                     />}
+                </Modal>
+                <Modal
+                    isOpen={displayActivityAddedModal}>
+                    {displayActivityAddedModal && <ActivityAddedModal/>}
                 </Modal>
                 <Outlet/>
             </div>
