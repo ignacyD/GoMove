@@ -13,7 +13,7 @@ function HomePage() {
 
     const [activities, setActivities] = useState([]);
     const [currentActivityIndex, setCurrentActivityIndex] = useState(0);
-
+console.log(activities)
     useEffect(() => {
         fetchActivities();
     }, [userData, isUserLogged]);
