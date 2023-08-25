@@ -31,9 +31,11 @@ function HomePage() {
             const activitiesData = await response.json();
             if (isUserLogged) {
                 let filteredActivities = filterActivities(activitiesData)
-                setActivities(filteredActivities)
+                let sortedFilteredActivities = filteredActivities.sort(chronologicalSort)
+                setActivities(sortedFilteredActivities)
             } else {
-                setActivities(activitiesData);
+                let sortedActivities = activitiesData.sort(chronologicalSort)
+                setActivities(sortedActivities);
             }
             setCurrentActivityIndex(0);
 
@@ -41,6 +43,12 @@ function HomePage() {
             console.error('Błąd podczas pobierania aktywności:', error);
         }
     };
+
+    function chronologicalSort(a,b) {
+        const aDateTime = new Date(`${a.date} ${a.time}`);
+        const bDateTime = new Date(`${b.date} ${b.time}`);
+        return aDateTime - bDateTime;
+    }
 
     const fetchNextActivity = () => {
         if (currentActivityIndex < activities.length - 1) {

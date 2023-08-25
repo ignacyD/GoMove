@@ -30,7 +30,6 @@ function Search() {
     useEffect(() => {
         const carousel = document.querySelector('.activities-carousel-visible')
         carousel.style.bottom = `${(carouselIndex - 1) * 220}px`;
-        console.log(carousel)
     }, [carouselIndex])
 
     useEffect(() => {
@@ -41,7 +40,8 @@ function Search() {
     async function getActivities() {
         const response = await fetch("http://localhost:8080/activities/future");
         const activitiesData = await response.json();
-        setActivities(activitiesData);
+        let sortedActivities = activitiesData.sort(chronologicalSort)
+        setActivities(sortedActivities);
     }
 
     async function getAllCities() {
@@ -77,7 +77,8 @@ function Search() {
             filteredActivities = filteredActivities.filter(activity => activity.date <= dateTo);
         }
 
-        setActivities(filteredActivities);
+        let sortedFilteredActivities = filteredActivities.sort(chronologicalSort)
+        setActivities(sortedFilteredActivities);
     }
 
     function resetFilter() {
@@ -87,7 +88,6 @@ function Search() {
         setDateTo("");
         getActivities();
     }
-
 
     const handleOptionChange = (event) => {
         setSelectedActivityType(event.target.value);
@@ -109,15 +109,23 @@ function Search() {
             window.removeEventListener("click", (event) => handleBodyClick(event));
         };
     }, []);
+
     useEffect(() => {
         const cityOptionsSpace = document.querySelector(".city-options-field");
         cityOptionsSpace.style.height = cityOptionsVisible ? '100px' : '0px';
         cityOptionsSpace.style.border = cityOptionsVisible ? '1px solid yellowgreen' : 'none';
     }, [cityOptionsVisible])
+
     const handleCityClick = (selectedCity) => {
         setCityOptionsSuggestions(selectedCity);
         setSelectedCity(selectedCity);
     };
+
+    function chronologicalSort(a, b) {
+        const aDateTime = new Date(`${a.date} ${a.time}`);
+        const bDateTime = new Date(`${b.date} ${b.time}`);
+        return aDateTime - bDateTime;
+    }
 
     return (
         <div className="activity-search-page">
@@ -228,9 +236,11 @@ function Search() {
                             activities.length > 0 ?
                                 <div>
                                     {activities.map((activity, index) => (
-                                        <div className={index === carouselIndex ? 'active-card' : 'non-active-card'}>
+                                        <div
+                                            className={index === carouselIndex ? 'active-card' : 'non-active-card'}
+                                            key={activity.activityId}
+                                        >
                                             <ActivitySmallCard
-                                                key={activity.activityId}
                                                 activity={activity}
                                             />
                                         </div>
@@ -240,10 +250,10 @@ function Search() {
                                 <div>No activities found for requested criteria</div>
                         }
                     </div>
-                        <div className="manage-searched-buttons">
-                            <button onClick={handleCarouselPrev}><FontAwesomeIcon icon={faAngleUp} /></button>
-                            <button onClick={handleCarouselNext}><FontAwesomeIcon icon={faAngleDown} /></button>
-                        </div>
+                    <div className="manage-searched-buttons">
+                        <button onClick={handleCarouselPrev}><FontAwesomeIcon icon={faAngleUp}/></button>
+                        <button onClick={handleCarouselNext}><FontAwesomeIcon icon={faAngleDown}/></button>
+                    </div>
                 </div>
             </div>
         </div>
