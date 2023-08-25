@@ -47,7 +47,7 @@ function ActivityCard({activity}) {
                     </div>
                     <div className="google-maps">
                         <GoogleMapComponent height={'33vh'} width={'27vw'}
-                                            address={`${activity.city} ${activity.street}`}/>
+                                            address={`${activity.address}`}/>
                     </div>
                 </div>
             </div>

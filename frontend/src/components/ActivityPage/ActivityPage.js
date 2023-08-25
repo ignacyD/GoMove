@@ -121,7 +121,7 @@ function ActivityPage() {
                     <br/>
                     <div className="google-maps">
                         <GoogleMapComponent height={'400px'} width={'1020px'}
-                                            address={`${activityData.city} ${activityData.street}`}/>
+                                            address={`${activityData.address}`}/>
                     </div>
                     <br/>
                     <br/>
