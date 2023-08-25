@@ -30,7 +30,7 @@ function ActivityCard({activity}) {
                     <div className="middle-section">
                         <div className="location">
                             <h3>Location: </h3>
-                            <p>{activity.city}, {activity.street}</p>
+                            <p>{activity.address}</p>
                         </div>
                         <div className="datetime">
                             <h3>Date: </h3>

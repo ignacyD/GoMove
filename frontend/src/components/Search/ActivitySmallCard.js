@@ -16,7 +16,7 @@ const ActivitySmallCard = ({activity}) => {
             <div className="info-section">
                 <div className="activity-title">{activity.title}</div>
                 <div className="activity-type">{activity.activityType}</div>
-                <div className="activity-city">{activity.city}</div>
+                <div className="activity-city">{activity.address}</div>
                 <div className="activity-date">{activity.date}, {activity.time}</div>
                 <div className="searched-card-buttons">
                     <button onClick={() => navigate(`/activity-page/${activity.activityId}`)}

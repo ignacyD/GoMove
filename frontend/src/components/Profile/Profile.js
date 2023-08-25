@@ -28,7 +28,7 @@ function Profile() {
                                     <h3>{activity.time}</h3>
                                     <h3>{activity.title}</h3>
                                     <h3>{activity.city}</h3>
-                                    <h3>{activity.street}</h3>
+                                    <h3>{activity.address}</h3>
                                 </div>
                             </div>
                         )}
@@ -61,7 +61,6 @@ function Profile() {
         if (Object.keys(userData).length !== 0) {
             fetchOwnedActivities(userData.userId);
             fetchAllUserActivities(userData.userId);
-            console.log(userData);
         }
     }, [userData]);
 

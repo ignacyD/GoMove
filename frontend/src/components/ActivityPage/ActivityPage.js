@@ -111,7 +111,7 @@ function ActivityPage() {
                         <h3>Place of meeting:</h3>
                         <div className="place">
                             <FontAwesomeIcon icon={faLocationPin} size="2xl" style={{color: "#2a2a2a",}}/>
-                            <p>{activityData.city}, {activityData.street}</p>
+                            <p>{activityData.address}</p>
                         </div>
                         <div className="date">
                             <FontAwesomeIcon icon={faCalendarDays} size="2xl" style={{color: "#2a2a2a",}}/>
