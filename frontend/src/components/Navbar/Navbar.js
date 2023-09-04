@@ -8,6 +8,7 @@ import MobileMenu from "../MobileMenu/MobileMenu";
 import {Context} from "../../App";
 
 function Navbar({setDisplayLoginForm, handleLogout}) {
+
     const isUserLogged = useContext(Context).isUserLogged;
 
     const [displayMedia, setDisplayMedia] = useState(false);
@@ -35,9 +36,20 @@ function Navbar({setDisplayLoginForm, handleLogout}) {
                     <Link to='/about' className='nav-btn'>
                         <li>About Us</li>
                     </Link>
-                    <Link to='/add-activity' className='add-activity-btn'>
+
+                    <Link
+                        to={isUserLogged ? '/add-activity' : '#'}
+                        className='add-activity-btn'
+                        onClick={() => {
+                            if (!isUserLogged) {
+                                setDisplayLoginForm(true);
+                            }
+                        }}
+                    >
                         <li>Add Activity</li>
                     </Link>
+
+
                 </ul>
                 <div
                     className={`media ${displayMedia ? 'media-displayed' : 'media-undisplayed'}`}>
