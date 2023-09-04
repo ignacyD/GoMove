@@ -10,6 +10,8 @@ import {Context} from "../../App";
 
 function ActivityPage() {
     const userData = useContext(Context).userData;
+    const setDisplayLoginForm = useContext(Context).setDisplayLoginForm;
+    const isUserLogged = useContext(Context).isUserLogged;
 
     const [activityData, setActivityData] = useState("");
     const [isUserEnrolled, setIsUserEnrolled] = useState(true);
@@ -19,13 +21,13 @@ function ActivityPage() {
 
     useEffect(() => {
         fetchActivityData()
-    },[])
+    }, [])
 
     useEffect(() => {
         if (Object.keys(activityData).length !== 0) {
             checkIsUserEnrolled();
         }
-    },[activityData])
+    }, [activityData])
 
     const handleEnrollButton = () => {
         fetch(`http://localhost:8080/users/enroll/${localStorage.getItem("userId")}/${activityId}`, {
@@ -53,20 +55,20 @@ function ActivityPage() {
             headers: {Authorization: localStorage.getItem("jwt"), "Content-Type": "application/json"},
             method: "PATCH",
         })
-        .then(response => {
-            if (response.status === 200) {
-                console.log("User unsubscribed successfully");
-                setIsUserEnrolled(false);
-                let newEnrolledUsers = [...enrolledUsers];
-                let indexOfUser = newEnrolledUsers.indexOf(userData.username);
-                newEnrolledUsers.splice(indexOfUser, 1)
-                setEnrolledUsers(newEnrolledUsers);
-            } else {
-                console.log("something went wrong")
-            }
-        })
+            .then(response => {
+                if (response.status === 200) {
+                    console.log("User unsubscribed successfully");
+                    setIsUserEnrolled(false);
+                    let newEnrolledUsers = [...enrolledUsers];
+                    let indexOfUser = newEnrolledUsers.indexOf(userData.username);
+                    newEnrolledUsers.splice(indexOfUser, 1)
+                    setEnrolledUsers(newEnrolledUsers);
+                } else {
+                    console.log("something went wrong")
+                }
+            })
     }
-    
+
     const fetchActivityData = async () => {
         try {
             const response = await fetch(`http://localhost:8080/activities/${activityId}`);
@@ -127,8 +129,18 @@ function ActivityPage() {
                     <br/>
                     <div className="info-users">
                         <div className="minus">
-                            <FontAwesomeIcon icon={isUserEnrolled ? faUserMinus : faUserPlus} size="2xl" style={{color: "#90EE90FF"}}
-                                             onClick={() => isUserEnrolled ? handleUnsubscribeButton() : handleEnrollButton()}/>
+                            <FontAwesomeIcon
+                                icon={!isUserEnrolled || !isUserLogged ? faUserPlus : faUserMinus}
+                                size="2xl"
+                                style={{color: "#90EE90FF"}}
+                                onClick={() =>
+                                    isUserLogged
+                                        ? isUserEnrolled
+                                            ? handleUnsubscribeButton()
+                                            : handleEnrollButton()
+                                        : setDisplayLoginForm(true)
+                                }
+                            />
                         </div>
                     </div>
                     <hr/>
@@ -141,7 +153,7 @@ function ActivityPage() {
                                 <p>{participant}</p>
                             </div>
                         )) : <div className="users">
-                        </div> }
+                        </div>}
                     </div>
 
                     <h3>Leave a message:</h3>
