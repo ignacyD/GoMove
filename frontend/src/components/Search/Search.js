@@ -1,10 +1,15 @@
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import ActivitySmallCard from "./ActivitySmallCard";
 import "./Search.css";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faAngleDown, faAngleUp} from "@fortawesome/free-solid-svg-icons";
+import {Context} from "../../App";
 
 function Search() {
+
+    const isUserLogged = useContext(Context).isUserLogged;
+    const userData = useContext(Context).userData;
+
     const [activities, setActivities] = useState([]);
     const [cities, setCities] = useState([]);
     const [selectedCity, setSelectedCity] = useState("");
@@ -37,11 +42,25 @@ function Search() {
         getAllCities();
     }, [])
 
+
     async function getActivities() {
         const response = await fetch("http://localhost:8080/activities/future");
         const activitiesData = await response.json();
-        let sortedActivities = activitiesData.sort(chronologicalSort)
-        setActivities(sortedActivities);
+
+        if (isUserLogged) {
+            let filteredActivities = filterActivitiesIfEnrolled(activitiesData)
+            let sortedFilteredActivities = filteredActivities.sort(chronologicalSort)
+            setActivities(sortedFilteredActivities)
+        } else {
+            let sortedActivities = activitiesData.sort(chronologicalSort)
+            setActivities(sortedActivities);
+        }
+    }
+
+    function filterActivitiesIfEnrolled(activities) {
+        return activities
+            .filter(activity => !activity.participants.map(participant => participant.userId).includes(userData.userId))
+
     }
 
     async function getAllCities() {
@@ -78,12 +97,13 @@ function Search() {
         }
 
         let sortedFilteredActivities = filteredActivities.sort(chronologicalSort)
-        setActivities(sortedFilteredActivities);
+        setActivities(filterActivitiesIfEnrolled(sortedFilteredActivities));
     }
 
     function resetFilter() {
         setSelectedActivityType("");
         setSelectedCity("");
+        setCityOptionsSuggestions("")
         setDateFrom("");
         setDateTo("");
         getActivities();
@@ -116,6 +136,10 @@ function Search() {
         cityOptionsSpace.style.border = cityOptionsVisible ? '1px solid yellowgreen' : 'none';
     }, [cityOptionsVisible])
 
+    useEffect(() => {
+        getActivities();
+    }, [userData, isUserLogged]);
+
     const handleCityClick = (selectedCity) => {
         setCityOptionsSuggestions(selectedCity);
         setSelectedCity(selectedCity);
@@ -126,6 +150,31 @@ function Search() {
         const bDateTime = new Date(`${b.date} ${b.time}`);
         return aDateTime - bDateTime;
     }
+
+
+    const enrollUserToActivity = (activityId) => {
+        fetch(`http://localhost:8080/users/enroll/${userData.userId}/${activityId}`, {
+            method: 'PATCH',
+            headers: {
+                "Authorization": localStorage.getItem("jwt"),
+                'Content-Type': 'application/json'
+            },
+        })
+            .then(response => {
+                if (response.ok) {
+                    return response.text();
+                } else {
+                    throw new Error('Enrollment failed');
+                }
+            })
+            .then(() => {
+                setActivities(activities.filter(activity => activity.activityId !== activityId));
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
+
 
     return (
         <div className="activity-search-page">
@@ -178,7 +227,10 @@ function Search() {
                         </h4>
                         <input type="text" value={cityOptionsSuggestions}
                                placeholder="Select city"
-                               onChange={(event) => setCityOptionsSuggestions(event.target.value)}
+                               onChange={(event) => {
+                                   setCityOptionsSuggestions(event.target.value);
+                                   setCityOptionsVisible(true);
+                               }}
                                className="city-select" onClick={() => {
                             setCityOptionsVisible(true)
                         }}/>
@@ -242,6 +294,7 @@ function Search() {
                                         >
                                             <ActivitySmallCard
                                                 activity={activity}
+                                                handleJoinActivity={() => enrollUserToActivity(activity.activityId)}
                                             />
                                         </div>
                                     ))}
