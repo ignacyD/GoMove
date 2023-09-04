@@ -103,6 +103,7 @@ function Search() {
     function resetFilter() {
         setSelectedActivityType("");
         setSelectedCity("");
+        setCityOptionsSuggestions("")
         setDateFrom("");
         setDateTo("");
         getActivities();
@@ -226,7 +227,10 @@ function Search() {
                         </h4>
                         <input type="text" value={cityOptionsSuggestions}
                                placeholder="Select city"
-                               onChange={(event) => setCityOptionsSuggestions(event.target.value)}
+                               onChange={(event) => {
+                                   setCityOptionsSuggestions(event.target.value);
+                                   setCityOptionsVisible(true);
+                               }}
                                className="city-select" onClick={() => {
                             setCityOptionsVisible(true)
                         }}/>
