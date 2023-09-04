@@ -10,6 +10,7 @@ function ActivityComments({currentActivityID}) {
     const [editedMessage, setEditedMessage] = useState("");
 
     const isUserLogged = useContext(Context).isUserLogged;
+    const userData = useContext(Context).userData;
     const loggedUserId = localStorage.getItem("userId");
 
 
@@ -138,60 +139,68 @@ function ActivityComments({currentActivityID}) {
 
     return (
         <div className="comments">
-            <ul>
-                {activityComments.map((comment) => (
-                    <li className="commentsList" key={comment.commentId}>
-                        <div>
-                            {editingComment === comment ? (
+            {activityComments.map((comment) => (
+                <div key={comment.commentId}>
+                    <div
+                        className={comment.user.userId === userData.userId ? "singleComment-right" : "singleComment-left"}
+                    >
+                        <div className="username">{comment.user.username}</div>
+                        {editingComment === comment ?
+                            <>
                                 <div>
-                                    <textarea
-                                        value={editedMessage}
-                                        onChange={(e) => setEditedMessage(e.target.value)}
-                                        onKeyPress={(e) => {
-                                            if (e.key === 'Enter') {
-                                                handleSaveEdit();
-                                            }
-                                        }}
-                                    />
-                                    <button onClick={handleSaveEdit}>Save</button>
-
-                                    <button onClick={handleCancelEdit}>Cancel</button>
+                                <textarea
+                                    className="editTextarea"
+                                    value={editedMessage}
+                                    onChange={(e) => setEditedMessage(e.target.value)}
+                                    onKeyPress={(e) => {
+                                        if (e.key === 'Enter') {
+                                            handleSaveEdit();
+                                        }
+                                    }}
+                                />
                                 </div>
-                            ) : (
-                                <div>
-                                    <span>
-                                        {`${comment.time} ${comment.user.userId}: ${comment.message}`}
-                                    </span>
-                                    {comment.user.userId === loggedUserId && (
-                                        <div>
-                                            <button onClick={() => handleEditComment(comment)}>Edit</button>
-                                            <button onClick={() => handleDeleteComment(comment)}>Delete</button>
-                                        </div>
-                                    )}
+                                <div className="buttons">
+                                    <span className="blueButton" onClick={handleSaveEdit}>Save </span>
+                                    <span className="redButton" onClick={handleCancelEdit}>Cancel</span>
                                 </div>
-                            )}
-                        </div>
-                    </li>
-                ))}
-            </ul>
-            <div>
-                {isUserLogged ? (
-                    <textarea
-                        placeholder="Add a new comment..."
-                        value={newComment}
-                        onChange={(e) => setNewComment(e.target.value)}
-                        onKeyPress={(e) => {
-                            if (e.key === 'Enter') {
-                                handleCommentSubmit();
-                            }
-                        }}
-                        style={{width: '99%'}}
-                        rows={4}
-                    />
-                ) : <></>
-                }
+                            </>
+                            :
+                            <>
+                                <div className="message">{comment.message}</div>
+                                {comment.user.userId === loggedUserId && (
+                                    <div className="buttons">
+                                        <span className="blueButton"
+                                              onClick={() => handleEditComment(comment)}>Edit </span>
+                                        <span className="redButton"
+                                              onClick={() => handleDeleteComment(comment)}>Delete</span>
+                                    </div>
+                                )}
+                            </>
+                        }
+                    </div>
+                    <div
+                        className={comment.user.userId === userData.userId ? "datetime-right" : "datetime-left"}>{comment.date} {comment.time.substring(0, 5)}</div>
+                </div>
+            ))}
 
-            </div>
+            {isUserLogged ? (
+                <div className="addCommentSection">
+                        <textarea
+                            className="newCommentTextarea"
+                            placeholder="Add a new comment..."
+                            value={newComment}
+                            onChange={(e) => setNewComment(e.target.value)}
+                            onKeyPress={(e) => {
+                                if (e.key === 'Enter') {
+                                    handleCommentSubmit();
+                                }
+                            }}
+                            rows={3}
+                        />
+                    <button className="addButton" onClick={() => handleCommentSubmit()}>Add comment</button>
+                </div>
+            ) : <></>
+            }
         </div>
     );
 }

@@ -143,7 +143,8 @@ function ActivityPage() {
                         )) : <div className="users">
                         </div> }
                     </div>
-
+                    <br/>
+                    <hr/>
                     <h3>Leave a message:</h3>
                     <div className="activity-comments">
                         <ActivityComments currentActivityID={activityId}/>

@@ -1,9 +1,6 @@
 package com.codecool.goMove.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -32,6 +29,7 @@ public class Comment {
     @ManyToOne
     private User user;
     @NotBlank(message = "message is mandatory")
+    @Column(columnDefinition = "TEXT")
     private String message;
     @NotNull(message = "activity id is mandatory")
     private UUID activityId;
