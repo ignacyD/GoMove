@@ -4,6 +4,7 @@ import GoogleMapComponent from "../GoogleMap/GoogleMap";
 import {useNavigate} from "react-router-dom";
 import {Context} from "../../App";
 import { v4 as UUID } from 'uuid';
+import './AddActivity.css'
 
 const googleMapApiKey = process.env.REACT_APP_GOOGLE_MAP_API_KEY;
 const googleMapsLibraries = ["places"];
@@ -101,7 +102,7 @@ const AddActivity = () => {
 
     return isLoaded ? (
 
-        <div>
+        <div className="add-activity">
             <form className="add-activity-form" onSubmit={handleSubmit}>
                 <div className="title-field">
                     <label className="title-label">Title</label>
@@ -177,7 +178,7 @@ const AddActivity = () => {
 
 
                 {selectedAddress ?
-                    <GoogleMapComponent height={'400px'} width={'400px'} address={selectedAddress}/> : <></>}
+                    <GoogleMapComponent height={'400px'} width={'1200px'} address={selectedAddress}/> : <></>}
         </div>
 
     ) : <></>;
