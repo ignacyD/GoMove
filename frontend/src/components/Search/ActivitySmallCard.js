@@ -1,9 +1,13 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import './ActivitySmallCard.css';
 import testPhoto from "../../assets/images/test.jpg";
 import {useNavigate} from "react-router-dom";
+import {Context} from "../../App";
 
-const ActivitySmallCard = ({activity}) => {
+const ActivitySmallCard = ({activity, handleJoinActivity}) => {
+
+    const isUserLogged = useContext(Context).isUserLogged;
+    const setDisplayLoginForm = useContext(Context).setDisplayLoginForm;
 
     const navigate = useNavigate();
 
@@ -22,7 +26,18 @@ const ActivitySmallCard = ({activity}) => {
                     <button onClick={() => navigate(`/activity-page/${activity.activityId}`)}
                             className="details-button">Details
                     </button>
-                <button className="join-button">Join</button>
+                    <button
+                        className="join-button"
+                        onClick={() => {
+                            if (isUserLogged) {
+                                handleJoinActivity(activity.activityId);
+                            } else {
+                                setDisplayLoginForm(true);
+                            }
+                        }}
+                    >
+                        Join
+                    </button>
                 </div>
             </div>
         </div>
