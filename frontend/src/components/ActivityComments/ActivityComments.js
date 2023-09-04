@@ -123,8 +123,6 @@ function ActivityComments({currentActivityID}) {
 
             });
 
-            console.log(updatedComment)
-
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
@@ -147,7 +145,7 @@ function ActivityComments({currentActivityID}) {
                         <div className="username">{comment.user.username}</div>
                         {editingComment === comment ?
                             <>
-                                <div>
+
                                 <textarea
                                     className="editTextarea"
                                     value={editedMessage}
@@ -158,7 +156,7 @@ function ActivityComments({currentActivityID}) {
                                         }
                                     }}
                                 />
-                                </div>
+
                                 <div className="buttons">
                                     <span className="blueButton" onClick={handleSaveEdit}>Save </span>
                                     <span className="redButton" onClick={handleCancelEdit}>Cancel</span>
