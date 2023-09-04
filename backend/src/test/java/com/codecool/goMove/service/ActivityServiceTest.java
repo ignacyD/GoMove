@@ -9,6 +9,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.test.context.support.WithMockUser;
 
 
 import java.time.LocalDate;
@@ -23,6 +24,9 @@ class ActivityServiceTest {
 
     @Mock
     private ActivityRepository activityRepository;
+
+    @Mock
+    private UserService userService;
 
     @InjectMocks
     private ActivityService activityService;
@@ -218,23 +222,35 @@ class ActivityServiceTest {
     }
 
     @Test
-    void testAddActivity_ValidActivity() {
-        Activity activityToAdd = new Activity(
-                ActivityType.CYCLING,
-                new User(),
-                "Title",
-                "City",
-                "Street",
-                LocalDate.now().plusDays(1),
-                LocalTime.of(14, 0),
-                "Description"
-        );
+    void testAddActivity_ActivityInTheFuture() {
+        Activity activityToAdd = new Activity();
+        User user = new User();
+        user.setUserId(UUID.randomUUID());
 
+        activityToAdd.setActivityId(UUID.randomUUID());
+        activityToAdd.setOwner(user);
+        activityToAdd.setDate(LocalDate.now().plusDays(1));
+        activityToAdd.setTime(LocalTime.now().plusHours(1));
+
+        when(userService.enrollUser(user.getUserId(), activityToAdd.getActivityId())).thenReturn(true);
         when(activityRepository.save(activityToAdd)).thenReturn(activityToAdd);
 
         boolean result = activityService.addActivity(activityToAdd);
 
         assertTrue(result);
+        verify(activityRepository, times(1)).save(activityToAdd);
+    }
+
+    @Test
+    void testAddActivity_ActivityInPast() {
+        Activity activityToAdd = new Activity();
+        activityToAdd.setDate(LocalDate.now().minusDays(1));
+        activityToAdd.setTime(LocalTime.now().minusHours(1));
+
+        boolean result = activityService.addActivity(activityToAdd);
+
+        assertFalse(result);
+        verify(activityRepository, never()).save(activityToAdd);
     }
 
     @Test
