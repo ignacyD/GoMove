@@ -8,7 +8,6 @@ import {Context} from "../../App";
 function Search() {
 
     const isUserLogged = useContext(Context).isUserLogged;
-    const setDisplayLoginForm = useContext(Context).setDisplayLoginForm;
     const userData = useContext(Context).userData;
 
     const [activities, setActivities] = useState([]);
@@ -49,7 +48,7 @@ function Search() {
         const activitiesData = await response.json();
 
         if (isUserLogged) {
-            let filteredActivities = filterActivities(activitiesData)
+            let filteredActivities = filterActivitiesIfEnrolled(activitiesData)
             let sortedFilteredActivities = filteredActivities.sort(chronologicalSort)
             setActivities(sortedFilteredActivities)
         } else {
@@ -58,7 +57,7 @@ function Search() {
         }
     }
 
-    function filterActivities(activities) {
+    function filterActivitiesIfEnrolled(activities) {
         return activities
             .filter(activity => !activity.participants.map(participant => participant.userId).includes(userData.userId))
 
@@ -98,7 +97,7 @@ function Search() {
         }
 
         let sortedFilteredActivities = filteredActivities.sort(chronologicalSort)
-        setActivities(sortedFilteredActivities);
+        setActivities(filterActivitiesIfEnrolled(sortedFilteredActivities));
     }
 
     function resetFilter() {
@@ -168,7 +167,7 @@ function Search() {
                 }
             })
             .then(() => {
-                getActivities();
+                setActivities(activities.filter(activity => activity.activityId !== activityId));
             })
             .catch(error => {
                 console.error('Error:', error);
