@@ -24,13 +24,19 @@ function ActivityComments({currentActivityID}) {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
-            const data = await response.json();
-            setActivityComments(data);
+            const comments = await response.json();
+            const sortedComments = comments.sort(chronologicalSort)
+            setActivityComments(sortedComments);
         } catch (error) {
             console.error('Error fetching activity data:', error);
         }
     };
 
+    function chronologicalSort(a, b) {
+        const aDateTime = new Date(`${a.date} ${a.time}`);
+        const bDateTime = new Date(`${b.date} ${b.time}`);
+        return aDateTime - bDateTime;
+    }
 
     useEffect(() => {
         fetchActivityComments();
