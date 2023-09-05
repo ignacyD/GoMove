@@ -2,8 +2,9 @@ import {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import './AdditionalUserInfoForm.css'
 import Modal from "react-modal";
-import loginFormStyles from "../../ModalStyles";
+import additionalProfileInfoModalStyles from "../../ModalStyles";
 import {useRef} from 'react';
+
 function AdditionalUserInfoForm() {
     const [city, setCity] = useState("");
     const [preferredActivity, setPreferredActivity] = useState("");
@@ -41,74 +42,82 @@ function AdditionalUserInfoForm() {
             }
         })
     }
+
     return (
         <div className="additional-info">
             <Modal
                 isOpen={true}
-                style={loginFormStyles}
-                class="additional-info-modal"
+                style={additionalProfileInfoModalStyles}
+                className="additional-info-modal"
             >
-            <h4 className="additional-info-title">Please fill this form to give us info, so we can provide you more personalized activities</h4>
+                <h4 className="additional-info-title">Please fill this form, so we can provide you more
+                    personalized activities</h4>
                 <form className="additional-info-form" onSubmit={handleSubmit}>
-                    <div className="city-field">
-                        <label className="city-label">City</label>
-                        <input
-                            className="city-input"
-                            type="text"
-                            id="city"
-                            value={city}
-                            onChange={e => setCity(e.target.value)}
-                        ></input>
-                    </div>
-                    <div className="description-field">
-                        <label className="description-label">Description</label>
-                        <input
-                            className="description-input"
-                            type="text"
-                            id="description"
-                            value={description}
-                            onChange={e => setDescription(e.target.value)}
-                        ></input>
-                    </div>
-                    <div className="preferred-activity-field">
-                        <label className="preferred-activity-label">Preferred activity</label>
-                        <select
-                            className="preferred-activity-select"
-                            id="preferred-activity"
-                            value={preferredActivity}
-                            onChange={e => setPreferredActivity(e.target.value)}
-                        >
-                            <option value="">Select preferred activity</option>
-                            <option value="SKATING">Skating</option>
-                            <option value="CYCLING">Cycling</option>
-                            <option value="WALKING">Walking</option>
-                            <option value="RUNNING">Running</option>
-                        </select>
-                    </div>
-                    <div className="photo-url-field">
-                        <label className="photo-url-label">Photo url</label>
-                        <button className="custom-file-button" onClick={handleImageButtonClick}>
-                            Choose photo
-                        </button>
-                        <input
-                            ref={fileInputRef}
-                            type="file"
-                            accept="image/*"
-                            onChange={handleImageUpload}
-                            style={{ display: 'none' }}
-                        />
-                    </div>
-                    {selectedImage && (
-                            <div className="selected-photo">
-                                <h2>Uploaded Image:</h2>
-                                <img src={selectedImage} alt="Uploaded"/>
+                    <div className="form-container">
+                        <div>
+                            <div>
+                                <button className="custom-file-button" onClick={handleImageButtonClick}>
+                                    <img className='profile-picture'
+                                         src={selectedImage ? selectedImage : 'blank-profile-picture.png'}></img>
+                                    <div className='change-photo-button'>
+                                        Click to change
+                                    </div>
+                                </button>
+                                <input
+                                    ref={fileInputRef}
+                                    type="file"
+                                    accept="image/*"
+                                    onChange={handleImageUpload}
+                                    style={{display: 'none'}}
+                                />
                             </div>
-                        )}
-                    <button className="additional-info-submit-btn" type="submit">Update</button>
+                        </div>
+                        <div className="additional-info-form-right-side">
+                            <div className="city-field">
+                                <label className="city-label">City</label>
+                                <input
+                                    className="city-input"
+                                    type="text"
+                                    id="city"
+                                    value={city}
+                                    onChange={e => setCity(e.target.value)}
+                                ></input>
+                            </div>
+                            <div className="profile-description-field">
+                                <label className="profile-description-label">Description</label>
+                                <textarea className="profile-description-input"
+                                    type="text"
+                                    id="description"
+                                    value={description}
+                                    onChange={e => setDescription(e.target.value)}>
+                                </textarea>
+                            </div>
+                            <div className="preferred-activity-field">
+                                <label className="preferred-activity-label">Preferred activity</label>
+                                <select
+                                    className="preferred-activity-select"
+                                    id="preferred-activity"
+                                    defaultValue="Select"
+                                    style={{color: preferredActivity ? 'black' : 'grey'}}
+                                    onChange={e => setPreferredActivity(e.target.value)}
+                                >
+                                    <option hidden value="Select"><p>Select</p></option>
+                                    <option style={{color: 'black'}} value="SKATING">Skating</option>
+                                    <option style={{color: 'black'}} value="CYCLING">Cycling</option>
+                                    <option style={{color: 'black'}} value="WALKING">Walking</option>
+                                    <option style={{color: 'black'}} value="RUNNING">Running</option>
+                                </select>
+                            </div>
+                            <div className='additional-info-submit-btn-container'>
+                                <button className="additional-info-submit-btn" type="submit">Update</button>
+                            </div>
+                        </div>
+                    </div>
                 </form>
             </Modal>
         </div>
-    );
+    )
+        ;
 }
 
 export default AdditionalUserInfoForm;

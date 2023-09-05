@@ -23,8 +23,9 @@
 .info-section{
     width: 200px;
 }
-.activity-title{
+.info-section > .activity-title{
     border-bottom: 1px solid grey;
+    margin-top:0px;
     margin-bottom: 5px;
     padding: 5px 0;
 }

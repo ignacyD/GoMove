@@ -24,6 +24,56 @@
     margin: 5px;
 }
 
+.add-activity-form .activity-type-field .activities {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 95%;
+}
+
+.activity:hover, .activity-add:hover {
+    transform: scale(1.2);
+    transition: transform .5s;
+}
+
+.activity-type-field .activities .activity {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    padding: 10px;
+    width: 80px;
+    height: 85px;
+    border: 1px solid lightgreen;
+    border-radius: 15px;
+    cursor: pointer;
+    background-color: lightgreen;
+    transition: transform .5s;
+}
+
+.activity-type-field .activities .activity-add {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    padding: 10px;
+    width: 80px;
+    height: 85px;
+    background-color: greenyellow;
+    border-radius: 15px;
+    cursor: pointer;
+    border: 1px solid greenyellow;
+    transition: transform .5s;
+}
+
+.activity-type-field .activities .activity-add p,
+.activity-type-field .activities .activity p {
+    margin: 0;
+    font-weight: bold;
+}
+
 .add-activity-form input[type="text"],
 .add-activity-form input[type="date"],
 .add-activity-form input[type="time"],
@@ -50,18 +100,28 @@
     padding: 10px 20px;
     cursor: pointer;
     font-size: 18px;
+    transition: transform .4s ease, background-color .4s ease;
 }
 
-.add-activity-form .submit-btn:hover{
+.add-activity-form .submit-btn:hover {
     background-color: greenyellow;
     transform: scale(1.1);
     transition: transform .4s ease, background-color .4s ease;
 }
 
-p {
+.activity-type-field p {
     margin-top: 20px;
     font-weight: bold;
 }
 
-/*!* Styles for the Google Map component *!*/
-/*!* You can define specific styles for your GoogleMapComponent here *!*/
+.add-activity .google-maps {
+    display: flex;
+    flex-direction: column;
+    justify-content: center
+}
+
+.add-activity .google-maps p {
+    font-size: 15px;
+    font-weight: bold;
+}
+

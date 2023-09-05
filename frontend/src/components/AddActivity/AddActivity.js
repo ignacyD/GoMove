@@ -3,8 +3,10 @@ import {Autocomplete, useJsApiLoader} from '@react-google-maps/api';
 import GoogleMapComponent from "../GoogleMap/GoogleMap";
 import {useNavigate} from "react-router-dom";
 import {Context} from "../../App";
-import { v4 as UUID } from 'uuid';
+import {v4 as UUID} from 'uuid';
 import './AddActivity.css'
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faPersonBiking, faPersonRunning, faPersonSkating, faPersonWalking} from "@fortawesome/free-solid-svg-icons";
 
 const googleMapApiKey = process.env.REACT_APP_GOOGLE_MAP_API_KEY;
 const googleMapsLibraries = ["places"];
@@ -19,11 +21,22 @@ const AddActivity = () => {
     const [time, setTime] = useState("");
     const [city, setCity] = useState("");
     const [timeDisable, setTimeDisable] = useState(true);
+    const [chosenOption, setChosenOption] = useState(null);
 
     const navigate = useNavigate();
 
     const userId = localStorage.getItem("userId");
     const today = new Date().toISOString().substring(0, 10);
+
+    const handleChosenOption = (option) => {
+        if (chosenOption === option) {
+            setChosenOption(null);
+            setActivityType(null);
+        } else {
+            setChosenOption(option);
+            setActivityType(option);
+        }
+    };
 
     const handlePlaceSelect = () => {
         const selectedPlace = window.autocomplete.getPlace();
@@ -52,21 +65,21 @@ const AddActivity = () => {
         fetch("http://localhost:8080/activities", {
             headers: {Authorization: localStorage.getItem("jwt"), "Content-Type": "application/json"},
             method: "POST",
-                body: JSON.stringify({
-                    "activityId": activityId,
-                    "activityType": activityType,
-                    "owner": {
-                        "userId": userId
-                    },
-                    "title": title,
-                    "city": city,
-                    "address": selectedAddress,
-                    "date": date,
-                    "time": time,
-                    "description": description,
-                    "participants": null,
-                    "activityPhotoUrl": null
-                })
+            body: JSON.stringify({
+                "activityId": activityId,
+                "activityType": activityType,
+                "owner": {
+                    "userId": userId
+                },
+                "title": title,
+                "city": city,
+                "address": selectedAddress,
+                "date": date,
+                "time": time,
+                "description": description,
+                "participants": null,
+                "activityPhotoUrl": null
+            })
         }).then(response => {
             if (response.status === 200) {
                 setDisplayActivityAddedModal(true);
@@ -126,61 +139,73 @@ const AddActivity = () => {
                 </div>
                 <div className="activity-type-field">
                     <label className="activity-type-label">Activity type</label>
-                    <select required={true}
-                            className="activity-select"
-                            id="activity-select"
-                            value={activityType}
-                            onChange={e => setActivityType(e.target.value)}>
-                        <option value="" disabled={true}>Select activity Type</option>
-                        <option value="RUNNING">Running</option>
-                        <option value="WALKING">Walking</option>
-                        <option value="SKATING">Skating</option>
-                        <option value="CYCLING">Cycling</option>
-                    </select>
+                    <div className="activities">
+                        <div className={`${chosenOption === 'RUNNING' ? 'activity-add' : 'activity'}`}
+                             onClick={() => handleChosenOption('RUNNING')}
+                        >
+                            <FontAwesomeIcon icon={faPersonRunning} size="2xl"/>
+                            <p>Running</p>
+                        </div>
+                        <div className={`${chosenOption === 'WALKING' ? 'activity-add' : 'activity'}`}
+                             onClick={() => handleChosenOption('WALKING')}
+                        >
+                            <FontAwesomeIcon icon={faPersonWalking} size="2xl"/>
+                            <p>Walking</p>
+                        </div>
+                        <div className={`${chosenOption === 'SKATING' ? 'activity-add' : 'activity'}`}
+                             onClick={() => handleChosenOption('SKATING')}
+                        >
+                            <FontAwesomeIcon icon={faPersonSkating} size="2xl"/>
+                            <p>Skating</p>
+                        </div>
+                        <div className={`${chosenOption === 'CYCLING' ? 'activity-add' : 'activity'}`}
+                             onClick={() => handleChosenOption('CYCLING')}
+                        >
+                            <FontAwesomeIcon icon={faPersonBiking} size="2xl"/>
+                            <p>Cycling</p>
+                        </div>
                     </div>
-                    <div>
-                        <label className="description-label">Description</label>
-                        <input
-                            required={true}
-                            className="description-input"
-                            type="text"
-                            id="description"
-                            value={description}
-                            onChange={e => setDescription(e.target.value)}
-                        /></div>
-                    <div className="date-field">
-                        <label className="date-label">Date</label>
-                        <input
-                            required={true}
-                            value={date}
-                            type="date"
-                            id="date"
-                            name="date"
-                            min={today}
-                            onChange={(e) => dateHandler(e)}/>
-                    </div>
-                    <div className="time-field">
-                        <label className="time-label">Time</label>
-                        <input
-                            disabled={timeDisable}
-                            required={true}
-                            value={time}
-                            type="time"
-                            id="time"
-                            name="time"
-                            min={manageTime()}
-                            onChange={(e) => setTime(e.target.value)}/>
-                    </div>
+                </div>
+                <div>
+                    <label className="description-label">Description</label>
+                    <input
+                        required={true}
+                        className="description-input"
+                        type="text"
+                        id="description"
+                        value={description}
+                        onChange={e => setDescription(e.target.value)}
+                    /></div>
+                <div className="date-field">
+                    <label className="date-label">Date</label>
+                    <input
+                        required={true}
+                        value={date}
+                        type="date"
+                        id="date"
+                        name="date"
+                        min={today}
+                        onChange={(e) => dateHandler(e)}/>
+                </div>
+                <div className="time-field">
+                    <label className="time-label">Time</label>
+                    <input
+                        disabled={timeDisable}
+                        required={true}
+                        value={time}
+                        type="time"
+                        id="time"
+                        name="time"
+                        min={manageTime()}
+                        onChange={(e) => setTime(e.target.value)}/>
+                </div>
                 <button className="submit-btn" type="submit">Create activity</button>
             </form>
-
-                <p>Selected Address: {selectedAddress}</p>
-
-
-                {selectedAddress ?
-                    <GoogleMapComponent height={'400px'} width={'1200px'} address={selectedAddress}/> : <></>}
+            {selectedAddress ?
+                <div className="google-maps">
+                    <p>Selected Address: {selectedAddress}</p>
+                    <GoogleMapComponent height={'400px'} width={'1020px'} address={selectedAddress}/> </div> : <></>}
         </div>
-
     ) : <></>;
 };
 
