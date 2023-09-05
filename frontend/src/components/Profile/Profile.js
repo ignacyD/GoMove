@@ -2,6 +2,7 @@ import {useContext, useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import './Profile.css';
 import {Context} from "../../App";
+import testPhoto from "../../assets/images/test.jpg";
 
 function Profile() {
     const userData = useContext(Context).userData;
@@ -16,22 +17,25 @@ function Profile() {
                 <div className="activities">
                     <h3>{activities === ownedActivities ? "Owned" : "Take part"}</h3>
                     <div className="activities-container">
-                        {activities.map(activity =>
+                        {activities.map((activity) => (
                             <div
                                 className="activity-card"
                                 key={activity.activityId}
                                 onClick={() => navigate(`/activity-page/${activity.activityId}`)}
                             >
-                                <img src={activity.activityPhotoUrl} alt={activity.title} className="activity-image"/>
+                                <div className="activity-title">{activity.title}</div>
+                                <hr />
+                                <div className="activity-type">{activity.activityType}</div>
                                 <div className="activity-details">
-                                    <h3>{activity.date}</h3>
-                                    <h3>{activity.time}</h3>
-                                    <h3>{activity.title}</h3>
-                                    <h3>{activity.city}</h3>
-                                    <h3>{activity.address}</h3>
+                                    <div className="activity-city">{activity.city}</div>
+                                    <div className="activity-date-time">
+                                        <span className="activity-date">{activity.date}</span>
+                                        <span className="activity-time">{activity.time}</span>
+                                    </div>
                                 </div>
+                                <img src={testPhoto} alt={activity.title} className="activity-image" />
                             </div>
-                        )}
+                        ))}
                     </div>
                 </div>
             );
@@ -67,14 +71,30 @@ function Profile() {
 
     return (
         <div>
-            <h1>{userData.username}</h1>
-            <h3>{userData.userId}</h3>
-            <h3>{userData.city}</h3>
-            <h3>{userData.description}</h3>
-            <h3>{userData.preferredActivity}</h3>
+            <div className="user-container">
+                <div className="user-card">
+                    <p className="username">{userData.username}</p>
+                    <div className="profile-picture-container">
+                        <img
+                            className="profile-picture"
+                            src={userData.userPhotoUrl}
+                            alt="Profile picture"
+                        />
+                    </div>
+                </div>
+                <div className="user-details">
+                        <h3 className="activity-label">Preferred Activity:</h3>
+                        <p className="activity-info">{userData.preferredActivity}</p>
+
+                        <h3 className="activity-label">City:</h3>
+                        <p className="activity-info">{userData.city}</p>
+
+                        <h3 className="activity-label">Description:</h3>
+                        <p className="activity-info">{userData.description}</p>
+                </div>
+            </div>
             {displayActivities(allUserActivities)}
             {displayActivities(ownedActivities)}
-            <img src={userData.userPhotoUrl} width="500" height="500"/>
             <button onClick={() => navigate("/additional-info-form")}>Update info</button>
         </div>
     )
