@@ -80,22 +80,17 @@
     justify-content: space-evenly;
 }
 
-.activity-page .info-users .minus, .plus {
+.activity-page .info-users .icon {
     background-color: #2a2a2a;
     border: 2px solid #2a2a2a;
     padding: 15px;
     border-radius: 10px;
     margin: 10px;
     cursor: pointer;
+    transition: transform .2s;
 }
 
-.activity-page .info-users .plus:hover {
-    background-color: rgba(175, 175, 175, 0.91);
-    transform: scale(1.2);
-    transition: transform .3s;
-}
-
-.activity-page .info-users .minus:hover {
+.activity-page .info-users .icon:hover {
     background-color: rgba(175, 175, 175, 0.91);
     transform: scale(1.2);
     transition: transform .3s;
@@ -109,3 +104,21 @@
 .top-section {
     cursor: pointer;
 }
+
+/*.delete {*/
+/*    color: #D5FFD0;*/
+/*    background-color: #2a2a2a;*/
+/*    border: 2px solid #2a2a2a;*/
+/*    padding: 15px;*/
+/*    border-radius: 10px;*/
+/*    margin: 10px;*/
+/*    cursor: pointer;*/
+/*    transition: transform .2s;*/
+/*}*/
+
+/*.delete:hover {*/
+/*    color: red;*/
+/*    background-color: rgba(175, 175, 175, 0.91);*/
+/*    transform: scale(1.2);*/
+/*    transition: transform .3s;*/
+/*}*/

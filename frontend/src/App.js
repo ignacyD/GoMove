@@ -7,6 +7,7 @@ import Modal from "react-modal";
 import ModalStyles from "./ModalStyles";
 import RegistrationForm from "./components/RegistrationForm/RegistrationForm";
 import ActivityAddedModal from "./components/ActivityAddedModal/ActivityAddedModal";
+import ActivityDeleteModal from "./components/ActivityDeleteModal/ActivityDeleteModal";
 
 export const Context = React.createContext();
 
@@ -15,6 +16,7 @@ function App() {
     const [displayLoginForm, setDisplayLoginForm] = useState(false)
     const [displayRegistrationForm, setDisplayRegistrationForm] = useState(false);
     const [displayActivityAddedModal, setDisplayActivityAddedModal] = useState(false);
+    const [displayActivityDeleteModal, setDisplayActivityDeleteModal] = useState(false);
     const [userData, setUserData] = useState({});
 
     const navigate = useNavigate();
@@ -43,6 +45,7 @@ function App() {
     function closeForms() {
         setDisplayLoginForm(false);
         setDisplayRegistrationForm(false);
+        setDisplayActivityDeleteModal(false);
     }
 
     return (
@@ -51,6 +54,7 @@ function App() {
             setIsUserLogged: setIsUserLogged,
             setDisplayLoginForm: setDisplayLoginForm,
             setDisplayActivityAddedModal: setDisplayActivityAddedModal,
+            setDisplayActivityDeleteModal: setDisplayActivityDeleteModal,
             userData: userData
         }}>
             <div className="App">
@@ -76,6 +80,14 @@ function App() {
                     appElement={document.querySelector("#root") || undefined}
                 >
                     {displayActivityAddedModal && <ActivityAddedModal/>}
+                </Modal>
+                <Modal
+                    isOpen={displayActivityDeleteModal}
+                    onRequestClose={() => closeForms()}
+                    style={ModalStyles.activityDeleteModalStyles}
+                    appElement={document.querySelector("#root") || undefined}
+                >
+                    {displayActivityDeleteModal && <ActivityDeleteModal/>}
                 </Modal>
                 <Outlet/>
             </div>
