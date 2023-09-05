@@ -139,7 +139,7 @@ const AddActivity = () => {
                 </div>
                 <div className="activity-type-field">
                     <label className="activity-type-label">Activity type</label>
-                    <div className="activities ">
+                    <div className="activities">
                         <div className={`${chosenOption === 'RUNNING' ? 'activity-add' : 'activity'}`}
                              onClick={() => handleChosenOption('RUNNING')}
                         >

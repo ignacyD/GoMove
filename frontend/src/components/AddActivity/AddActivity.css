@@ -24,13 +24,18 @@
     margin: 5px;
 }
 
-.add-activity-form .activity-type-field .activities{
+.add-activity-form .activity-type-field .activities {
     padding-top: 10px;
     padding-bottom: 10px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 95%;
+}
+
+.activity:hover, .activity-add:hover {
+    transform: scale(1.2);
+    transition: transform .5s;
 }
 
 .activity-type-field .activities .activity {
@@ -45,9 +50,10 @@
     border-radius: 15px;
     cursor: pointer;
     background-color: lightgreen;
+    transition: transform .5s;
 }
 
-.activity-type-field .activities .activity-add{
+.activity-type-field .activities .activity-add {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -59,10 +65,11 @@
     border-radius: 15px;
     cursor: pointer;
     border: 1px solid greenyellow;
+    transition: transform .5s;
 }
 
 .activity-type-field .activities .activity-add p,
-.activity-type-field .activities .activity p{
+.activity-type-field .activities .activity p {
     margin: 0;
     font-weight: bold;
 }
@@ -93,9 +100,10 @@
     padding: 10px 20px;
     cursor: pointer;
     font-size: 18px;
+    transition: transform .4s ease, background-color .4s ease;
 }
 
-.add-activity-form .submit-btn:hover{
+.add-activity-form .submit-btn:hover {
     background-color: greenyellow;
     transform: scale(1.1);
     transition: transform .4s ease, background-color .4s ease;
@@ -112,7 +120,7 @@
     justify-content: center
 }
 
-.add-activity .google-maps p{
+.add-activity .google-maps p {
     font-size: 15px;
     font-weight: bold;
 }
