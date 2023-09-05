@@ -55,10 +55,9 @@ class ActivityControllerIT {
     public void testGetAllActivities() throws Exception {
         mockMvc.perform(get("/activities"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.length()").value(4))
-                .andExpect(jsonPath("$[0].title").value("Bieganie z Dominikem"))
-                .andExpect(jsonPath("$[1].title").value("Rowerowanie z Kamilem"))
-                .andExpect(jsonPath("$[2].title").value("Spacer z Jakubem"));
+                .andExpect(jsonPath("$.length()").value(2))
+                .andExpect(jsonPath("$[0].title").value("Wycieczka rowerowa"))
+                .andExpect(jsonPath("$[1].title").value("Bieg w parku"));
 
     }
 
@@ -68,11 +67,9 @@ class ActivityControllerIT {
     public void testGetFutureActivities() throws Exception {
         mockMvc.perform(get("/activities/future"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.length()").value(4))
-                .andExpect(jsonPath("$[0].title").value("Bieganie z Dominikem"))
-                .andExpect(jsonPath("$[1].title").value("Rowerowanie z Kamilem"))
-                .andExpect(jsonPath("$[2].title").value("Spacer z Jakubem"))
-                .andExpect(jsonPath("$[3].title").value("Rolki z Ignacym"));
+                .andExpect(jsonPath("$.length()").value(2))
+                .andExpect(jsonPath("$[0].title").value("Wycieczka rowerowa"))
+                .andExpect(jsonPath("$[1].title").value("Bieg w parku"));
     }
 
     @Test
@@ -92,19 +89,19 @@ class ActivityControllerIT {
     @Sql("/activities.sql")
     public void testGetActivitiesByTypeAndCity() throws Exception {
         mockMvc.perform(get("/activities/filter")
-                        .param("city", "Radziszow")
-                        .param("type", "RUNNING"))
+                        .param("city", "Warszawa")
+                        .param("type", "CYCLING"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(1))
-                .andExpect(jsonPath("$[0].city").value("Radziszow"))
-                .andExpect(jsonPath("$[0].activityType").value("RUNNING"));
+                .andExpect(jsonPath("$[0].city").value("Warszawa"))
+                .andExpect(jsonPath("$[0].activityType").value("CYCLING"));
     }
 
     @Test
     @Sql("/users.sql")
     @Sql("/activities.sql")
     public void testGetActivitiesByOwner() throws Exception {
-        UUID ownerId = UUID.fromString("1111e1a7-7acf-4f50-8275-1449748e96eb");
+        UUID ownerId = UUID.fromString("4444e1a7-7acf-4f50-8275-1449748e96eb");
 
         mockMvc.perform(get("/activities/user/{ownerId}", ownerId))
                 .andExpect(status().isOk())
@@ -116,7 +113,7 @@ class ActivityControllerIT {
     @Sql("/activities.sql")
     @Sql("/user_activity.sql")
     public void testGetActivitiesByParticipant() throws Exception {
-        UUID participantId = UUID.fromString("2222e1a7-7acf-4f50-8275-1449748e96eb");
+        UUID participantId = UUID.fromString("3333e1a7-7acf-4f50-8275-1449748e96eb");
 
         mockMvc.perform(get("/activities/participant/{participantId}", participantId))
                 .andExpect(status().isOk())
@@ -130,7 +127,7 @@ class ActivityControllerIT {
     public void testGetAllCities() throws Exception {
         mockMvc.perform(get("/activities/cities"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.length()").value(4));
+                .andExpect(jsonPath("$.length()").value(2));
     }
 
     @Test
@@ -141,13 +138,15 @@ class ActivityControllerIT {
         UUID userId = UUID.fromString("1111e1a7-7acf-4f50-8275-1449748e96eb");
         User owner = userRepository.findById(userId).orElseThrow();
         Activity activity = new Activity();
+        UUID activityId = UUID.randomUUID();
+        activity.setActivityId(activityId);
         activity.setActivityType(ActivityType.RUNNING);
         activity.setOwner(owner);
         activity.setTitle("Bieg rano");
         activity.setCity("Kraków");
         activity.setAddress("Ruczaj");
-        activity.setDate(LocalDate.of(2023, 9, 1));
-        activity.setTime(LocalTime.of(8, 0));
+        activity.setDate(LocalDate.of(2024,01,01));
+        activity.setTime(LocalTime.now());
         activity.setDescription("Bieg poranny po okolicy");
         String jsonRequest = objectMapper.writeValueAsString(activity);
 
@@ -163,7 +162,7 @@ class ActivityControllerIT {
     @Sql("/activities.sql")
     @Sql("/user_activity.sql")
     public void testUpdateActivity() throws Exception {
-        UUID activityIdToUpdate = UUID.fromString("1111e4ee-06f5-40ab-935e-442074f939a1");
+        UUID activityIdToUpdate = UUID.fromString("5555e1a7-7acf-4f50-8275-1449748e96eb");
         Activity updatedActivity = new Activity();
         updatedActivity.setActivityType(ActivityType.RUNNING);
         updatedActivity.setAddress("Ruczaj");

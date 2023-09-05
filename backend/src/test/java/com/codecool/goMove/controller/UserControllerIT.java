@@ -112,7 +112,7 @@ class UserControllerIT {
     @Test
     @Sql("/users.sql")
     public void testGetUserByNameExistingUser() throws Exception {
-        String userName = "jakub";
+        String userName = "Mateusz";
 
         mockMvc.perform(get("/users/name/{name}", userName))
                 .andExpect(status().isOk())
@@ -169,8 +169,8 @@ class UserControllerIT {
     @Sql("/users.sql")
     @Sql("/activities.sql")
     public void testEnrollUserSuccess() throws Exception {
-        UUID userId = UUID.fromString("1111e1a7-7acf-4f50-8275-1449748e96eb");
-        UUID activityId = UUID.fromString("1111e4ee-06f5-40ab-935e-442074f939a1");
+        UUID userId = UUID.fromString("4444e1a7-7acf-4f50-8275-1449748e96eb");
+        UUID activityId = UUID.fromString("5555e1a7-7acf-4f50-8275-1449748e96eb");
 
         mockMvc.perform(patch("/users/enroll/{userId}/{activityId}", userId, activityId))
                 .andExpect(status().isOk())

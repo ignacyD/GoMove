@@ -1,4 +1,28 @@
-INSERT INTO public.activities (activity_id, activity_photo_url, activity_type, city, date, description, street, time, title, owner_user_id) VALUES ('1111e4ee-06f5-40ab-935e-442074f939a1', null, 'RUNNING', 'Radziszow', '2023-09-13', 'Zapraszam na bieganie', 'Prosta', '17:00:00', 'Bieganie z Dominikem', '1111e1a7-7acf-4f50-8275-1449748e96eb');
-INSERT INTO public.activities (activity_id, activity_photo_url, activity_type, city, date, description, street, time, title, owner_user_id) VALUES ('2222e4ee-06f5-40ab-935e-442074f939a1', null, 'CYCLING', 'Krzeszowice', '2023-09-14', 'Zapraszam na jazdę na rowerze', 'Bandurskiego', '13:00:00', 'Rowerowanie z Kamilem', '2222e1a7-7acf-4f50-8275-1449748e96eb');
-INSERT INTO public.activities (activity_id, activity_photo_url, activity_type, city, date, description, street, time, title, owner_user_id) VALUES ('3333e4ee-06f5-40ab-935e-442074f939a1', null, 'WALKING', 'Orly', '2023-09-16', 'Zapraszam na spacer', 'Sportowa', '20:00:00', 'Spacer z Jakubem', '3333e1a7-7acf-4f50-8275-1449748e96eb');
-INSERT INTO public.activities (activity_id, activity_photo_url, activity_type, city, date, description, street, time, title, owner_user_id) VALUES ('4444e4ee-06f5-40ab-935e-442074f939a1', null, 'SKATING', 'Warszawa', '2023-09-15', 'Zapraszam na rolki', 'Niemcewicza', '15:00:00', 'Rolki z Ignacym', '4444e1a7-7acf-4f50-8275-1449748e96eb');
+INSERT INTO activities (activity_id, activity_photo_url, activity_type, address, city, date, description, time, title, owner_user_id)
+VALUES (
+           '5555e1a7-7acf-4f50-8275-1449748e96eb',
+           null,
+           'CYCLING',
+           'Park XYZ',
+           'Warszawa',
+           '2023-09-15',
+           'Opis wydarzenia 1',
+           '15:00:00',
+           'Wycieczka rowerowa',
+           '4444e1a7-7acf-4f50-8275-1449748e96eb'
+       );
+
+INSERT INTO activities (activity_id, activity_photo_url, activity_type, address, city, date, description, time, title, owner_user_id)
+VALUES (
+           '6666e1a7-7acf-4f50-8275-1449748e96eb',
+           'https://example.com/activity2.jpg',
+           'RUNNING',
+           'Park ABC',
+           'Kraków',
+           '2023-09-20',
+           'Opis wydarzenia 2',
+           '18:30:00',
+           'Bieg w parku',
+           '3333e1a7-7acf-4f50-8275-1449748e96eb'
+       );
+
