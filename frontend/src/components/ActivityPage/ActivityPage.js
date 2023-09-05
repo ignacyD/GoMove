@@ -2,7 +2,14 @@ import './ActivityPage.css';
 import {useContext, useEffect, useState} from "react";
 import GoogleMapComponent from "../GoogleMap/GoogleMap";
 import ActivityComments from "../ActivityComments/ActivityComments";
-import {faCalendarDays, faLocationPin, faUser, faUserMinus, faUserPlus} from "@fortawesome/free-solid-svg-icons";
+import {
+    faCalendarDays,
+    faLocationPin,
+    faTrash,
+    faUser,
+    faUserMinus,
+    faUserPlus
+} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {useParams} from "react-router-dom";
 import {Context} from "../../App";
@@ -11,11 +18,13 @@ import {Context} from "../../App";
 function ActivityPage() {
     const userData = useContext(Context).userData;
     const setDisplayLoginForm = useContext(Context).setDisplayLoginForm;
+    const setDisplayActivityDeleteModal = useContext(Context).setDisplayActivityDeleteModal;
     const isUserLogged = useContext(Context).isUserLogged;
 
     const [activityData, setActivityData] = useState("");
     const [isUserEnrolled, setIsUserEnrolled] = useState(true);
     const [enrolledUsers, setEnrolledUsers] = useState([]);
+
 
     const {activityId} = useParams();
 
@@ -90,7 +99,6 @@ function ActivityPage() {
         ).length > 0)
     }
 
-
     return (
         <div className={"activity-page"}>
             {activityData ? (
@@ -128,20 +136,30 @@ function ActivityPage() {
                     <br/>
                     <br/>
                     <div className="info-users">
-                        <div className="minus">
-                            <FontAwesomeIcon
-                                icon={!isUserEnrolled || !isUserLogged ? faUserPlus : faUserMinus}
-                                size="2xl"
-                                style={{color: "#90EE90FF"}}
-                                onClick={() =>
-                                    isUserLogged
-                                        ? isUserEnrolled
-                                            ? handleUnsubscribeButton()
-                                            : handleEnrollButton()
-                                        : setDisplayLoginForm(true)
-                                }
-                            />
+                        <div className="icon">
+                            {(activityData.owner.userId === userData.userId) && isUserLogged ?
+                                <FontAwesomeIcon icon={faTrash}
+                                                 size="2xl"
+                                                 style={{color: "#90EE90FF"}}
+                                                 onClick={() => setDisplayActivityDeleteModal(true)}
+                                />
+                                :
+                                <FontAwesomeIcon
+                                    icon={!isUserEnrolled || !isUserLogged ? faUserPlus : faUserMinus}
+                                    size="2xl"
+                                    style={{color: "#90EE90FF"}}
+                                    onClick={() =>
+                                        isUserLogged
+                                            ? isUserEnrolled
+                                                ? handleUnsubscribeButton()
+                                                : handleEnrollButton()
+                                            : setDisplayLoginForm(true)
+                                    }
+                                />
+
+                            }
                         </div>
+
                     </div>
                     <hr/>
                     <br/>
