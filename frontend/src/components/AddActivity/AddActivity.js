@@ -202,9 +202,9 @@ const AddActivity = () => {
                 <button className="submit-btn" type="submit">Create activity</button>
             </form>
             {selectedAddress ?
-                <>
+                <div className="google-maps">
                     <p>Selected Address: {selectedAddress}</p>
-                    <GoogleMapComponent height={'400px'} width={'1020px'} address={selectedAddress}/> </> : <></>}
+                    <GoogleMapComponent height={'400px'} width={'1020px'} address={selectedAddress}/> </div> : <></>}
         </div>
     ) : <></>;
 };

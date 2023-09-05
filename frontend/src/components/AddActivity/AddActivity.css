@@ -101,8 +101,19 @@
     transition: transform .4s ease, background-color .4s ease;
 }
 
-p {
+.activity-type-field p {
     margin-top: 20px;
+    font-weight: bold;
+}
+
+.add-activity .google-maps {
+    display: flex;
+    flex-direction: column;
+    justify-content: center
+}
+
+.add-activity .google-maps p{
+    font-size: 15px;
     font-weight: bold;
 }
 
