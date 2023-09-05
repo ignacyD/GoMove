@@ -1,4 +1,11 @@
-INSERT INTO public.users (user_id, city, description, gender, password, preferred_activity, role, user_email, user_name, user_photo_url) VALUES ('1111e1a7-7acf-4f50-8275-1449748e96eb', 'Radziszow', null, null, '$2a$10$19SYyWc9NADHrsXaXJ4c7eP5xTYXAoww87aYfcLuV0BW4IvtpPhP2', null, 'USER', 'dominik@gmail.com', 'dominik', null);
-INSERT INTO public.users (user_id, city, description, gender, password, preferred_activity, role, user_email, user_name, user_photo_url) VALUES ('4444e1a7-7acf-4f50-8275-1449748e96eb', 'Warszawa', null, null, '$2a$10$zR5II9bFsNjII98zLAN2Y.vnv3rmT4ItTOVX.YWmzJcaBmT2IdfA.', null, 'USER', 'ignacy@gmail.com', 'ignacy', null);
-INSERT INTO public.users (user_id, city, description, gender, password, preferred_activity, role, user_email, user_name, user_photo_url) VALUES ('2222e1a7-7acf-4f50-8275-1449748e96eb', 'Krzeszowice', null, null, '$2a$10$.ol1HNKpiKhK/0d/SSxeGu1ypuCJnLljDKMpOzXRFQakBlqF/9MKS', null, 'USER', 'kamil@gmail.com', 'kamil', null);
-INSERT INTO public.users (user_id, city, description, gender, password, preferred_activity, role, user_email, user_name, user_photo_url) VALUES ('3333e1a7-7acf-4f50-8275-1449748e96eb', 'Orly', null, null, '$2a$10$NoTLdHc0YJtbw4spWUpMtucH6pl9URt0q13N3AxZmmaasFrcsZ2Ry', null, 'USER', 'jakub@gmail.com', 'jakub', null);
+INSERT INTO users (user_id, city, description, password, preferred_activity, role, user_email, user_name, user_photo_url)
+VALUES ('1111e1a7-7acf-4f50-8275-1449748e96eb', 'Warszawa', null, 'haslo123', null, 'USER', 'jan@example.com', 'Jan', null);
+
+INSERT INTO users (user_id, city, description, password, preferred_activity, role, user_email, user_name, user_photo_url)
+VALUES ('2222e1a7-7acf-4f50-8275-1449748e96eb', 'Kraków', 'Opis użytkownika 2', 'inne_haslo', 'WALKING', 'USER', 'anna@example.com', 'Anna', 'https://example.com/anna.jpg');
+
+INSERT INTO users (user_id, city, description, password, preferred_activity, role, user_email, user_name, user_photo_url)
+VALUES ('3333e1a7-7acf-4f50-8275-1449748e96eb', 'Gdańsk', null, 'inne_haslo_3', 'CYCLING', 'USER', 'mateusz@example.com', 'Mateusz', 'https://example.com/mateusz.jpg');
+
+INSERT INTO users (user_id, city, description, password, preferred_activity, role, user_email, user_name, user_photo_url)
+VALUES ('4444e1a7-7acf-4f50-8275-1449748e96eb', 'Wrocław', 'Opis użytkownika 4', 'inne_haslo_4', 'RUNNING', 'USER', 'karolina@example.com', 'Karolina', 'https://example.com/karolina.jpg');

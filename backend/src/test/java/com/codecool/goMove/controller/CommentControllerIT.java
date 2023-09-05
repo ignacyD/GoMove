@@ -17,10 +17,8 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.List;
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -56,7 +54,7 @@ class CommentControllerIT {
                 .andExpect(jsonPath("$.length()").value(4))
                 .andExpect(jsonPath("$[0].message").value("Robimy grila na koniec?"))
                 .andExpect(jsonPath("$[1].message").value("No pewnie że tak !"))
-                .andExpect(jsonPath("$[2].message").value("To ja wezme ketchup."))
+                .andExpect(jsonPath("$[2].message").value("To ja wezmę ketchup."))
                 .andExpect(jsonPath("$[3].message").value("Na pewno aktualne?"));
     }
 
@@ -65,14 +63,13 @@ class CommentControllerIT {
     @Sql("/activities.sql")
     @Sql("/comments.sql")
     public void testGetActivityComments() throws Exception {
-        UUID activityId = UUID.fromString("1111e4ee-06f5-40ab-935e-442074f939a1");
+        UUID activityId = UUID.fromString("5555e1a7-7acf-4f50-8275-1449748e96eb");
 
         mockMvc.perform(get("/comments/{activityId}", activityId))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.length()").value(3)) // Assumption based on the data in comments.sql
+                .andExpect(jsonPath("$.length()").value(2))
                 .andExpect(jsonPath("$[0].message").value("Robimy grila na koniec?"))
-                .andExpect(jsonPath("$[1].message").value("No pewnie że tak !"))
-                .andExpect(jsonPath("$[2].message").value("To ja wezme ketchup."));
+                .andExpect(jsonPath("$[1].message").value("No pewnie że tak !"));
     }
 
     @Test
