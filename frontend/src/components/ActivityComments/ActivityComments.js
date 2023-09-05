@@ -142,7 +142,7 @@ function ActivityComments({currentActivityID}) {
                     <div
                         className={comment.user.userId === userData.userId ? "singleComment-right" : "singleComment-left"}
                     >
-                        <div className="username">{comment.user.username}</div>
+                        <div className="comment-username">{comment.user.username}</div>
                         {editingComment === comment ?
                             <>
 
