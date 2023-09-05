@@ -37,7 +37,6 @@ function RegistrationForm({setDisplayLoginForm, setDisplayRegistrationForm}) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        setErrorMessage([]);
         if (!validateRegisterForm()) {
             return;
         }
@@ -74,6 +73,9 @@ function RegistrationForm({setDisplayLoginForm, setDisplayRegistrationForm}) {
         if (username.trim().length < 4) {
             errors.push("username has to be at least 4 characters long");
         }
+        if (username.trim().length > 16) {
+            errors.push("username can contain up to 16 characters")
+        }
         if (!validateEmail(email)) {
             errors.push("provided e-mail adress is incorrect");
         }
@@ -81,10 +83,8 @@ function RegistrationForm({setDisplayLoginForm, setDisplayRegistrationForm}) {
             errors.push("passwords doesn't match")
         }
         setErrorMessage(errors);
-        if (!validatePassword(password) || errorMessage.length > 0) {
-            return false;
-        }
-        return true;
+        return !(!validatePassword(password) || errorMessage.length > 0);
+
     }
 
     function validateEmail(email) {
