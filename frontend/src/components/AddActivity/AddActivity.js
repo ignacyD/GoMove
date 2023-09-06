@@ -67,7 +67,7 @@ const AddActivity = () => {
             return;
         }
 
-        if (selectedAddress === "" && city === "") {
+        if (selectedAddress === "" || city === "") {
             alert("Choose correct address.");
             return;
         }
@@ -107,7 +107,7 @@ const AddActivity = () => {
 
     function addHours(date, hours) {
         date.setHours(date.getHours() + hours);
-        return date.toLocaleString().substring(12, 17);
+        return date.toLocaleString().substring(11, 16);
     }
 
     function manageTime() {
