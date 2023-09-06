@@ -39,7 +39,7 @@ function Profile() {
                                         <div className="activity-city">{activity.city}</div>
                                         <div className="activity-date-time">
                                             <span className="activity-date">{activity.date}</span>
-                                            <span className="activity-time">{activity.time}</span>
+                                            <span className="activity-time">{activity.time.substring(0,5)}</span>
                                         </div>
                                     </div>
                                     <img src={testPhoto} alt={activity.title} className="activity-image"/>
@@ -132,8 +132,9 @@ function Profile() {
             `http://localhost:8080/activities/user/${userId}`, {
                 headers: {Authorization: localStorage.getItem("jwt")}
             })
-        const data = await response.json();
-        setOwnedActivities(data);
+        const ownedActivities = await response.json();
+        const sortedOwnedActivities = ownedActivities.sort(chronologicalSort);
+        setOwnedActivities(sortedOwnedActivities);
     }
 
     async function fetchAllUserActivities(userId) {
@@ -141,8 +142,15 @@ function Profile() {
             `http://localhost:8080/activities/participant/${userId}`, {
                 headers: {Authorization: localStorage.getItem("jwt")}
             })
-        const activities = await response.json();
-        setAllUserActivities(activities);
+        const userActivities = await response.json();
+        const sortedUserActivities = userActivities.sort(chronologicalSort);
+        setAllUserActivities(sortedUserActivities);
+    }
+
+    function chronologicalSort(a, b) {
+        const aDateTime = new Date(`${a.date} ${a.time}`);
+        const bDateTime = new Date(`${b.date} ${b.time}`);
+        return aDateTime - bDateTime;
     }
 
     useEffect(() => {
