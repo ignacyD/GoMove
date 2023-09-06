@@ -5,10 +5,6 @@ import ActivityComments from "../ActivityComments/ActivityComments";
 import {
     faCalendarDays,
     faLocationPin,
-    faPersonBiking,
-    faPersonRunning,
-    faPersonSkating,
-    faPersonWalking,
     faTrash,
     faUser,
     faUserMinus,
@@ -17,6 +13,7 @@ import {
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {useParams} from "react-router-dom";
 import {Context} from "../../App";
+import {iconSelector} from '../IconSelector'
 
 function ActivityPage() {
     const userData = useContext(Context).userData;
@@ -29,23 +26,6 @@ function ActivityPage() {
     const [enrolledUsers, setEnrolledUsers] = useState([]);
 
     const {activityId} = useParams();
-
-    let iconToDisplay;
-
-    switch (activityData.activityType) {
-        case "RUNNING":
-            iconToDisplay = <FontAwesomeIcon icon={faPersonRunning} size="2xl"/>
-            break;
-        case "CYCLING":
-            iconToDisplay = <FontAwesomeIcon icon={faPersonBiking} size="2xl"/>
-            break;
-        case "WALKING":
-            iconToDisplay = <FontAwesomeIcon icon={faPersonWalking} size="2xl"/>
-            break;
-        case "SKATING":
-            iconToDisplay = <FontAwesomeIcon icon={faPersonSkating} size="2xl"/>
-            break;
-    }
 
     useEffect(() => {
         fetchActivityData()
@@ -122,9 +102,8 @@ function ActivityPage() {
         <div className={"activity-page"}>
             {activityData ? (
                 <div>
-                    <div className="activity-icon">{iconToDisplay}</div>
+                    <div className="activity-icon">{iconSelector(activityData.activityType)}</div>
                     <h1>{activityData.title}</h1>
-
                     <hr/>
                     <br/>
                     {activityData.activityPhotoUrl ?
@@ -143,7 +122,7 @@ function ActivityPage() {
                         </div>
                         <div className="date">
                             <FontAwesomeIcon icon={faCalendarDays} size="2xl"/>
-                            <p>{activityData.date}, {activityData.time.substring(0,5)}</p>
+                            <p>{activityData.date}, {activityData.time.substring(0, 5)}</p>
                         </div>
                     </div>
                     <br/>
