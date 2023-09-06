@@ -2,13 +2,34 @@ import React, {useState} from 'react';
 import './ActivitCard.css';
 import testPhoto from '../../assets/images/test.jpg'
 import GoogleMapComponent from "../GoogleMap/GoogleMap";
+import {faPersonBiking, faPersonRunning, faPersonSkating, faPersonWalking} from "@fortawesome/free-solid-svg-icons";
+
 import {useNavigate} from "react-router-dom";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {iconSelector} from '../IconSelector'
 
 function ActivityCard({activity}) {
 
     const [showMap, setShowMap] = useState(false);
 
     const navigate = useNavigate();
+
+    let iconToDisplay;
+
+    switch (activity.activityType) {
+        case "RUNNING":
+            iconToDisplay = <FontAwesomeIcon icon={faPersonRunning} size="2xl"/>
+            break;
+        case "CYCLING":
+            iconToDisplay = <FontAwesomeIcon icon={faPersonBiking} size="2xl"/>
+            break;
+        case "WALKING":
+            iconToDisplay = <FontAwesomeIcon icon={faPersonWalking} size="2xl"/>
+            break;
+        case "SKATING":
+            iconToDisplay = <FontAwesomeIcon icon={faPersonSkating} size="2xl"/>
+            break;
+    }
 
     return (
         <div className="card">
@@ -21,8 +42,8 @@ function ActivityCard({activity}) {
                     <img className="photo" src={testPhoto} alt="Activity"/>
                 }
                 <div className="title-section">
+                    <div className="activityCard-icon">{iconToDisplay}</div>
                     <h2>{activity.title}</h2>
-                    <h3>{activity.activityType}</h3>
                 </div>
             </div>
             <div className="card-changeable-space">
@@ -34,7 +55,7 @@ function ActivityCard({activity}) {
                         </div>
                         <div className="datetime">
                             <h3>Date: </h3>
-                            <p>{activity.date}, {activity.time.substring(0,5)}</p>
+                            <p>{activity.date}, {activity.time.substring(0, 5)}</p>
                         </div>
                     </div>
                     <div className="description-section">
