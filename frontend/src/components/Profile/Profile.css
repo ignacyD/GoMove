@@ -1,3 +1,48 @@
+.activities-in-profile-carousel {
+    display: flex;
+    overflow: hidden;
+    width: 1130px;
+}
+
+.activities-container {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    position: relative;
+    right: 0px;
+    transition: right .3s;
+}
+.activities-carousel-in-profile{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.activities-in-profile-swipe-right-container, .activities-in-profile-swipe-left-container {
+    transition: opacity .3s;
+    display: flex;
+    align-items: center;
+    height: 50px;
+    width: 50px;
+}
+
+.activities-in-profile-swipe-left-container {
+    visibility: hidden;
+}
+
+.activities-in-profile-swipe-right-button, .activities-in-profile-swipe-left-button {
+    height: 50px;
+    width: 50px;
+    background-color: white;
+    border-radius: 50%;
+    border: none;
+    transition: background-color .5s;
+}
+
+.activities-in-profile-swipe-right-button:hover, .activities-in-profile-swipe-left-button:hover {
+    background-color: lightgreen;
+    transition: background-color .5s;
+}
+
 .activity-card {
     background-color: #f0f0f0;
     border-radius: 10px;
@@ -7,7 +52,19 @@
     display: flex;
     flex-direction: column;
     width: 150px;
+    height: 285px;
     cursor: pointer;
+    text-align: center;
+}
+
+.activity-carousel-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 100px;
+}
+
+.activity-type-title {
     text-align: center;
 }
 
@@ -28,16 +85,6 @@
     border-radius: 10px;
     object-fit: cover;
     margin-top: 10px;
-}
-
-.activities-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-}
-
-.activities h3 {
-    margin-left: 20px;
 }
 
 .activity-details {
@@ -68,7 +115,9 @@
 
 .user-container {
     display: flex;
-    margin: 20px;
+    justify-content: center;
+    margin-top: 40px;
+    margin-bottom: 50px;
 }
 
 .user-card {
@@ -88,12 +137,23 @@
 .user-details {
     display: flex;
     flex-direction: column;
-    align-items: left;
-    justify-content: left;
-    max-width: 75vh;
+    justify-content: center;
     word-wrap: break-word;
 }
-
+.update-info-button{
+    margin-top: 30px;
+    width: 130px;
+    height: 40px;
+    background-color: lightgreen;
+    border: none;
+    border-radius: 3px;
+    transition: background-color .5s, transform .5s;
+}
+.update-info-button:hover{
+    background-color: greenyellow;
+    transform: scale(1.1);
+    transition: background-color .5s, transform .5s;
+}
 .activity-label {
     font-size: 18px;
     font-weight: bold;

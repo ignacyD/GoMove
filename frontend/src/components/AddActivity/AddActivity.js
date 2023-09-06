@@ -168,7 +168,7 @@ const AddActivity = () => {
                 </div>
                 <div>
                     <label className="description-label">Description</label>
-                    <input
+                    <textarea
                         required={true}
                         className="description-input"
                         type="text"

@@ -73,9 +73,13 @@
     margin: 0;
     font-weight: bold;
 }
+.description-input{
+    resize: none;
+}
 
 .add-activity-form input[type="text"],
 .add-activity-form input[type="date"],
+.description-input,
 .add-activity-form input[type="time"],
 .add-activity-form select {
     width: 90%;

@@ -19,6 +19,7 @@ function Search() {
     const [cityOptionsVisible, setCityOptionsVisible] = useState(false);
     const [cityOptionsSuggestions, setCityOptionsSuggestions] = useState("");
     const [carouselIndex, setCarouselIndex] = useState(0);
+    const [isInputActive, setInputActive] = useState(false);
 
     const today = new Date().toISOString().split("T")[0];
     const handleCarouselPrev = () => {
@@ -223,17 +224,22 @@ function Search() {
                 <div>
                     <div className="select-city">
                         <h4>
-                            Select City:
+                            Select City
                         </h4>
                         <input type="text" value={cityOptionsSuggestions}
-                               placeholder="Select city"
+                               placeholder={isInputActive ? '' : 'Type...'}
                                onChange={(event) => {
                                    setCityOptionsSuggestions(event.target.value);
                                    setCityOptionsVisible(true);
                                }}
-                               className="city-select" onClick={() => {
-                            setCityOptionsVisible(true)
-                        }}/>
+                               className="city-select"
+                               onClick={() => {
+                                   setCityOptionsVisible(true);
+                                   setInputActive(true);
+                               }}
+                               onBlur={() => {
+                                   setInputActive(false);
+                               }}/>
                         <div className="city-options-field">
                             {cityOptionsVisible &&
                                 <div className="city-options">
@@ -310,7 +316,8 @@ function Search() {
                 </div>
             </div>
         </div>
-    );
+    )
+        ;
 }
 
 export default Search;
