@@ -74,7 +74,6 @@ function Profile() {
     }
     useEffect(() => {
         const displayedActivities = document.querySelector('.activities-container');
-        console.log('lol')
         if (displayedActivities) {
             const swipeLeftButton = document.querySelector('.activities-in-profile-swipe-left-container')
             const swipeRightButton = document.querySelector('.activities-in-profile-swipe-right-container')
@@ -102,9 +101,6 @@ function Profile() {
 
     useEffect(() => {
         const displayedActivities = document.querySelectorAll('.activities-container')[1];
-        console.log(displayedActivities);
-        console.log(carouselIndex.owned);
-        console.log(carouselIndex.takePart)
         if (displayedActivities) {
             const swipeLeftButton = document.querySelectorAll('.activities-in-profile-swipe-left-container')[1]
             const swipeRightButton = document.querySelectorAll('.activities-in-profile-swipe-right-container')[1]
@@ -178,7 +174,7 @@ function Profile() {
 
                     <h3 className="activity-label">Description:</h3>
                     <p className="activity-info">{userData.description}</p>
-                    <button className="update-info-button" onClick={() => navigate("/additional-info-form")}>Update info</button>
+                    <button className="update-info-button" onClick={() => navigate("/update-info")}>Update info</button>
                 </div>
             </div>
             <h3 className="activity-type-title">Take part</h3>

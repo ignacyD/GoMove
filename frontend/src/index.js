@@ -11,6 +11,7 @@ import ActivityPage from "./components/ActivityPage/ActivityPage";
 import AddActivity from "./components/AddActivity/AddActivity";
 import Profile from "./components/Profile/Profile";
 import AdditionalUserInfoForm from "./components/AdditionalUserInfoForm/AdditionalUserInfoForm";
+import UpdateUserInfoForm from "./components/UpdateUserInfoForm/UpdateUserInfoForm";
 
 const router = createBrowserRouter([
     {
@@ -47,6 +48,10 @@ const router = createBrowserRouter([
             {
                 path: "/additional-info-form",
                 element:<AdditionalUserInfoForm/>
+            },
+            {
+                path: "/update-info",
+                element:<UpdateUserInfoForm/>
             }
         ]
     }

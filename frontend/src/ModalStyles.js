@@ -68,6 +68,24 @@ const additionalProfileInfoModalStyles = {
         textAlign: "center",
         maxWidth: "400px",
     }
-}
-export default {loginFormStyles, activityAddedModalStyles, activityDeleteModalStyles, additionalProfileInfoModalStyles};
+};
+
+const updateUserInfoModalStyles = {
+    content: {
+        position: "absolute",
+        display: "flex",
+        background: "white",
+        flexDirection: "column",
+        height: "20%",
+        top: "40vh",
+        left: "35%",
+        transition: "height 0.5s, top 0.5s",
+        border: "4px solid #90ee90",
+        borderRadius: "8px",
+        boxShadow: "0px 2px 10px rgba(0, 0, 0, 0.2)",
+        textAlign: "center",
+        maxWidth: "400px",
+    }
+};
+export default {loginFormStyles, activityAddedModalStyles, activityDeleteModalStyles, additionalProfileInfoModalStyles, updateUserInfoModalStyles};
 

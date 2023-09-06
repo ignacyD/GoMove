@@ -1,16 +1,19 @@
-import {useState} from "react";
+import {useContext, useState} from "react";
 import {useNavigate} from "react-router-dom";
-import './AdditionalUserInfoForm.css'
+// import './AdditionalUserInfoForm.css'
 import Modal from "react-modal";
-import additionalProfileInfoModalStyles from "../../ModalStyles";
+import updateUserInfoModalStyles from "../../ModalStyles";
 import {useRef} from 'react';
+import {Context} from "../../App";
 
-function AdditionalUserInfoForm() {
-    const [city, setCity] = useState("");
-    const [preferredActivity, setPreferredActivity] = useState("");
-    const [description, setDescription] = useState("");
+function UpdateUserInfoForm() {
+    const userData = useContext(Context).userData;
+    const [city, setCity] = useState(userData.city);
+    const [preferredActivity, setPreferredActivity] = useState(userData.preferredActivity);
+    const [description, setDescription] = useState(userData.description);
     const navigate = useNavigate();
     const [selectedImage, setSelectedImage] = useState(null);
+    // TODO defaultowo wyświetlane aktualne zdjęcie
     const fileInputRef = useRef(null);
     const handleImageUpload = (event) => {
         const imageFile = event.target.files[0];
@@ -47,11 +50,11 @@ function AdditionalUserInfoForm() {
         <div className="additional-info">
             <Modal
                 isOpen={true}
-                style={additionalProfileInfoModalStyles}
+                style={updateUserInfoModalStyles}
                 className="additional-info-modal"
+                onRequestClose={() => navigate("/profile")}
             >
-                <h4 className="additional-info-title">Please fill this form, so we can provide you more
-                    personalized activities</h4>
+                <h4 className="additional-info-title">Edit profile info</h4>
                 <form className="additional-info-form" onSubmit={handleSubmit}>
                     <div className="form-container">
                         <div>
@@ -67,7 +70,9 @@ function AdditionalUserInfoForm() {
                                     ref={fileInputRef}
                                     type="file"
                                     accept="image/*"
+                                    // TODO defaultowo wyświetlane aktualne zdjęcie
                                     onChange={handleImageUpload}
+                                    onClick={() => console.log(userData)}
                                     style={{display: 'none'}}
                                 />
                             </div>
@@ -86,10 +91,10 @@ function AdditionalUserInfoForm() {
                             <div className="profile-description-field">
                                 <label className="profile-description-label">Description</label>
                                 <textarea className="profile-description-input"
-                                    type="text"
-                                    id="description"
-                                    value={description}
-                                    onChange={e => setDescription(e.target.value)}>
+                                          type="text"
+                                          id="description"
+                                          value={description}
+                                          onChange={e => setDescription(e.target.value)}>
                                 </textarea>
                             </div>
                             <div className="preferred-activity-field">
@@ -97,7 +102,7 @@ function AdditionalUserInfoForm() {
                                 <select
                                     className="preferred-activity-select"
                                     id="preferred-activity"
-                                    defaultValue="Select"
+                                    defaultValue={preferredActivity}
                                     style={{color: preferredActivity ? 'black' : 'grey'}}
                                     onChange={e => setPreferredActivity(e.target.value)}
                                 >
@@ -120,4 +125,4 @@ function AdditionalUserInfoForm() {
         ;
 }
 
-export default AdditionalUserInfoForm;
+export default UpdateUserInfoForm;
