@@ -105,20 +105,7 @@
     cursor: pointer;
 }
 
-/*.delete {*/
-/*    color: #D5FFD0;*/
-/*    background-color: #2a2a2a;*/
-/*    border: 2px solid #2a2a2a;*/
-/*    padding: 15px;*/
-/*    border-radius: 10px;*/
-/*    margin: 10px;*/
-/*    cursor: pointer;*/
-/*    transition: transform .2s;*/
-/*}*/
-
-/*.delete:hover {*/
-/*    color: red;*/
-/*    background-color: rgba(175, 175, 175, 0.91);*/
-/*    transform: scale(1.2);*/
-/*    transition: transform .3s;*/
-/*}*/
+.activity-icon {
+    display: flex;
+    justify-content: center;
+}

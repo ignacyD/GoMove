@@ -107,4 +107,8 @@ margin-top: 0;
     transition: bottom 1s;
 }
 
+.activityCard-icon {
+    margin-top: 20px;
+}
+
 

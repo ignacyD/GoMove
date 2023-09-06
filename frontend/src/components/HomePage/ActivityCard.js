@@ -3,6 +3,7 @@ import './ActivitCard.css';
 import testPhoto from '../../assets/images/test.jpg'
 import GoogleMapComponent from "../GoogleMap/GoogleMap";
 import {useNavigate} from "react-router-dom";
+import {iconSelector} from '../IconSelector'
 
 function ActivityCard({activity}) {
 
@@ -21,8 +22,8 @@ function ActivityCard({activity}) {
                     <img className="photo" src={testPhoto} alt="Activity"/>
                 }
                 <div className="title-section">
+                    <div className="activityCard-icon">{iconSelector(activity.activityType)}</div>
                     <h2>{activity.title}</h2>
-                    <h3>{activity.activityType}</h3>
                 </div>
             </div>
             <div className="card-changeable-space">
@@ -34,7 +35,7 @@ function ActivityCard({activity}) {
                         </div>
                         <div className="datetime">
                             <h3>Date: </h3>
-                            <p>{activity.date}, {activity.time.substring(0,5)}</p>
+                            <p>{activity.date}, {activity.time.substring(0, 5)}</p>
                         </div>
                     </div>
                     <div className="description-section">

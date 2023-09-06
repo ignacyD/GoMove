@@ -13,7 +13,7 @@ import {
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {useParams} from "react-router-dom";
 import {Context} from "../../App";
-
+import {iconSelector} from '../IconSelector'
 
 function ActivityPage() {
     const userData = useContext(Context).userData;
@@ -24,7 +24,6 @@ function ActivityPage() {
     const [activityData, setActivityData] = useState("");
     const [isUserEnrolled, setIsUserEnrolled] = useState(true);
     const [enrolledUsers, setEnrolledUsers] = useState([]);
-
 
     const {activityId} = useParams();
 
@@ -103,29 +102,27 @@ function ActivityPage() {
         <div className={"activity-page"}>
             {activityData ? (
                 <div>
+                    <div className="activity-icon">{iconSelector(activityData.activityType)}</div>
                     <h1>{activityData.title}</h1>
                     <hr/>
-                    <h2>Information</h2>
-                    <br/>
                     <br/>
                     {activityData.activityPhotoUrl ?
                         <img src={activityData.activityPhotoUrl} alt={activityData.title} className="activity-image"/>
                         : null}
 
-                    <h3>Description</h3>
+                    <h3>Description:</h3>
                     <p>{activityData.description}</p>
-                    <br/>
                     <br/>
                     <br/>
                     <div className="place-date">
                         <h3>Place of meeting:</h3>
                         <div className="place">
-                            <FontAwesomeIcon icon={faLocationPin} size="2xl" style={{color: "#2a2a2a",}}/>
+                            <FontAwesomeIcon icon={faLocationPin} size="2xl"/>
                             <p>{activityData.address}</p>
                         </div>
                         <div className="date">
-                            <FontAwesomeIcon icon={faCalendarDays} size="2xl" style={{color: "#2a2a2a",}}/>
-                            <p>{activityData.date}, {activityData.time}</p>
+                            <FontAwesomeIcon icon={faCalendarDays} size="2xl"/>
+                            <p>{activityData.date}, {activityData.time.substring(0, 5)}</p>
                         </div>
                     </div>
                     <br/>
@@ -163,7 +160,7 @@ function ActivityPage() {
                     </div>
                     <hr/>
                     <br/>
-                    <h3>Participants</h3>
+                    <h3>Participants:</h3>
                     <div>
                         {enrolledUsers.length > 0 ? enrolledUsers.map(participant => (
                             <div className="users" key={participant}>

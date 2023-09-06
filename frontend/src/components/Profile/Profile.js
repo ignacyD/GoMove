@@ -5,6 +5,7 @@ import {Context} from "../../App";
 import testPhoto from "../../assets/images/test.jpg";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faChevronLeft, faChevronRight} from "@fortawesome/free-solid-svg-icons";
+import {iconSelector} from '../IconSelector'
 
 function Profile() {
     const userData = useContext(Context).userData;
@@ -33,7 +34,7 @@ function Profile() {
                                 >
                                     <div className="activity-title">{activity.title}</div>
                                     <hr/>
-                                    <div className="activity-type">{activity.activityType}</div>
+                                    <div className="activity-type">{iconSelector(activity.activityType)}</div>
                                     <div className="activity-details">
                                         <div className="activity-city">{activity.city}</div>
                                         <div className="activity-date-time">
