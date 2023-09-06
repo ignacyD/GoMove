@@ -22,6 +22,7 @@ function Search() {
     const [isInputActive, setInputActive] = useState(false);
 
     const today = new Date().toISOString().split("T")[0];
+
     const handleCarouselPrev = () => {
         if (carouselIndex > 0) {
             setCarouselIndex(carouselIndex - 1);
@@ -33,6 +34,7 @@ function Search() {
             setCarouselIndex(carouselIndex + 1);
         }
     };
+
     useEffect(() => {
         const carousel = document.querySelector('.activities-carousel-visible')
         carousel.style.bottom = `${(carouselIndex - 1) * 220}px`;
@@ -42,7 +44,6 @@ function Search() {
         getActivities();
         getAllCities();
     }, [])
-
 
     async function getActivities() {
         const response = await fetch("http://localhost:8080/activities/future");
@@ -61,13 +62,13 @@ function Search() {
     function filterActivitiesIfEnrolled(activities) {
         return activities
             .filter(activity => !activity.participants.map(participant => participant.userId).includes(userData.userId))
-
     }
 
     async function getAllCities() {
         const response = await fetch("http://localhost:8080/activities/cities");
-        const data = await response.json();
-        setCities(data);
+        const cities = await response.json();
+        cities.sort();
+        setCities(cities);
     }
 
     async function getFilteredActivities() {
@@ -113,6 +114,7 @@ function Search() {
     const handleOptionChange = (event) => {
         setSelectedActivityType(event.target.value);
     };
+
     const closeSelectCity = () => {
         setCityOptionsVisible(false);
     };
@@ -151,7 +153,6 @@ function Search() {
         const bDateTime = new Date(`${b.date} ${b.time}`);
         return aDateTime - bDateTime;
     }
-
 
     const enrollUserToActivity = (activityId) => {
         fetch(`http://localhost:8080/users/enroll/${userData.userId}/${activityId}`, {
@@ -244,9 +245,9 @@ function Search() {
                             {cityOptionsVisible &&
                                 <div className="city-options">
                                     {cities.filter(city => city.toString().toLowerCase().includes(cityOptionsSuggestions.toLocaleLowerCase())).map(city =>
-                                        <div
-                                            onClick={() => handleCityClick(city)} key={city}
-                                            value={city}>{city}</div>
+                                        <div onClick={() => handleCityClick(city)} key={city}>
+                                            {city}
+                                        </div>
                                     )}
                                 </div>
                             }
@@ -283,8 +284,8 @@ function Search() {
                 </div>
 
                 <div className="filter-buttons">
-                    <button className="reset-filters-button" onClick={() => resetFilter()}>Reset filters</button>
                     <button className="filter-button" onClick={() => getFilteredActivities()}>Filter</button>
+                    <button className="reset-filters-button" onClick={() => resetFilter()}>Reset filters</button>
                 </div>
             </div>
             <div className="found-activities">
@@ -317,7 +318,6 @@ function Search() {
             </div>
         </div>
     )
-        ;
 }
 
 export default Search;

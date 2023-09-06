@@ -20,12 +20,12 @@ public interface ActivityRepository extends JpaRepository<Activity, UUID> {
 
     List<Activity> findByActivityTypeAndCity(ActivityType activityType, String city);
 
-    @Query("SELECT a FROM Activity a WHERE a.owner.userId = :ownerId")
+    @Query("SELECT a FROM Activity a WHERE a.owner.userId = :ownerId AND a.date >= CURRENT DATE")
     List<Activity> findByOwnerId(UUID ownerId);
 
-    @Query("SELECT a FROM Activity a WHERE :userUuid IN (SELECT u.userId FROM a.participants u)")
+    @Query("SELECT a FROM Activity a WHERE :userUuid IN (SELECT u.userId FROM a.participants u) AND a.date >= CURRENT DATE")
     List<Activity> getActivitiesByParticipantId(UUID userUuid);
 
-    @Query("SELECT DISTINCT a.city FROM Activity a")
+    @Query("SELECT DISTINCT a.city FROM Activity a WHERE a.date >= CURRENT DATE")
     List<String> getAllCities();
 }

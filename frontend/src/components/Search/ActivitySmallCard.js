@@ -10,24 +10,18 @@ const ActivitySmallCard = ({activity, handleJoinActivity}) => {
     const isUserLogged = useContext(Context).isUserLogged;
     const setDisplayLoginForm = useContext(Context).setDisplayLoginForm;
 
-
-    const geocoder = new window.google.maps.Geocoder();
-    geocoder.geocode({ address: activity.address }, (results, status) => {
-        if (status === "OK" && results.length > 0) {
-
-            const place = results[0];
-            const cityComponent = place.address_components.find(
-                (component) => component.types.includes("locality")
-            );
-            console.log(place)
-        }
-    });
-
-
-
-
-
     const navigate = useNavigate();
+
+    // const geocoder = new window.google.maps.Geocoder();
+    // geocoder.geocode({ address: activity.address }, (results, status) => {
+    //     if (status === "OK" && results.length > 0) {
+    //
+    //         const place = results[0];
+    //         const cityComponent = place.address_components.find(
+    //             (component) => component.types.includes("locality")
+    //         );
+    //     }
+    // });
 
     return (
         <div className="searched-activity-card">
