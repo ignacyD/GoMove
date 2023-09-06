@@ -2,17 +2,19 @@
     display: flex;
     overflow: hidden;
     width: 1130px;
+    align-items: center;
+    height: 400px;
 }
 
 .activities-container {
     display: flex;
     flex-direction: row;
-    gap: 20px;
     position: relative;
     right: 0px;
+    gap: 20px;
     transition: right .3s;
 }
-.activities-carousel-in-profile{
+.activities-carousel-inner-container{
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -55,13 +57,16 @@
     height: 285px;
     cursor: pointer;
     text-align: center;
+    transition: transform .5s;
 }
-
-.activity-carousel-container {
+.activity-card:hover {
+    transform: scale(1.1);
+    transition: transform .5s;
+}
+.activity-carousel-outer-container {
     width: 100%;
     display: flex;
     justify-content: center;
-    margin-bottom: 100px;
 }
 
 .activity-type-title {
@@ -103,13 +108,13 @@
 }
 
 .activity-date-time {
-    display: flex;
     justify-content: space-between;
     font-size: 14px;
     color: #777;
 }
 
 .activity-date {
+    margin-right: 10px;
     flex: 1;
 }
 
@@ -117,7 +122,7 @@
     flex: 1;
 }
 
-.user-container {
+.user-inner-container {
     display: flex;
     justify-content: center;
     margin-top: 40px;

@@ -18,7 +18,7 @@ function Profile() {
 
         if (activities.length > 0) {
             return (
-                <div className={'activities-carousel-in-profile'}>
+                <div className='activities-carousel-inner-container'>
                     <div className='activities-in-profile-swipe-left-container'
                          onClick={() => handleIndexChange(-1, type)}>
                         <button className="activities-in-profile-swipe-left-button">
@@ -37,8 +37,8 @@ function Profile() {
                                     <div className="activity-details">
                                         <div className="activity-city">{activity.city}</div>
                                         <div className="activity-date-time">
-                                            <span className="activity-date">{activity.date}</span>
-                                            <span className="activity-time">{activity.time.substring(0,5)}</span>
+                                            <span className="activity-date">{activity.date + " "}</span>
+                                            <span className="activity-time">{" "+ activity.time.substring(0,5)}</span>
                                         </div>
                                     </div>
                                     <img src={testPhoto} alt={activity.title} className="activity-image"/>
@@ -162,7 +162,7 @@ function Profile() {
 
     return (
         <div>
-            <div className="user-container">
+            <div className="user-inner-container">
                 <div className="user-card">
                     <p className="username">{userData.username}</p>
                     <div className="profile-picture-container">
@@ -185,12 +185,12 @@ function Profile() {
                     <button className="update-info-button" onClick={() => navigate("/update-info")}>Update info</button>
                 </div>
             </div>
-            <h3 className="activity-type-title">Take part</h3>
-            <div className="activity-carousel-container">
+            <h3 className="activity-type-title">Taking part</h3>
+            <div className="activity-carousel-outer-container">
                 {displayActivities(allUserActivities, 'takePart')}
             </div>
             <h3 className="activity-type-title">Owned</h3>
-            <div className="activity-carousel-container">
+            <div className="activity-carousel-outer-container">
                 {displayActivities(ownedActivities, 'owned')}
             </div>
         </div>
