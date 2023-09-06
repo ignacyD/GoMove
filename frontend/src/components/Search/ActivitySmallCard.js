@@ -21,7 +21,7 @@ const ActivitySmallCard = ({activity, handleJoinActivity}) => {
             <div className="info-section">
                 <div className="activity-title">{activity.title}</div>
                 <div className="activity-type">{iconSelector(activity.activityType)}</div>
-                <div className="activity-city">{activity.address}</div>
+                <div className="activity-city" onClick={() => console.log(activity)}>{activity.address}</div>
                 <div className="activity-date">{activity.date}, {activity.time.substring(0, 5)}</div>
                 <div className="searched-card-buttons">
                     <button onClick={() => navigate(`/activity-page/${activity.activityId}`)}

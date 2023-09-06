@@ -23,13 +23,18 @@
 .info-section{
     width: 200px;
 }
-.info-section > .activity-title{
+.info-section > .activity-title {
+    min-height: 30px;
+    max-height: 30px;
     border-bottom: 1px solid grey;
     margin-top:0px;
-    margin-bottom: 5px;
-    padding: 5px 0;
+    padding: 0px 0;
 }
-.activity-type, .activity-city, .activity-date{
+.info-section > .activity-type{
+    margin-bottom: 5px;
+    font-size: 16px;
+}
+.activity-city, .activity-date{
     margin-bottom: 10px;
 }
 .join-button, .details-button{

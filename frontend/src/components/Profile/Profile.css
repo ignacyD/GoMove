@@ -69,14 +69,19 @@
 }
 
 .activity-title {
-    margin: 10px 0;
+    min-height: 40px;
+    max-height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     font-size: 18px;
     font-weight: bold;
     color: #333;
 }
 
 .activity-type {
-    font-size: 18px;
+    margin: 15px 0;
+    font-size:24px;
     color: #555;
 }
 
@@ -88,7 +93,6 @@
 }
 
 .activity-details {
-    margin-top: 20px;
     display: flex;
     flex-direction: column;
 }

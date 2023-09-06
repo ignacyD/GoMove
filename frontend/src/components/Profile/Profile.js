@@ -33,7 +33,6 @@ function Profile() {
                                     onClick={() => navigate(`/activity-page/${activity.activityId}`)}
                                 >
                                     <div className="activity-title">{activity.title}</div>
-                                    <hr/>
                                     <div className="activity-type">{iconSelector(activity.activityType)}</div>
                                     <div className="activity-details">
                                         <div className="activity-city">{activity.city}</div>
