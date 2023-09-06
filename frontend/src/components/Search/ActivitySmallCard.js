@@ -10,6 +10,7 @@ const ActivitySmallCard = ({activity, handleJoinActivity}) => {
     const isUserLogged = useContext(Context).isUserLogged;
     const setDisplayLoginForm = useContext(Context).setDisplayLoginForm;
 
+    const navigate = useNavigate();
 
     const geocoder = new window.google.maps.Geocoder();
     geocoder.geocode({ address: activity.address }, (results, status) => {
@@ -19,15 +20,8 @@ const ActivitySmallCard = ({activity, handleJoinActivity}) => {
             const cityComponent = place.address_components.find(
                 (component) => component.types.includes("locality")
             );
-            console.log(place)
         }
     });
-
-
-
-
-
-    const navigate = useNavigate();
 
     return (
         <div className="searched-activity-card">

@@ -1,7 +1,6 @@
 package com.codecool.goMove.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -43,9 +42,8 @@ public class User implements UserDetails {
     private Set<Activity> enrolledActivities;
     @Column(columnDefinition = "TEXT")
     private String description;
-
     @Column(columnDefinition = "TEXT")
-    private Byte userPhotoUrl;
+    private String userPhotoUrl;
     @Enumerated(EnumType.STRING)
     private Role role;
 
