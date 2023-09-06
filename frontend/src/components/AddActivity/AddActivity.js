@@ -61,6 +61,18 @@ const AddActivity = () => {
 
     function handleSubmit(e) {
         e.preventDefault();
+
+        if(activityType === ""){
+            alert("Choose correct activity type.")
+            return;
+        }
+
+        if (selectedAddress === "" || city === "") {
+            alert("Choose correct address.");
+            return;
+        }
+
+
         const activityId = UUID();
         fetch("http://localhost:8080/activities", {
             headers: {Authorization: localStorage.getItem("jwt"), "Content-Type": "application/json"},
@@ -95,7 +107,7 @@ const AddActivity = () => {
 
     function addHours(date, hours) {
         date.setHours(date.getHours() + hours);
-        return date.toLocaleString().substring(12, 17);
+        return date.toLocaleString().substring(11, 16);
     }
 
     function manageTime() {
@@ -139,7 +151,7 @@ const AddActivity = () => {
                 </div>
                 <div className="activity-type-field">
                     <label className="activity-type-label">Activity type</label>
-                    <div className="activities">
+                    <div className="activities ">
                         <div className={`${chosenOption === 'RUNNING' ? 'activity-add' : 'activity'}`}
                              onClick={() => handleChosenOption('RUNNING')}
                         >
@@ -168,7 +180,7 @@ const AddActivity = () => {
                 </div>
                 <div>
                     <label className="description-label">Description</label>
-                    <input
+                    <textarea
                         required={true}
                         className="description-input"
                         type="text"
@@ -204,7 +216,7 @@ const AddActivity = () => {
             {selectedAddress ?
                 <div className="google-maps">
                     <p>Selected Address: {selectedAddress}</p>
-                    <GoogleMapComponent height={'400px'} width={'1020px'} address={selectedAddress}/> </div> : <></>}
+                    <GoogleMapComponent height={'400px'} width={'1020px'} address={selectedAddress}/></div> : <></>}
         </div>
     ) : <></>;
 };
