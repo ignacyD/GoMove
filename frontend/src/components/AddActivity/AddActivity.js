@@ -22,6 +22,7 @@ const AddActivity = () => {
     const [city, setCity] = useState("");
     const [timeDisable, setTimeDisable] = useState(true);
     const [chosenOption, setChosenOption] = useState(null);
+    const [place , setPlace] = useState(null)
 
     const navigate = useNavigate();
 
@@ -40,18 +41,19 @@ const AddActivity = () => {
 
     const handlePlaceSelect = () => {
         const selectedPlace = window.autocomplete.getPlace();
+
         if (selectedPlace) {
             setSelectedAddress(selectedPlace.formatted_address);
         }
 
         const cityComponent = selectedPlace.address_components.find(
-            component => component.types.includes('locality')
+            (component) => component.types.includes("locality")
         );
         if (cityComponent) {
             setCity(cityComponent.long_name);
         }
 
-    }
+    };
 
     const {isLoaded} = useJsApiLoader({
         id: 'google-map-script',
