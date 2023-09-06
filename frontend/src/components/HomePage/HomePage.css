@@ -55,3 +55,8 @@
     border-radius: 6px;
     transition: transform .4s ease;
 }
+
+.no-more-activities {
+    display: grid;
+    place-items: center;
+}

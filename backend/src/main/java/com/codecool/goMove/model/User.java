@@ -43,8 +43,9 @@ public class User implements UserDetails {
     private Set<Activity> enrolledActivities;
     @Column(columnDefinition = "TEXT")
     private String description;
+
     @Column(columnDefinition = "TEXT")
-    private String userPhotoUrl;
+    private Byte userPhotoUrl;
     @Enumerated(EnumType.STRING)
     private Role role;
 

@@ -44,7 +44,7 @@ function HomePage() {
         }
     };
 
-    function chronologicalSort(a,b) {
+    function chronologicalSort(a, b) {
         const aDateTime = new Date(`${a.date} ${a.time}`);
         const bDateTime = new Date(`${b.date} ${b.time}`);
         return aDateTime - bDateTime;
@@ -88,14 +88,20 @@ function HomePage() {
 
     return (
         <div className='home-page'>
-            <div className='delete-activity' onClick={() => fetchNextActivity()}>
-                <FontAwesomeIcon icon={faXmark} size="2xl" style={{color: "#000000",}}/>
-            </div>
+
+            {activities.length > 0 ? (
+                <div className='delete-activity' onClick={() => fetchNextActivity()}>
+                    <FontAwesomeIcon icon={faXmark} size="2xl" style={{color: "#000000",}}/>
+                </div>
+
+            ) : <></>}
+
+
             <div className='card-activity'>
                 {activities.length > 0 ? (
                     <ActivityCard activity={activities[currentActivityIndex]}/>
                 ) : (
-                    <div>
+                    <div className={"no-more-activities"}>
                         <h3>
                             We don't have more activities with Your preferences
                         </h3>
@@ -111,17 +117,21 @@ function HomePage() {
                 )}
             </div>
 
-            {isUserLogged ?
-                <div className='accept-activity' onClick={handleAcceptActivity}>
-                    <FontAwesomeIcon icon={faCheck} size="2xl" style={{color: "#000000"}}/>
-                </div>
-                :
-                <div className='accept-activity' onClick={() => {
-                    setDisplayLoginForm(true);
-                }}>
-                    <FontAwesomeIcon icon={faCheck} size="2xl" style={{color: "#000000"}}/>
-                </div>
-            }
+            {activities.length > 0 ? (
+                isUserLogged ? (
+                    <div className='accept-activity' onClick={handleAcceptActivity}>
+                        <FontAwesomeIcon icon={faCheck} size="2xl" style={{color: "#000000"}}/>
+                    </div>
+                ) : (
+                    <div className='accept-activity' onClick={() => setDisplayLoginForm(true)}>
+                        <FontAwesomeIcon icon={faCheck} size="2xl" style={{color: "#000000"}}/>
+                    </div>
+                )
+            ) : (
+                <></>
+            )}
+
+
         </div>
     )
 }
