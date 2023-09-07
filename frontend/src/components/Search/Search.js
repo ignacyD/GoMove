@@ -1,8 +1,15 @@
-import {useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import ActivitySmallCard from "./ActivitySmallCard";
 import "./Search.css";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faAngleDown, faAngleUp} from "@fortawesome/free-solid-svg-icons";
+import {
+    faAngleDown,
+    faAngleUp,
+    faPersonBiking,
+    faPersonRunning,
+    faPersonSkating,
+    faPersonWalking
+} from "@fortawesome/free-solid-svg-icons";
 import {Context} from "../../App";
 
 function Search() {
@@ -15,11 +22,12 @@ function Search() {
     const [selectedCity, setSelectedCity] = useState("");
     const [dateFrom, setDateFrom] = useState("");
     const [dateTo, setDateTo] = useState("");
-    const [selectedActivityType, setSelectedActivityType] = useState("");
+    const [activityType, setActivityType] = useState("");
     const [cityOptionsVisible, setCityOptionsVisible] = useState(false);
     const [cityOptionsSuggestions, setCityOptionsSuggestions] = useState("");
     const [carouselIndex, setCarouselIndex] = useState(0);
     const [isInputActive, setInputActive] = useState(false);
+    const [chosenOption, setChosenOption] = useState(null);
 
     const today = new Date().toISOString().split("T")[0];
 
@@ -76,13 +84,13 @@ function Search() {
 
         let url = "http://localhost:8080/activities/future";
 
-        if (selectedCity !== "" || selectedActivityType !== "") {
+        if (selectedCity !== "" || activityType !== "") {
             url = "http://localhost:8080/activities/filter";
             if (selectedCity !== "") {
                 url += `?city=${selectedCity}`;
             }
-            if (selectedActivityType !== "") {
-                url += selectedCity !== "" ? `&type=${selectedActivityType}` : `?type=${selectedActivityType}`;
+            if (activityType !== "") {
+                url += selectedCity !== "" ? `&type=${activityType}` : `?type=${activityType}`;
             }
         }
 
@@ -103,17 +111,14 @@ function Search() {
     }
 
     function resetFilter() {
-        setSelectedActivityType("");
+        setActivityType("");
         setSelectedCity("");
         setCityOptionsSuggestions("")
         setDateFrom("");
         setDateTo("");
+        setChosenOption(null);
         getActivities();
     }
-
-    const handleOptionChange = (event) => {
-        setSelectedActivityType(event.target.value);
-    };
 
     const closeSelectCity = () => {
         setCityOptionsVisible(false);
@@ -177,6 +182,15 @@ function Search() {
             });
     }
 
+    const handleChosenOption = (option) => {
+        if (chosenOption === option) {
+            setChosenOption(null);
+            setActivityType("");
+        } else {
+            setChosenOption(option);
+            setActivityType(option);
+        }
+    };
 
     return (
         <div className="activity-search-page">
@@ -184,48 +198,36 @@ function Search() {
 
                 <h2>Activity search filters</h2>
                 <div className="choose-activity">
-                    <h4>Choose activity type</h4>
-                    <div>
-                        <input
-                            type="radio"
-                            value="RUNNING"
-                            checked={selectedActivityType === "RUNNING"}
-                            onChange={handleOptionChange}
-                        />
-                        Running
+                    <h4>Select activity type</h4>
+                    <div className={`${chosenOption === 'RUNNING' ? 'search-activity-add' : 'search-activity'}`}
+                         onClick={() => handleChosenOption('RUNNING')}
+                    >
+                        <FontAwesomeIcon icon={faPersonRunning} size="xl"/>
+                        <p>Running</p>
                     </div>
-                    <div>
-                        <input
-                            type="radio"
-                            value="CYCLING"
-                            checked={selectedActivityType === "CYCLING"}
-                            onChange={handleOptionChange}
-                        />
-                        Cycling
+                    <div className={`${chosenOption === 'WALKING' ? 'search-activity-add' : 'search-activity'}`}
+                         onClick={() => handleChosenOption('WALKING')}
+                    >
+                        <FontAwesomeIcon icon={faPersonWalking} size="xl"/>
+                        <p>Walking</p>
                     </div>
-                    <div>
-                        <input
-                            type="radio"
-                            value="SKATING"
-                            checked={selectedActivityType === "SKATING"}
-                            onChange={handleOptionChange}
-                        />
-                        Skating
+                    <div className={`${chosenOption === 'SKATING' ? 'search-activity-add' : 'search-activity'}`}
+                         onClick={() => handleChosenOption('SKATING')}
+                    >
+                        <FontAwesomeIcon icon={faPersonSkating} size="xl"/>
+                        <p>Skating</p>
                     </div>
-                    <div>
-                        <input
-                            type="radio"
-                            value="WALKING"
-                            checked={selectedActivityType === "WALKING"}
-                            onChange={handleOptionChange}
-                        />
-                        Walking
+                    <div className={`${chosenOption === 'CYCLING' ? 'search-activity-add' : 'search-activity'}`}
+                         onClick={() => handleChosenOption('CYCLING')}
+                    >
+                        <FontAwesomeIcon icon={faPersonBiking} size="xl"/>
+                        <p>Cycling</p>
                     </div>
                 </div>
                 <div>
                     <div className="select-city">
                         <h4>
-                            Select City
+                            Select city
                         </h4>
                         <input type="text" value={cityOptionsSuggestions}
                                placeholder={isInputActive ? '' : 'Type...'}
