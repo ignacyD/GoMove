@@ -1,6 +1,6 @@
 import {useContext, useState} from "react";
 import {useNavigate} from "react-router-dom";
-// import './AdditionalUserInfoForm.css'
+import './UpdateUserInfoForm.css'
 import Modal from "react-modal";
 import updateUserInfoModalStyles from "../../ModalStyles";
 import {useRef} from 'react';
@@ -51,7 +51,7 @@ function UpdateUserInfoForm() {
             <Modal
                 isOpen={true}
                 style={updateUserInfoModalStyles}
-                className="additional-info-modal"
+                className="update-user-info-modal"
                 onRequestClose={() => navigate("/profile")}
             >
                 <h4 className="additional-info-title">Edit profile info</h4>

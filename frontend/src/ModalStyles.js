@@ -1,4 +1,4 @@
-const loginFormStyles = {
+const loginFormModalStyles = {
     content: {
         position: 'absolute',
         background: 'white',
@@ -12,7 +12,7 @@ const loginFormStyles = {
         border: "4px solid #90ee90",
         color: "90ee90",
         boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-        transition: "height 0.5s, top 0.5s"
+        transition: "top 0.5s"
     }
 };
 
@@ -34,11 +34,11 @@ const activityAddedModalStyles = {
     }
 };
 
-const activityDeleteModalStyles = {
+const activityDeletedModalStyles = {
     content: {
         position: 'absolute',
         background: 'white',
-        top: "30%",
+        top: "10%",
         left: "35%",
         height: "25vh",
         width: "30vw",
@@ -59,7 +59,7 @@ const additionalProfileInfoModalStyles = {
         background: "white",
         flexDirection: "column",
         height: "20%",
-        top: "40vh",
+        top: "30%",
         left: "35%",
         transition: "height 0.5s, top 0.5s",
         border: "4px solid #90ee90",
@@ -77,7 +77,7 @@ const updateUserInfoModalStyles = {
         background: "white",
         flexDirection: "column",
         height: "20%",
-        top: "40vh",
+        top: "30%",
         left: "35%",
         transition: "height 0.5s, top 0.5s",
         border: "4px solid #90ee90",
@@ -87,5 +87,42 @@ const updateUserInfoModalStyles = {
         maxWidth: "400px",
     }
 };
-export default {loginFormStyles, activityAddedModalStyles, activityDeleteModalStyles, additionalProfileInfoModalStyles, updateUserInfoModalStyles};
+const noMoreActivitiesModalStyles = {
+    content: {
+        position: "absolute",
+        display: "flex",
+        background: "white",
+        flexDirection: "column",
+        height: "10%",
+        width: "30vw",
+        top: "5%",
+        left: "35%",
+        transition: "height 0.5s, top 0.5s",
+        border: "4px solid #90ee90",
+        borderRadius: "8px",
+        boxShadow: "0px 2px 10px rgba(0, 0, 0, 0.2)",
+        textAlign: "center",
+        maxWidth: "400px",
+    }
+}
+
+const joinedActivityModalStyles = {
+    content: {
+        position: "absolute",
+        display: "flex",
+        background: "white",
+        flexDirection: "column",
+        height: "10%",
+        width: "30vw",
+        top: "5%",
+        left: "35%",
+        transition: "height 0.5s, top 0.5s",
+        border: "4px solid #90ee90",
+        borderRadius: "8px",
+        boxShadow: "0px 2px 10px rgba(0, 0, 0, 0.2)",
+        textAlign: "center",
+        maxWidth: "400px",
+    }
+}
+export default {loginFormModalStyles, activityAddedModalStyles, activityDeletedModalStyles, additionalProfileInfoModalStyles, updateUserInfoModalStyles, noMoreActivitiesModalStyles, joinedActivityModalStyles};
 

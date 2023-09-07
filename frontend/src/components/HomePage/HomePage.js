@@ -5,6 +5,8 @@ import React, {useContext, useEffect, useState} from "react";
 import ActivityCard from "./ActivityCard";
 import {Context} from "../../App";
 import {Link} from 'react-router-dom';
+import ModalStyles from "../../ModalStyles";
+import Modal from "react-modal";
 
 function HomePage() {
     const isUserLogged = useContext(Context).isUserLogged;
@@ -13,6 +15,9 @@ function HomePage() {
 
     const [activities, setActivities] = useState([]);
     const [currentActivityIndex, setCurrentActivityIndex] = useState(0);
+    const [showNoMoreActivitiesModal, setShowNoMoreActivitiesModal] = useState(false);
+    const [showJoinedActivityModal, setShowJoinedActivityModal] = useState(false);
+
 
     useEffect(() => {
         fetchActivities();
@@ -54,11 +59,13 @@ function HomePage() {
         if (currentActivityIndex < activities.length - 1) {
             setCurrentActivityIndex(currentActivityIndex + 1);
         } else {
-            alert('Nie ma więcej aktywności. Chcesz wrócić do pierwszej?');
+            setShowNoMoreActivitiesModal(true);
+            setTimeout(() => {
+                setShowNoMoreActivitiesModal(false)
+            }, 3000)
             fetchActivities();
         }
     };
-
     const enrollUserToActivity = () => {
         fetch(`http://localhost:8080/users/enroll/${userData.userId}/${activities[currentActivityIndex].activityId}`, {
             method: 'PATCH',
@@ -82,13 +89,39 @@ function HomePage() {
 
     const handleAcceptActivity = async () => {
         await enrollUserToActivity();
-        alert('Dodano do ulubionych!');
+        setShowJoinedActivityModal(true);
+        setTimeout(() => {
+            setShowJoinedActivityModal(false);
+        }, 3000)
         await fetchNextActivity();
     };
 
     return (
         <div className='home-page'>
-
+            <Modal
+                isOpen={showJoinedActivityModal}
+                onRequestClose={() => setShowJoinedActivityModal(false)}
+                contentLabel="joined-activity-modal"
+                style={ModalStyles.joinedActivityModalStyles}
+                className="joined-activity-modal"
+            >
+                <h3>
+                    Succesfully joined to activity!
+                </h3>
+            </Modal>
+            <Modal
+                isOpen={showNoMoreActivitiesModal}
+                onRequestClose={() => setShowNoMoreActivitiesModal(false)}
+                contentLabel="no-more-activities-modal"
+                style={ModalStyles.noMoreActivitiesModalStyles}
+                className="no-more-activities-modal"
+            >
+                <h3>
+                    There are no activities left.
+                    <br/>
+                    You've been taken back to first one.
+                </h3>
+            </Modal>
             {activities.length > 0 ? (
                 <div className='delete-activity' onClick={() => fetchNextActivity()}>
                     <FontAwesomeIcon icon={faXmark} size="2xl" style={{color: "#000000",}}/>

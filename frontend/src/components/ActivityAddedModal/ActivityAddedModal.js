@@ -1,5 +1,5 @@
 function ActivityAddedModal() {
-    return <div className="modal-content">Activity added</div>
+    return <h3>Activity added</h3>
 }
 
 export default ActivityAddedModal;

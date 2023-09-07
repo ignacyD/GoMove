@@ -63,9 +63,8 @@ function App() {
                     isOpen={displayLoginForm || displayRegistrationForm}
                     onRequestClose={() => closeForms()}
                     contentLabel="Login-modal"
-                    style={ModalStyles.loginFormStyles}
+                    style={ModalStyles.loginFormModalStyles}
                     className="login-modal"
-                    appElement={document.querySelector("#root") || undefined}
                 >
                     {displayLoginForm && <LoginForm setDisplayLoginForm={setDisplayLoginForm}
                                                     setDisplayRegistrationForm={setDisplayRegistrationForm}
@@ -77,6 +76,7 @@ function App() {
                 <Modal
                     isOpen={displayActivityAddedModal}
                     style={ModalStyles.activityAddedModalStyles}
+                    className="activity-added-modal"
                     appElement={document.querySelector("#root") || undefined}
                 >
                     {displayActivityAddedModal && <ActivityAddedModal/>}
@@ -84,7 +84,8 @@ function App() {
                 <Modal
                     isOpen={displayActivityDeleteModal}
                     onRequestClose={() => closeForms()}
-                    style={ModalStyles.activityDeleteModalStyles}
+                    style={ModalStyles.activityDeletedModalStyles}
+                    className="activity-deleted-modal"
                     appElement={document.querySelector("#root") || undefined}
                 >
                     {displayActivityDeleteModal && <ActivityDeleteModal/>}
