@@ -68,6 +68,7 @@ function Navbar({setDisplayLoginForm, handleLogout}) {
                     </div>
                 </div>
             </div>
+            <div className="login-and-profile-container">
             {
                 isUserLogged && <Link to='/profile' className='nav-btn'>
                     <li>Profile</li>
@@ -84,6 +85,7 @@ function Navbar({setDisplayLoginForm, handleLogout}) {
                     Logout
                 </button>
             }
+            </div>
         </nav>
     );
 }

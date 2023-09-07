@@ -16,15 +16,27 @@
     display: flex;
 }
 
+.logo {
+    width: calc(30vw - 20px);
+    display: flex;
+    justify-content: left;
+}
+
+.login-and-profile-container {
+    display: flex;
+    justify-content: right;
+    width: calc(30vw - 20px);
+}
+
 .PC-menu {
-    width: calc(80vw - 20px);
+    justify-content: center;
+    width: 40vw;
 }
 
 .navbar .PC-menu .nav-links {
     position: relative;
-    width: 30vw;
+    width: 40vw;
     font-size: 16px;
-    left: calc(15vw - 20px);
     list-style: none;
     display: flex;
     align-items: center;
