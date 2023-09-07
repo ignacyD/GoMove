@@ -20,9 +20,12 @@ const AddActivity = () => {
     const [date, setDate] = useState("");
     const [time, setTime] = useState("");
     const [city, setCity] = useState("");
+    const [street , setStreet] = useState("");
+    const [streetNumber , setStreetNumber] = useState("");
+    const [country , setCountry] = useState("");
     const [timeDisable, setTimeDisable] = useState(true);
     const [chosenOption, setChosenOption] = useState(null);
-    const [place , setPlace] = useState(null)
+
 
     const navigate = useNavigate();
 
@@ -53,6 +56,29 @@ const AddActivity = () => {
             setCity(cityComponent.long_name);
         }
 
+        const streetComponent = selectedPlace.address_components.find(
+            (component) => component.types.includes("route")
+        );
+        if (streetComponent) {
+            setStreet(streetComponent.long_name);
+        }
+
+        const streetNumberComponent = selectedPlace.address_components.find(
+            (component) => component.types.includes("street_number")
+        );
+        if (streetNumberComponent) {
+            setStreetNumber(streetNumberComponent.long_name);
+        }
+
+        const countryComponent = selectedPlace.address_components.find(
+            (component) => component.types.includes("country")
+        );
+        if (countryComponent) {
+            setCountry(countryComponent.long_name);
+        }
+
+        console.log(selectedPlace)
+
     };
 
     const {isLoaded} = useJsApiLoader({
@@ -69,8 +95,8 @@ const AddActivity = () => {
             return;
         }
 
-        if (selectedAddress === "" || city === "") {
-            alert("Choose correct address.");
+        if (![selectedAddress, city, street, streetNumber, country].every(Boolean)) {
+            alert("Choose correct address. Address must include city, street, and street number.");
             return;
         }
 
@@ -87,6 +113,9 @@ const AddActivity = () => {
                 },
                 "title": title,
                 "city": city,
+                "street": street,
+                "streetNumber": streetNumber,
+                "country": country,
                 "address": selectedAddress,
                 "date": date,
                 "time": time,
@@ -218,6 +247,7 @@ const AddActivity = () => {
             {selectedAddress ?
                 <div className="google-maps">
                     <p>Selected Address: {selectedAddress}</p>
+                    <p>city {city} street: {street} streetNumber: {streetNumber} country: {country} </p>
                     <GoogleMapComponent height={'400px'} width={'1020px'} address={selectedAddress}/></div> : <></>}
         </div>
     ) : <></>;

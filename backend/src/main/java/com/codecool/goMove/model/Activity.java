@@ -32,6 +32,14 @@ public class Activity {
     private String title;
     @NotBlank(message = "city is mandatory")
     private String city;
+
+    @NotBlank(message = "street is mandatory")
+    private String street;
+    @NotBlank(message = "street number is mandatory")
+    private String streetNumber;
+    @NotBlank(message = "country is mandatory")
+    private String country;
+
     @NotBlank(message = "address is mandatory")
     private String address;
     @NotNull(message = "date is mandatory")
