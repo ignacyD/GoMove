@@ -35,7 +35,7 @@ public class Activity {
 
     @NotBlank(message = "street is mandatory")
     private String street;
-    @NotBlank(message = "street number is mandatory")
+    //@NotBlank(message = "street number is mandatory")
     private String streetNumber;
     @NotBlank(message = "country is mandatory")
     private String country;
