@@ -10,20 +10,9 @@
     height: 5vh;
 }
 
-.navbar .logo {
-    font-size: 1.75rem;
-    font-weight: bold;
-    margin-left: 30px;
-    width: calc(20vw - 20px);
-}
-
-.navbar .logo .logo-btn {
-    text-decoration: none;
-    color: lightgreen;
-}
-
-.navbar .logo .logo-btn:hover {
-    color: greenyellow;
+.navbar .logo-btn img {
+    max-width: 150px;
+    height: auto;
 }
 
 .PC-menu {

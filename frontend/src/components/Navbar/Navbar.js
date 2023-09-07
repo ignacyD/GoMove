@@ -6,6 +6,7 @@ import {faFacebook, faYoutube} from "@fortawesome/free-brands-svg-icons";
 import {faChevronLeft, faLaptopCode, faX} from "@fortawesome/free-solid-svg-icons";
 import MobileMenu from "../MobileMenu/MobileMenu";
 import {Context} from "../../App";
+import logo from "../../assets/images/logo.png"
 
 function Navbar({setDisplayLoginForm, handleLogout}) {
 
@@ -23,7 +24,9 @@ function Navbar({setDisplayLoginForm, handleLogout}) {
     return (
         <nav className="navbar">
             <div className='logo'>
-                <Link to='/' className='logo-btn'>Go Move.</Link>
+                <Link to='/' className='logo-btn'>
+                    <img src={logo} alt="logo GoMove"/>
+                </Link>
             </div>
             <div className="mobile-menu">
                 <MobileMenu/>
