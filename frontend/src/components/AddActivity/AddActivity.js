@@ -186,7 +186,6 @@ const AddActivity = () => {
                     <Autocomplete
                         onLoad={(autocomplete) => (window.autocomplete = autocomplete)}
                         onPlaceChanged={handlePlaceSelect}
-                        readOnly
                     >
                         <input type="text"
                                placeholder="Enter a location"
