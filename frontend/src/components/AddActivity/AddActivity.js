@@ -32,6 +32,10 @@ const AddActivity = () => {
     const userId = localStorage.getItem("userId");
     const today = new Date().toISOString().substring(0, 10);
 
+    const maxDate = new Date();
+    maxDate.setFullYear(maxDate.getFullYear() + 1);
+    const maxDateISO = maxDate.toISOString().split('T')[0];
+
     const handleChosenOption = (option) => {
         if (chosenOption === option) {
             setChosenOption(null);
@@ -44,6 +48,12 @@ const AddActivity = () => {
 
     const handlePlaceSelect = () => {
         const selectedPlace = window.autocomplete.getPlace();
+
+
+        if (!selectedPlace || !selectedPlace.address_components ) {
+            alert("Choose a valid address.");
+            return;
+        }
 
         if (selectedPlace) {
             setSelectedAddress(selectedPlace.formatted_address);
@@ -176,8 +186,12 @@ const AddActivity = () => {
                     <Autocomplete
                         onLoad={(autocomplete) => (window.autocomplete = autocomplete)}
                         onPlaceChanged={handlePlaceSelect}
+                        readOnly
                     >
-                        <input type="text" placeholder="Enter a location" required={true}/>
+                        <input type="text"
+                               placeholder="Enter a location"
+                               required={true}
+                        />
                     </Autocomplete>
                 </div>
                 <div className="activity-type-field">
@@ -228,6 +242,7 @@ const AddActivity = () => {
                         id="date"
                         name="date"
                         min={today}
+                        max={maxDateISO}
                         onChange={(e) => dateHandler(e)}/>
                 </div>
                 <div className="time-field">
@@ -247,7 +262,6 @@ const AddActivity = () => {
             {selectedAddress ?
                 <div className="google-maps">
                     <p>Selected Address: {selectedAddress}</p>
-                    <p>city {city} street: {street} streetNumber: {streetNumber} country: {country} </p>
                     <GoogleMapComponent height={'400px'} width={'1020px'} address={selectedAddress}/></div> : <></>}
         </div>
     ) : <></>;
