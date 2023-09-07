@@ -20,14 +20,21 @@ const AddActivity = () => {
     const [date, setDate] = useState("");
     const [time, setTime] = useState("");
     const [city, setCity] = useState("");
+    const [street, setStreet] = useState("");
+    const [streetNumber, setStreetNumber] = useState("");
+    const [country, setCountry] = useState("");
     const [timeDisable, setTimeDisable] = useState(true);
     const [chosenOption, setChosenOption] = useState(null);
-    const [place , setPlace] = useState(null)
+
 
     const navigate = useNavigate();
 
     const userId = localStorage.getItem("userId");
     const today = new Date().toISOString().substring(0, 10);
+
+    const maxDate = new Date();
+    maxDate.setFullYear(maxDate.getFullYear() + 1);
+    const maxDateISO = maxDate.toISOString().split('T')[0];
 
     const handleChosenOption = (option) => {
         if (chosenOption === option) {
@@ -42,9 +49,14 @@ const AddActivity = () => {
     const handlePlaceSelect = () => {
         const selectedPlace = window.autocomplete.getPlace();
 
+        if (!selectedPlace || !selectedPlace.address_components) {
+            return;
+        }
+
         if (selectedPlace) {
             setSelectedAddress(selectedPlace.formatted_address);
         }
+
 
         const cityComponent = selectedPlace.address_components.find(
             (component) => component.types.includes("locality")
@@ -52,6 +64,29 @@ const AddActivity = () => {
         if (cityComponent) {
             setCity(cityComponent.long_name);
         }
+
+        const streetComponent = selectedPlace.address_components.find(
+            (component) => component.types.includes("route")
+        );
+        if (streetComponent) {
+            setStreet(streetComponent.long_name);
+        }
+
+        const streetNumberComponent = selectedPlace.address_components.find(
+            (component) => component.types.includes("street_number")
+        );
+        if (streetNumberComponent) {
+            setStreetNumber(streetNumberComponent.long_name);
+        }
+
+        const countryComponent = selectedPlace.address_components.find(
+            (component) => component.types.includes("country")
+        );
+        if (countryComponent) {
+            setCountry(countryComponent.long_name);
+        }
+
+        console.log(selectedPlace)
 
     };
 
@@ -64,13 +99,18 @@ const AddActivity = () => {
     function handleSubmit(e) {
         e.preventDefault();
 
-        if(activityType === ""){
+        if (!selectedAddress ) {
+            alert("Choose correct address. Address must include city, street, and street number.");
+            return;
+        }
+
+        if (activityType === "") {
             alert("Choose correct activity type.")
             return;
         }
 
-        if (selectedAddress === "" || city === "") {
-            alert("Choose correct address.");
+        if (![selectedAddress, city, street].every(Boolean)) {
+            alert("Choose correct address. Address must include city, street, and street number.");
             return;
         }
 
@@ -87,6 +127,9 @@ const AddActivity = () => {
                 },
                 "title": title,
                 "city": city,
+                "street": street,
+                "streetNumber": streetNumber,
+                "country": country,
                 "address": selectedAddress,
                 "date": date,
                 "time": time,
@@ -148,7 +191,10 @@ const AddActivity = () => {
                         onLoad={(autocomplete) => (window.autocomplete = autocomplete)}
                         onPlaceChanged={handlePlaceSelect}
                     >
-                        <input type="text" placeholder="Enter a location" required={true}/>
+                        <input type="text"
+                               placeholder="Enter a location"
+                               required={true}
+                        />
                     </Autocomplete>
                 </div>
                 <div className="activity-type-field">
@@ -199,6 +245,7 @@ const AddActivity = () => {
                         id="date"
                         name="date"
                         min={today}
+                        max={maxDateISO}
                         onChange={(e) => dateHandler(e)}/>
                 </div>
                 <div className="time-field">
