@@ -13,7 +13,6 @@ function UpdateUserInfoForm() {
     const [description, setDescription] = useState(userData.description);
     const navigate = useNavigate();
     const [selectedImage, setSelectedImage] = useState(null);
-    // TODO defaultowo wyświetlane aktualne zdjęcie
     const fileInputRef = useRef(null);
     const handleImageUpload = (event) => {
         const imageFile = event.target.files[0];
@@ -70,7 +69,6 @@ function UpdateUserInfoForm() {
                                     ref={fileInputRef}
                                     type="file"
                                     accept="image/*"
-                                    // TODO defaultowo wyświetlane aktualne zdjęcie
                                     onChange={handleImageUpload}
                                     onClick={() => console.log(userData)}
                                     style={{display: 'none'}}

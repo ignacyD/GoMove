@@ -16,6 +16,7 @@ function RegistrationForm({setDisplayLoginForm, setDisplayRegistrationForm}) {
 
     const setIsUserLogged = useContext(Context).setIsUserLogged;
 
+
     const handleUsernameChange = (e) => {
         setUsername(e.target.value);
     };
@@ -84,7 +85,6 @@ function RegistrationForm({setDisplayLoginForm, setDisplayRegistrationForm}) {
         }
         setErrorMessage(errors);
         return !(!validatePassword(password) || errorMessage.length > 0);
-
     }
 
     function validateEmail(email) {

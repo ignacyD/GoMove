@@ -1,7 +1,7 @@
 import './ActivityPage.css';
 import {useContext, useEffect, useState} from "react";
-import GoogleMapComponent from "../GoogleMap/GoogleMap";
-import ActivityComments from "../ActivityComments/ActivityComments";
+import GoogleMapComponent from "../../components/GoogleMap/GoogleMap";
+import ActivityComments from "../../components/ActivityComments/ActivityComments";
 import {
     faCalendarDays,
     faLocationPin,
@@ -13,7 +13,7 @@ import {
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {useParams} from "react-router-dom";
 import {Context} from "../../App";
-import {iconSelector} from '../IconSelector'
+import {iconSelector} from '../../components/IconSelector'
 
 function ActivityPage() {
     const userData = useContext(Context).userData;

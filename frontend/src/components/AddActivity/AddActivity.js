@@ -36,17 +36,17 @@ const AddActivity = () => {
     maxDate.setFullYear(maxDate.getFullYear() + 1);
     const maxDateISO = maxDate.toISOString().split('T')[0];
 
+    useEffect(() => {
+        manageTime();
+    }, [date])
+
     const handleChosenOption = (option) => {
-        if (chosenOption === option) {
-            setChosenOption(null);
-            setActivityType(null);
-        } else {
-            setChosenOption(option);
-            setActivityType(option);
-        }
+        const value = chosenOption === option ? null : option;
+        setChosenOption(value);
+        setActivityType(value);
     };
 
-    const clearAddress =() => {
+    const clearAddress = () => {
         setSelectedAddress("");
         setCity("");
         setStreet("");
@@ -60,45 +60,45 @@ const AddActivity = () => {
         if (!selectedPlace || !selectedPlace.address_components) {
             clearAddress();
             return;
-        } else {
-            setSelectedAddress(selectedPlace.formatted_address);
-            const cityComponent = selectedPlace.address_components.find(
-                (component) => component.types.includes("locality")
-            );
-            if (cityComponent) {
-                setCity(cityComponent.long_name);
-            } else {
-                setCity("");
-            }
-
-            const streetComponent = selectedPlace.address_components.find(
-                (component) => component.types.includes("route")
-            );
-            if (streetComponent) {
-                setStreet(streetComponent.long_name);
-            } else {
-                setStreet("");
-            }
-
-            const streetNumberComponent = selectedPlace.address_components.find(
-                (component) => component.types.includes("street_number")
-            );
-            if (streetNumberComponent) {
-                setStreetNumber(streetNumberComponent.long_name);
-            } else {
-                setStreetNumber("");
-            }
-
-            const countryComponent = selectedPlace.address_components.find(
-                (component) => component.types.includes("country")
-            );
-            if (countryComponent) {
-                setCountry(countryComponent.long_name);
-            } else {
-                setCountry("");
-            }
-
         }
+        setSelectedAddress(selectedPlace.formatted_address);
+        const cityComponent = selectedPlace.address_components.find(
+            (component) => component.types.includes("locality")
+        );
+        if (cityComponent) {
+            setCity(cityComponent.long_name);
+        } else {
+            setCity("");
+        }
+
+        const streetComponent = selectedPlace.address_components.find(
+            (component) => component.types.includes("route")
+        );
+        if (streetComponent) {
+            setStreet(streetComponent.long_name);
+        } else {
+            setStreet("");
+        }
+
+        const streetNumberComponent = selectedPlace.address_components.find(
+            (component) => component.types.includes("street_number")
+        );
+        if (streetNumberComponent) {
+            setStreetNumber(streetNumberComponent.long_name);
+        } else {
+            setStreetNumber("");
+        }
+
+        const countryComponent = selectedPlace.address_components.find(
+            (component) => component.types.includes("country")
+        );
+        if (countryComponent) {
+            setCountry(countryComponent.long_name);
+        } else {
+            setCountry("");
+        }
+
+
         console.log(selectedPlace)
 
     };
@@ -151,15 +151,15 @@ const AddActivity = () => {
                 "activityPhotoUrl": null
             })
         }).then(response => {
-            if (response.status === 200) {
-                setDisplayActivityAddedModal(true);
-                setTimeout(() => {
-                    setDisplayActivityAddedModal(false)
-                    navigate(`/activity-page/${activityId}`)
-                }, 3000)
-            } else {
-                console.log("something went wrong")
+            if (response.status !== 200) {
+                console.error("something went wrong");
+                return;
             }
+            setDisplayActivityAddedModal(true);
+            setTimeout(() => {
+                setDisplayActivityAddedModal(false)
+                navigate(`/activity-page/${activityId}`)
+            }, 3000)
         })
     }
 
@@ -179,9 +179,7 @@ const AddActivity = () => {
         setTimeDisable(false);
     }
 
-    useEffect(() => {
-        manageTime();
-    }, [date])
+
 
     return isLoaded ? (
 

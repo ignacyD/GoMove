@@ -38,7 +38,7 @@ function Profile() {
                                         <div className="activity-city">{activity.city}</div>
                                         <div className="activity-date-time">
                                             <span className="activity-date">{activity.date + " "}</span>
-                                            <span className="activity-time">{" "+ activity.time.substring(0,5)}</span>
+                                            <span className="activity-time">{" " + activity.time.substring(0, 5)}</span>
                                         </div>
                                     </div>
                                     <img src={testPhoto} alt={activity.title} className="activity-image"/>
@@ -60,18 +60,13 @@ function Profile() {
     }
 
     const handleIndexChange = (amount, type) => {
-        if (type === 'owned') {
-            const newIndex = carouselIndex[type] + amount;
-            if (newIndex >= 0 && newIndex <= allUserActivities.length - 5) {
-                setCarouselIndex({...carouselIndex, [type]: newIndex});
-            }
-        } else if (type === 'takePart') {
-            const newIndex = carouselIndex[type] + amount;
-            if (newIndex >= 0 && newIndex <= allUserActivities.length - 5) {
-                setCarouselIndex({...carouselIndex, [type]: newIndex});
-            }
+        const newIndex = carouselIndex[type] + amount;
+        if (newIndex >= 0 && newIndex <= allUserActivities.length - 5) {
+            setCarouselIndex({...carouselIndex, [type]: newIndex});
         }
     }
+
+
     useEffect(() => {
         const displayedActivities = document.querySelector('.activities-container');
         if (displayedActivities) {
