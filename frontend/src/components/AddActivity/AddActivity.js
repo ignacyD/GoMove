@@ -46,46 +46,59 @@ const AddActivity = () => {
         }
     };
 
+    const clearAddress =() => {
+        setSelectedAddress("");
+        setCity("");
+        setStreet("");
+        setStreetNumber("");
+        setCountry("");
+    }
+
     const handlePlaceSelect = () => {
         const selectedPlace = window.autocomplete.getPlace();
 
         if (!selectedPlace || !selectedPlace.address_components) {
+            clearAddress();
             return;
-        }
-
-        if (selectedPlace) {
+        } else {
             setSelectedAddress(selectedPlace.formatted_address);
+            const cityComponent = selectedPlace.address_components.find(
+                (component) => component.types.includes("locality")
+            );
+            if (cityComponent) {
+                setCity(cityComponent.long_name);
+            } else {
+                setCity("");
+            }
+
+            const streetComponent = selectedPlace.address_components.find(
+                (component) => component.types.includes("route")
+            );
+            if (streetComponent) {
+                setStreet(streetComponent.long_name);
+            } else {
+                setStreet("");
+            }
+
+            const streetNumberComponent = selectedPlace.address_components.find(
+                (component) => component.types.includes("street_number")
+            );
+            if (streetNumberComponent) {
+                setStreetNumber(streetNumberComponent.long_name);
+            } else {
+                setStreetNumber("");
+            }
+
+            const countryComponent = selectedPlace.address_components.find(
+                (component) => component.types.includes("country")
+            );
+            if (countryComponent) {
+                setCountry(countryComponent.long_name);
+            } else {
+                setCountry("");
+            }
+
         }
-
-
-        const cityComponent = selectedPlace.address_components.find(
-            (component) => component.types.includes("locality")
-        );
-        if (cityComponent) {
-            setCity(cityComponent.long_name);
-        }
-
-        const streetComponent = selectedPlace.address_components.find(
-            (component) => component.types.includes("route")
-        );
-        if (streetComponent) {
-            setStreet(streetComponent.long_name);
-        }
-
-        const streetNumberComponent = selectedPlace.address_components.find(
-            (component) => component.types.includes("street_number")
-        );
-        if (streetNumberComponent) {
-            setStreetNumber(streetNumberComponent.long_name);
-        }
-
-        const countryComponent = selectedPlace.address_components.find(
-            (component) => component.types.includes("country")
-        );
-        if (countryComponent) {
-            setCountry(countryComponent.long_name);
-        }
-
         console.log(selectedPlace)
 
     };
@@ -99,7 +112,7 @@ const AddActivity = () => {
     function handleSubmit(e) {
         e.preventDefault();
 
-        if (!selectedAddress ) {
+        if (!selectedAddress) {
             alert("Choose correct address. Address must include city, street, and street number.");
             return;
         }
