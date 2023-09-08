@@ -99,7 +99,6 @@ const AddActivity = () => {
             }
 
         }
-
         console.log(selectedPlace)
 
     };
