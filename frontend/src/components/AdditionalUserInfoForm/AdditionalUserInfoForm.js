@@ -11,15 +11,12 @@ function AdditionalUserInfoForm() {
     const [description, setDescription] = useState("");
     const navigate = useNavigate();
     const [selectedImage, setSelectedImage] = useState(null);
-    const fileInputRef = useRef(null);
+    const uploadImageRef = useRef(null);
     const handleImageUpload = (event) => {
         const imageFile = event.target.files[0];
         console.log(imageFile);
         console.log(URL.createObjectURL(imageFile))
         setSelectedImage(URL.createObjectURL(imageFile));
-    };
-    const handleImageButtonClick = () => {
-        fileInputRef.current.click();
     };
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -56,7 +53,7 @@ function AdditionalUserInfoForm() {
                     <div className="form-container">
                         <div>
                             <div>
-                                <button className="custom-file-button" onClick={handleImageButtonClick}>
+                                <button className="custom-file-button" type="button" onClick={() => uploadImageRef.current.click()}>
                                     <img className='profile-picture'
                                          src={selectedImage ? selectedImage : 'blank-profile-picture.png'}></img>
                                     <div className='change-photo-button'>
@@ -64,7 +61,7 @@ function AdditionalUserInfoForm() {
                                     </div>
                                 </button>
                                 <input
-                                    ref={fileInputRef}
+                                    ref={uploadImageRef}
                                     type="file"
                                     accept="image/*"
                                     onChange={handleImageUpload}

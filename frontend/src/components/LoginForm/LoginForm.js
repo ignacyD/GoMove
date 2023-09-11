@@ -10,14 +10,6 @@ function LoginForm({setDisplayLoginForm, setDisplayRegistrationForm}) {
 
     const setIsUserLogged = useContext(Context).setIsUserLogged;
 
-    const handleUsernameChange = (e) => {
-        setUsername(e.target.value);
-    };
-
-    const handlePasswordChange = (e) => {
-        setPassword(e.target.value);
-    };
-
     const handleOpenRegisterForm = () => {
         setDisplayRegistrationForm(true);
         setDisplayLoginForm(false);
@@ -64,7 +56,7 @@ function LoginForm({setDisplayLoginForm, setDisplayRegistrationForm}) {
                     type="text"
                     id="username"
                     value={username}
-                    onChange={handleUsernameChange}
+                    onChange={(e) => setUsername(e.target.value)}
                 ></input>
             </div>
             <div className="password-field">
@@ -74,7 +66,7 @@ function LoginForm({setDisplayLoginForm, setDisplayRegistrationForm}) {
                     type="password"
                     id="password"
                     value={password}
-                    onChange={handlePasswordChange}
+                    onChange={(e) => setPassword(e.target.value)}
                 ></input>
             </div>
             {showErrorMessage &&
