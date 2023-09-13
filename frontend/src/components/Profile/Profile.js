@@ -163,7 +163,7 @@ function Profile() {
                     <div className="profile-picture-container">
                         <img
                             className="profile-picture"
-                            src={userData.userPhotoUrl}
+                            src={'data:image/jpeg;base64,' + userData.userPhoto}
                             alt="Profile picture"
                         />
                     </div>

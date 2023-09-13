@@ -42,8 +42,10 @@ public class User implements UserDetails {
     private Set<Activity> enrolledActivities;
     @Column(columnDefinition = "TEXT")
     private String description;
-    @Column(columnDefinition = "TEXT")
-    private String userPhotoUrl;
+    @JsonIgnore
+    private String photoName;
+    @Transient
+    private byte[] userPhoto;
     @Enumerated(EnumType.STRING)
     private Role role;
 

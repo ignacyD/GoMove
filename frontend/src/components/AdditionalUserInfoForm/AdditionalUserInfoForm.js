@@ -14,9 +14,8 @@ function AdditionalUserInfoForm() {
     const fileInputRef = useRef(null);
     const handleImageUpload = (event) => {
         const imageFile = event.target.files[0];
-        console.log(imageFile);
-        console.log(URL.createObjectURL(imageFile))
-        setSelectedImage(URL.createObjectURL(imageFile));
+        const base64Data = btoa(imageFile);
+        setSelectedImage(base64Data);
     };
     const handleImageButtonClick = () => {
         fileInputRef.current.click();
@@ -31,7 +30,7 @@ function AdditionalUserInfoForm() {
                 "city": city,
                 "preferredActivity": preferredActivity,
                 "description": description,
-                "userPhotoUrl": selectedImage
+                "userPhoto": selectedImage
             })
         }).then(response => {
             if (response.status === 200) {
