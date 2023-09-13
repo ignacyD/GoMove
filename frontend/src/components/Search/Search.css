@@ -19,6 +19,22 @@
 .activity-search-filters h4 {
     margin-top: 0;
 }
+.choose-activity-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.search-activity {
+    flex-basis: 30%;
+    margin-bottom: 20px;
+}
+
+.search-activity-add {
+    flex-basis: 30%;
+    margin-bottom: 20px;
+}
+
 
 .choose-activity, .select-city, .date-filters {
     padding: 20px;
@@ -41,9 +57,9 @@
     margin-top: 10px;
     color: #2a2a2a;
     text-decoration: none;
-    border-color: black;
     border-radius: 6px;
     transition: transform .4s ease, background-color .4s ease;
+    border: none;
 }
 
 .filter-button:hover, .reset-filters-button:hover {
@@ -163,6 +179,17 @@
     transition: transform .5s, background-color .5s;
 }
 
+.manage-searched-buttons button.disabled-button{
+    transform: scale(1);
+    cursor: default;
+    background-color: darkgrey;
+    color:grey;
+}
+.manage-searched-buttons button.disabled-button:hover{
+    transform: scale(1);
+    background-color: darkgrey;
+}
+
 .manage-searched-buttons button:nth-child(2) svg {
     position: relative;
     top: 2px;
@@ -202,6 +229,7 @@
     background-color: greenyellow;
     border-radius: 15px;
     cursor: pointer;
+    /*transform: scale(1.2);*/
     border: 1px solid greenyellow;
     transition: transform .5s;
 }

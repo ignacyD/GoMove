@@ -48,6 +48,7 @@ function Profile() {
                     </div>
                     <div className='activities-in-profile-swipe-right-container'>
                         <button className="activities-in-profile-swipe-right-button"
+                                style={{visibility: activities.length <= 5 ? 'hidden' : 'visible'}}
                                 onClick={() => handleIndexChange(1, type)}>
                             <FontAwesomeIcon icon={faChevronRight}/>
                         </button>
@@ -65,60 +66,41 @@ function Profile() {
             setCarouselIndex({...carouselIndex, [type]: newIndex});
         }
     }
-
-
-    useEffect(() => {
-        const displayedActivities = document.querySelector('.activities-container');
+    const manageCarouselChange = (index, activities, order) => {
+        const displayedActivities = document.querySelectorAll('.activities-container')[order];
         if (displayedActivities) {
-            const swipeLeftButton = document.querySelector('.activities-in-profile-swipe-left-container')
-            const swipeRightButton = document.querySelector('.activities-in-profile-swipe-right-container')
-            if (carouselIndex.takePart <= 0) {
-                swipeLeftButton.style.opacity = 0;
-                setTimeout(() => {
-                    swipeLeftButton.style.visibility = 'hidden';
-                }, 500)
+            const swipeLeftButton = document.querySelectorAll('.activities-in-profile-swipe-left-container')[order]
+            const swipeRightButton = document.querySelectorAll('.activities-in-profile-swipe-right-container')[order]
+            if (index <= 0) {
+                hideButton(swipeLeftButton)
             } else {
-                swipeLeftButton.style.opacity = 1;
-                swipeLeftButton.style.visibility = 'visible';
+                displayButton(swipeLeftButton)
             }
-            if (carouselIndex.takePart > allUserActivities.length - 6) {
-                swipeRightButton.style.opacity = 0;
-                setTimeout(() => {
-                    swipeRightButton.style.visibility = 'hidden';
-                }, 500)
+            if (index > activities.length - 6) {
+                hideButton(swipeRightButton)
             } else {
-                swipeRightButton.style.opacity = 1;
-                swipeRightButton.style.visibility = 'visible';
+                displayButton(swipeRightButton)
             }
-            displayedActivities.style.right = `${carouselIndex.takePart * 230 + 'px'}`
+            displayedActivities.style.right = `${index * 230 + 'px'}`
         }
+    }
+    const displayButton = (button) => {
+        button.style.opacity = 1;
+        button.style.visibility = 'visible';
+    }
+    const hideButton = (button) => {
+        button.style.opacity = 0;
+        setTimeout(() => {
+            button.style.visibility = 'hidden';
+        }, 500)
+    }
+    useEffect(() => {
+        manageCarouselChange(carouselIndex.takePart, allUserActivities, 0)
     }, [carouselIndex.takePart])
 
+
     useEffect(() => {
-        const displayedActivities = document.querySelectorAll('.activities-container')[1];
-        if (displayedActivities) {
-            const swipeLeftButton = document.querySelectorAll('.activities-in-profile-swipe-left-container')[1]
-            const swipeRightButton = document.querySelectorAll('.activities-in-profile-swipe-right-container')[1]
-            if (carouselIndex.owned <= 0) {
-                swipeLeftButton.style.opacity = 0;
-                setTimeout(() => {
-                    swipeLeftButton.style.visibility = 'hidden';
-                }, 500)
-            } else {
-                swipeLeftButton.style.opacity = 1;
-                swipeLeftButton.style.visibility = 'visible';
-            }
-            if (carouselIndex.owned > allUserActivities.length - 6) {
-                swipeRightButton.style.opacity = 0;
-                setTimeout(() => {
-                    swipeRightButton.style.visibility = 'hidden';
-                }, 500)
-            } else {
-                swipeRightButton.style.opacity = 1;
-                swipeRightButton.style.visibility = 'visible';
-            }
-            displayedActivities.style.right = `${carouselIndex.owned * 230 + 'px'}`
-        }
+        manageCarouselChange(carouselIndex.owned, ownedActivities, 1)
     }, [carouselIndex.owned])
 
     async function fetchOwnedActivities(userId) {

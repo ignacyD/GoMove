@@ -28,8 +28,35 @@ function Search() {
     const [carouselIndex, setCarouselIndex] = useState(0);
     const [isInputActive, setInputActive] = useState(false);
     const [chosenOption, setChosenOption] = useState(null);
+    const [activitiesFetched, setActivitiesFetched] = useState(false);
 
     const today = new Date().toISOString().split("T")[0];
+
+    useEffect(() => {
+        getActivities();
+        getAllCities();
+        setActivitiesFetched(true);
+    }, [])
+
+    useEffect(() => {
+        const prevButton = document.querySelector('.search-button-prev');
+        const nextButton = document.querySelector('.search-button-next');
+        if (carouselIndex === 0) {
+            prevButton.classList.add('disabled-button')
+        } else {
+            prevButton.classList.remove('disabled-button')
+        }
+        if (activitiesFetched && carouselIndex >= activities.length - 1) {
+            nextButton.classList.add('disabled-button')
+        } else {
+            nextButton.classList.remove('disabled-button')
+        }
+    }, [carouselIndex, activities])
+
+    useEffect(() => {
+        const carousel = document.querySelector('.activities-carousel-visible')
+        carousel.style.bottom = `${(carouselIndex - 1) * 220}px`;
+    }, [carouselIndex])
 
     const handleCarouselPrev = () => {
         if (carouselIndex > 0) {
@@ -42,16 +69,6 @@ function Search() {
             setCarouselIndex(carouselIndex + 1);
         }
     };
-
-    useEffect(() => {
-        const carousel = document.querySelector('.activities-carousel-visible')
-        carousel.style.bottom = `${(carouselIndex - 1) * 220}px`;
-    }, [carouselIndex])
-
-    useEffect(() => {
-        getActivities();
-        getAllCities();
-    }, [])
 
     async function getActivities() {
         const response = await fetch("http://localhost:8080/activities/future");
@@ -199,29 +216,31 @@ function Search() {
                 <h2>Activity search filters</h2>
                 <div className="choose-activity">
                     <h4>Select activity type</h4>
-                    <div className={`${chosenOption === 'RUNNING' ? 'search-activity-add' : 'search-activity'}`}
-                         onClick={() => handleChosenOption('RUNNING')}
-                    >
-                        <FontAwesomeIcon icon={faPersonRunning} size="xl"/>
-                        <p>Running</p>
-                    </div>
-                    <div className={`${chosenOption === 'WALKING' ? 'search-activity-add' : 'search-activity'}`}
-                         onClick={() => handleChosenOption('WALKING')}
-                    >
-                        <FontAwesomeIcon icon={faPersonWalking} size="xl"/>
-                        <p>Walking</p>
-                    </div>
-                    <div className={`${chosenOption === 'SKATING' ? 'search-activity-add' : 'search-activity'}`}
-                         onClick={() => handleChosenOption('SKATING')}
-                    >
-                        <FontAwesomeIcon icon={faPersonSkating} size="xl"/>
-                        <p>Skating</p>
-                    </div>
-                    <div className={`${chosenOption === 'CYCLING' ? 'search-activity-add' : 'search-activity'}`}
-                         onClick={() => handleChosenOption('CYCLING')}
-                    >
-                        <FontAwesomeIcon icon={faPersonBiking} size="xl"/>
-                        <p>Cycling</p>
+                    <div className="choose-activity-container">
+                        <div className={`${chosenOption === 'RUNNING' ? 'search-activity-add' : 'search-activity'}`}
+                             onClick={() => handleChosenOption('RUNNING')}
+                        >
+                            <FontAwesomeIcon icon={faPersonRunning} size="xl"/>
+                            <p>Running</p>
+                        </div>
+                        <div className={`${chosenOption === 'WALKING' ? 'search-activity-add' : 'search-activity'}`}
+                             onClick={() => handleChosenOption('WALKING')}
+                        >
+                            <FontAwesomeIcon icon={faPersonWalking} size="xl"/>
+                            <p>Walking</p>
+                        </div>
+                        <div className={`${chosenOption === 'SKATING' ? 'search-activity-add' : 'search-activity'}`}
+                             onClick={() => handleChosenOption('SKATING')}
+                        >
+                            <FontAwesomeIcon icon={faPersonSkating} size="xl"/>
+                            <p>Skating</p>
+                        </div>
+                        <div className={`${chosenOption === 'CYCLING' ? 'search-activity-add' : 'search-activity'}`}
+                             onClick={() => handleChosenOption('CYCLING')}
+                        >
+                            <FontAwesomeIcon icon={faPersonBiking} size="xl"/>
+                            <p>Cycling</p>
+                        </div>
                     </div>
                 </div>
                 <div>
@@ -313,8 +332,11 @@ function Search() {
                         }
                     </div>
                     <div className="manage-searched-buttons">
-                        <button onClick={handleCarouselPrev}><FontAwesomeIcon icon={faAngleUp}/></button>
-                        <button onClick={handleCarouselNext}><FontAwesomeIcon icon={faAngleDown}/></button>
+                        <button className="search-button-prev disabled-button" onClick={handleCarouselPrev}>
+                            <FontAwesomeIcon
+                                icon={faAngleUp}/></button>
+                        <button className="search-button-next" onClick={handleCarouselNext}><FontAwesomeIcon
+                            icon={faAngleDown}/></button>
                     </div>
                 </div>
             </div>
