@@ -23,6 +23,10 @@ function UpdateUserInfoForm() {
     const handleSubmit = (e) => {
         e.preventDefault();
 
+        userData.description = description;
+        userData.city = city;
+        userData.preferredActivity = preferredActivity;
+
         fetch(`http://localhost:8080/users/update/${localStorage.getItem("userId")}`, {
             headers: {Authorization: localStorage.getItem("jwt"), "Content-Type": "application/json"},
             method: "PATCH",
