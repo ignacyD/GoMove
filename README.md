@@ -4,8 +4,8 @@
 
 ## Table of Contents 📋
 
-- [Description](#description)
 - [Demo](#demo)
+- [Description](#description)
 - [Installation](#installation)
 - [Features](#features)
 - [System Requirements](#system-requirements)
@@ -43,6 +43,7 @@
 
 Be active, stay healthy, and enjoy sports together with "GoMove"! 💪🌞
 
+---
 
 ## Installation ⚙️
 
@@ -88,6 +89,7 @@ Be active, stay healthy, and enjoy sports together with "GoMove"! 💪🌞
     npm start
     ```
 
+---
 
 ## Features 🚀
 
@@ -109,6 +111,7 @@ The "Go Move" application offers a range of features, making use of various tech
 
 These technologies work together to create a feature-rich and modern web application for various purposes.
 
+---
 
 ## System Requirements 💻
 
@@ -122,6 +125,7 @@ Before installing and running the "Go Move" application, ensure that your system
 
 Please make sure your system meets these requirements to ensure the proper installation and functioning of the application.
 
+---
 
 ## Authors 👥
 
