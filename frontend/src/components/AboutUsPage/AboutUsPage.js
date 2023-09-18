@@ -2,6 +2,7 @@ import './AboutUsPage.css'
 import {useEffect, useRef, useState} from "react";
 import testPhoto from '../../assets/images/test.jpg';
 import DominikPhoto from '../../assets/images/Dominik.png';
+import JakubPhoto from '../..//assets/images/Jakub_Szczygiel.jpeg'
 import emailjs from '@emailjs/browser';
 
 const arrayOfOwners = [
@@ -32,8 +33,9 @@ const arrayOfOwners = [
     {
         id: 5,
         name: "Jakub Szczygieł",
-        desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        photo: testPhoto
+        desc: "\n" +
+            "As a Full-Stack Developer, I possess a broad knowledge and skill set for creating comprehensive software solutions. My experience allows me to craft innovative products on both the front-end and back-end. I am ready to work in a dynamic team environment and contribute to technical advancements. My programming skills and passion serve as a strong foundation for further growth in this field. Additionally, I have a strong interest in sports, particularly football, and enjoy hiking in the mountains.",
+        photo: JakubPhoto
     }
 ]
 
