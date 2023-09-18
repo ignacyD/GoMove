@@ -11,25 +11,10 @@ function RegistrationForm({setDisplayLoginForm, setDisplayRegistrationForm}) {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState([]);
     const [passwordErrorMessage, setPasswordErrorMessage] = useState([]);
-    const [modalSize, setModalSize] = useState('40vh');
     const navigate = useNavigate();
 
     const setIsUserLogged = useContext(Context).setIsUserLogged;
 
-    const handleUsernameChange = (e) => {
-        setUsername(e.target.value);
-    };
-
-    const handleEmailChange = (e) => {
-        setEmail(e.target.value);
-    };
-    const handlePasswordChange = (e) => {
-        setPassword(e.target.value);
-    };
-
-    const handleConfirmPasswordChange = (e) => {
-        setConfirmPassword(e.target.value);
-    };
     const handleOpenLoginForm = () => {
         setDisplayRegistrationForm(false);
         setDisplayLoginForm(true);
@@ -84,7 +69,6 @@ function RegistrationForm({setDisplayLoginForm, setDisplayRegistrationForm}) {
         }
         setErrorMessage(errors);
         return !(!validatePassword(password) || errorMessage.length > 0);
-
     }
 
     function validateEmail(email) {
@@ -133,9 +117,6 @@ function RegistrationForm({setDisplayLoginForm, setDisplayRegistrationForm}) {
     useEffect(() => {
         const registrationForm = document.querySelector('.registration-form');
         const newModalSize = registrationForm.scrollHeight + 40 + 'px';
-
-        setModalSize(newModalSize);
-
         const modal = document.querySelector('.login-modal');
         modal.style.height = newModalSize;
         modal.style.top = `calc(50vh - ${newModalSize}/2)`;
@@ -152,7 +133,7 @@ function RegistrationForm({setDisplayLoginForm, setDisplayRegistrationForm}) {
                         type="text"
                         id="username"
                         value={username}
-                        onChange={handleUsernameChange}
+                        onChange={(e) => setUsername(e.target.value)}
                     ></input>
                 </div>
                 <div className="e-mail-field">
@@ -162,7 +143,7 @@ function RegistrationForm({setDisplayLoginForm, setDisplayRegistrationForm}) {
                         type="text"
                         id="e-mail"
                         value={email}
-                        onChange={handleEmailChange}
+                        onChange={(e) => setEmail(e.target.value)}
                     ></input>
                 </div>
                 <div className="password-field">
@@ -172,7 +153,7 @@ function RegistrationForm({setDisplayLoginForm, setDisplayRegistrationForm}) {
                         type="password"
                         id="password"
                         value={password}
-                        onChange={handlePasswordChange}
+                        onChange={(e) => setPassword(e.target.value)}
                     ></input>
                 </div>
                 <div className="confirm-password-field">
@@ -182,7 +163,7 @@ function RegistrationForm({setDisplayLoginForm, setDisplayRegistrationForm}) {
                         type="password"
                         id="confirm-password"
                         value={confirmPassword}
-                        onChange={handleConfirmPasswordChange}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
                     ></input>
                 </div>
                 <button className="register-submit-btn" type="submit">Register</button>

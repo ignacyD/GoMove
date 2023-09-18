@@ -41,6 +41,62 @@
     font-size: 16px;
 }
 
+.activity-page-middle-section {
+    display: flex;
+    justify-content: space-between;
+}
+
+.share-activity {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    margin-right: 20px;
+    width: 300px;
+    height: auto;
+}
+
+.copied-message-alert-container {
+    overflow: hidden;
+}
+
+.copied-message-alert {
+    height: 20px;
+    position: relative;
+    bottom: 20px;
+    transition: bottom .5s;
+}
+
+.share-activity-methods {
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    height: 40px;
+    width: 300px;
+    padding: 8px;
+    align-items: center;
+}
+
+.copy-to-clipboard {
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    font-size: 16px;
+    padding: 10px;
+    transition: transform .5s;
+}
+
+.copy-to-clipboard:hover {
+    transform: scale(1.2);
+    border-radius: 50%;
+    -webkit-box-shadow: 0px 0px 12px 1px rgba(66, 68, 90, 1);
+    -moz-box-shadow: 0px 0px 12px 1px rgba(66, 68, 90, 1);
+    box-shadow: 0px 0px 12px 1px rgba(66, 68, 90, 1);
+    transition: transform .5s;
+}
+
+
 .activity-page .place-date {
     display: flex;
     align-items: stretch;

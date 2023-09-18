@@ -7,6 +7,9 @@ import {v4 as UUID} from 'uuid';
 import './AddActivity.css'
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPersonBiking, faPersonRunning, faPersonSkating, faPersonWalking} from "@fortawesome/free-solid-svg-icons";
+import ModalStyles from "../../ModalStyles";
+import ActivityAddedModal from "../ActivityAddedModal/ActivityAddedModal";
+import Modal from "react-modal";
 
 const googleMapApiKey = process.env.REACT_APP_GOOGLE_MAP_API_KEY;
 const googleMapsLibraries = ["places"];
@@ -25,7 +28,8 @@ const AddActivity = () => {
     const [country, setCountry] = useState("");
     const [timeDisable, setTimeDisable] = useState(true);
     const [chosenOption, setChosenOption] = useState(null);
-
+    const [showIncorrectActivityModal, setShowIncorrectActivityModal] = useState(false);
+    const [showWrongAddressModal, setShowWrongAddressModal] = useState(false);
 
     const navigate = useNavigate();
 
@@ -36,33 +40,39 @@ const AddActivity = () => {
     maxDate.setFullYear(maxDate.getFullYear() + 1);
     const maxDateISO = maxDate.toISOString().split('T')[0];
 
+    useEffect(() => {
+        manageTime();
+    }, [date])
+
     const handleChosenOption = (option) => {
-        if (chosenOption === option) {
-            setChosenOption(null);
-            setActivityType(null);
-        } else {
-            setChosenOption(option);
-            setActivityType(option);
-        }
+        const value = chosenOption === option ? null : option;
+        setChosenOption(value);
+        setActivityType(value);
     };
+
+    const clearAddress = () => {
+        setSelectedAddress("");
+        setCity("");
+        setStreet("");
+        setStreetNumber("");
+        setCountry("");
+    }
 
     const handlePlaceSelect = () => {
         const selectedPlace = window.autocomplete.getPlace();
 
         if (!selectedPlace || !selectedPlace.address_components) {
+            clearAddress();
             return;
         }
-
-        if (selectedPlace) {
-            setSelectedAddress(selectedPlace.formatted_address);
-        }
-
-
+        setSelectedAddress(selectedPlace.formatted_address);
         const cityComponent = selectedPlace.address_components.find(
             (component) => component.types.includes("locality")
         );
         if (cityComponent) {
             setCity(cityComponent.long_name);
+        } else {
+            setCity("");
         }
 
         const streetComponent = selectedPlace.address_components.find(
@@ -70,6 +80,8 @@ const AddActivity = () => {
         );
         if (streetComponent) {
             setStreet(streetComponent.long_name);
+        } else {
+            setStreet("");
         }
 
         const streetNumberComponent = selectedPlace.address_components.find(
@@ -77,6 +89,8 @@ const AddActivity = () => {
         );
         if (streetNumberComponent) {
             setStreetNumber(streetNumberComponent.long_name);
+        } else {
+            setStreetNumber("");
         }
 
         const countryComponent = selectedPlace.address_components.find(
@@ -84,7 +98,10 @@ const AddActivity = () => {
         );
         if (countryComponent) {
             setCountry(countryComponent.long_name);
+        } else {
+            setCountry("");
         }
+
 
         console.log(selectedPlace)
 
@@ -99,18 +116,27 @@ const AddActivity = () => {
     function handleSubmit(e) {
         e.preventDefault();
 
-        if (!selectedAddress ) {
-            alert("Choose correct address. Address must include city, street, and street number.");
+        if (!selectedAddress) {
+            setShowWrongAddressModal(true);
+            setTimeout(() => {
+                setShowWrongAddressModal(false);
+            },3000)
             return;
         }
 
         if (activityType === "") {
-            alert("Choose correct activity type.")
+            setShowIncorrectActivityModal(true);
+            setTimeout(() => {
+                setShowIncorrectActivityModal(false);
+            },3000)
             return;
         }
 
         if (![selectedAddress, city, street].every(Boolean)) {
-            alert("Choose correct address. Address must include city, street, and street number.");
+            setShowWrongAddressModal(true);
+            setTimeout(() => {
+                setShowWrongAddressModal(false);
+            },3000)
             return;
         }
 
@@ -138,15 +164,15 @@ const AddActivity = () => {
                 "activityPhotoUrl": null
             })
         }).then(response => {
-            if (response.status === 200) {
-                setDisplayActivityAddedModal(true);
-                setTimeout(() => {
-                    setDisplayActivityAddedModal(false)
-                    navigate(`/activity-page/${activityId}`)
-                }, 3000)
-            } else {
-                console.log("something went wrong")
+            if (response.status !== 200) {
+                console.error("something went wrong");
+                return;
             }
+            setDisplayActivityAddedModal(true);
+            setTimeout(() => {
+                setDisplayActivityAddedModal(false)
+                navigate(`/activity-page/${activityId}`)
+            }, 3000)
         })
     }
 
@@ -166,13 +192,28 @@ const AddActivity = () => {
         setTimeDisable(false);
     }
 
-    useEffect(() => {
-        manageTime();
-    }, [date])
+
 
     return isLoaded ? (
-
         <div className="add-activity">
+            <Modal
+                isOpen={showWrongAddressModal}
+                onRequestClose={() => setShowWrongAddressModal(false)}
+                style={ModalStyles.activityAddedModalStyles}
+                className="activity-added-modal"
+                appElement={document.querySelector("#root") || undefined}
+            >
+                Choose correct address. Address must include city, street, and street number.
+            </Modal>
+            <Modal
+            isOpen={showIncorrectActivityModal}
+            onRequestClose={() => setShowIncorrectActivityModal(false)}
+            style={ModalStyles.activityAddedModalStyles}
+            className="activity-added-modal"
+            appElement={document.querySelector("#root") || undefined}
+        >
+                Choose correct activity type.
+        </Modal>
             <form className="add-activity-form" onSubmit={handleSubmit}>
                 <div className="title-field">
                     <label className="title-label">Title</label>
@@ -182,6 +223,8 @@ const AddActivity = () => {
                         type="text"
                         id="title"
                         value={title}
+                        minLength={8}
+                        maxLength={32}
                         onChange={e => setTitle(e.target.value)}
                     />
                 </div>
@@ -234,6 +277,8 @@ const AddActivity = () => {
                         type="text"
                         id="description"
                         value={description}
+                        minLength={8}
+                        maxLength={1024}
                         onChange={e => setDescription(e.target.value)}
                     /></div>
                 <div className="date-field">

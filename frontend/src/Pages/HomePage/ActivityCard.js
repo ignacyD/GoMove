@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import './ActivitCard.css';
 import testPhoto from '../../assets/images/test.jpg'
-import GoogleMapComponent from "../GoogleMap/GoogleMap";
+import GoogleMapComponent from "../../components/GoogleMap/GoogleMap";
 import {useNavigate} from "react-router-dom";
-import {iconSelector} from '../IconSelector'
+import {iconSelector} from '../../components/IconSelector'
 
 function ActivityCard({activity}) {
 
@@ -47,7 +47,7 @@ function ActivityCard({activity}) {
                             onClick={() => setShowMap(!showMap)}>{showMap ? "Back to details" : "See on map"}</button>
                     </div>
                     <div className="google-maps">
-                        <GoogleMapComponent height={'33vh'} width={'27vw'}
+                        <GoogleMapComponent height={'270px'} width={'400px'}
                                             address={`${activity.address}`}/>
                     </div>
                 </div>

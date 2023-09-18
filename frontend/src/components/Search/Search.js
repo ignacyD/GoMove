@@ -1,9 +1,18 @@
-import {useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import ActivitySmallCard from "./ActivitySmallCard";
 import "./Search.css";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faAngleDown, faAngleUp} from "@fortawesome/free-solid-svg-icons";
+import {
+    faAngleDown,
+    faAngleUp,
+    faPersonBiking,
+    faPersonRunning,
+    faPersonSkating,
+    faPersonWalking
+} from "@fortawesome/free-solid-svg-icons";
 import {Context} from "../../App";
+import ModalStyles from "../../ModalStyles";
+import Modal from "react-modal";
 
 function Search() {
 
@@ -15,13 +24,42 @@ function Search() {
     const [selectedCity, setSelectedCity] = useState("");
     const [dateFrom, setDateFrom] = useState("");
     const [dateTo, setDateTo] = useState("");
-    const [selectedActivityType, setSelectedActivityType] = useState("");
+    const [activityType, setActivityType] = useState("");
     const [cityOptionsVisible, setCityOptionsVisible] = useState(false);
     const [cityOptionsSuggestions, setCityOptionsSuggestions] = useState("");
     const [carouselIndex, setCarouselIndex] = useState(0);
     const [isInputActive, setInputActive] = useState(false);
+    const [chosenOption, setChosenOption] = useState(null);
+    const [activitiesFetched, setActivitiesFetched] = useState(false);
+    const [showJoinedActivityModal, setShowJoinedActivityModal] = useState(false);
 
     const today = new Date().toISOString().split("T")[0];
+
+    useEffect(() => {
+        getActivities();
+        getAllCities();
+        setActivitiesFetched(true);
+    }, [])
+
+    useEffect(() => {
+        const prevButton = document.querySelector('.search-button-prev');
+        const nextButton = document.querySelector('.search-button-next');
+        if (carouselIndex === 0) {
+            prevButton.classList.add('disabled-button')
+        } else {
+            prevButton.classList.remove('disabled-button')
+        }
+        if (activitiesFetched && carouselIndex >= activities.length - 1) {
+            nextButton.classList.add('disabled-button')
+        } else {
+            nextButton.classList.remove('disabled-button')
+        }
+    }, [carouselIndex, activities])
+
+    useEffect(() => {
+        const carousel = document.querySelector('.activities-carousel-visible')
+        carousel.style.bottom = `${(carouselIndex - 1) * 220}px`;
+    }, [carouselIndex])
 
     const handleCarouselPrev = () => {
         if (carouselIndex > 0) {
@@ -34,16 +72,6 @@ function Search() {
             setCarouselIndex(carouselIndex + 1);
         }
     };
-
-    useEffect(() => {
-        const carousel = document.querySelector('.activities-carousel-visible')
-        carousel.style.bottom = `${(carouselIndex - 1) * 220}px`;
-    }, [carouselIndex])
-
-    useEffect(() => {
-        getActivities();
-        getAllCities();
-    }, [])
 
     async function getActivities() {
         const response = await fetch("http://localhost:8080/activities/future");
@@ -76,13 +104,13 @@ function Search() {
 
         let url = "http://localhost:8080/activities/future";
 
-        if (selectedCity !== "" || selectedActivityType !== "") {
+        if (selectedCity !== "" || activityType !== "") {
             url = "http://localhost:8080/activities/filter";
             if (selectedCity !== "") {
                 url += `?city=${selectedCity}`;
             }
-            if (selectedActivityType !== "") {
-                url += selectedCity !== "" ? `&type=${selectedActivityType}` : `?type=${selectedActivityType}`;
+            if (activityType !== "") {
+                url += selectedCity !== "" ? `&type=${activityType}` : `?type=${activityType}`;
             }
         }
 
@@ -103,17 +131,14 @@ function Search() {
     }
 
     function resetFilter() {
-        setSelectedActivityType("");
+        setActivityType("");
         setSelectedCity("");
         setCityOptionsSuggestions("")
         setDateFrom("");
         setDateTo("");
+        setChosenOption(null);
         getActivities();
     }
-
-    const handleOptionChange = (event) => {
-        setSelectedActivityType(event.target.value);
-    };
 
     const closeSelectCity = () => {
         setCityOptionsVisible(false);
@@ -154,7 +179,15 @@ function Search() {
         return aDateTime - bDateTime;
     }
 
+    function manageModalDisplay() {
+    setShowJoinedActivityModal(true);
+    setTimeout(() => {
+        setShowJoinedActivityModal(false);
+    }, 3000)
+    }
+
     const enrollUserToActivity = (activityId) => {
+        manageModalDisplay();
         fetch(`http://localhost:8080/users/enroll/${userData.userId}/${activityId}`, {
             method: 'PATCH',
             headers: {
@@ -177,55 +210,62 @@ function Search() {
             });
     }
 
+    const handleChosenOption = (option) => {
+        if (chosenOption === option) {
+            setChosenOption(null);
+            setActivityType("");
+        } else {
+            setChosenOption(option);
+            setActivityType(option);
+        }
+    };
 
     return (
         <div className="activity-search-page">
+            <Modal
+                isOpen={showJoinedActivityModal}
+                onRequestClose={() => setShowJoinedActivityModal(false)}
+                style={ModalStyles.activityAddedModalStyles}
+                className="activity-added-modal"
+                appElement={document.querySelector("#root") || undefined}
+            >
+                You've successfully joined an activity!
+            </Modal>
             <div className="activity-search-filters">
-
                 <h2>Activity search filters</h2>
                 <div className="choose-activity">
-                    <h4>Choose activity type</h4>
-                    <div>
-                        <input
-                            type="radio"
-                            value="RUNNING"
-                            checked={selectedActivityType === "RUNNING"}
-                            onChange={handleOptionChange}
-                        />
-                        Running
-                    </div>
-                    <div>
-                        <input
-                            type="radio"
-                            value="CYCLING"
-                            checked={selectedActivityType === "CYCLING"}
-                            onChange={handleOptionChange}
-                        />
-                        Cycling
-                    </div>
-                    <div>
-                        <input
-                            type="radio"
-                            value="SKATING"
-                            checked={selectedActivityType === "SKATING"}
-                            onChange={handleOptionChange}
-                        />
-                        Skating
-                    </div>
-                    <div>
-                        <input
-                            type="radio"
-                            value="WALKING"
-                            checked={selectedActivityType === "WALKING"}
-                            onChange={handleOptionChange}
-                        />
-                        Walking
+                    <h4>Select activity type</h4>
+                    <div className="choose-activity-container">
+                        <div className={`${chosenOption === 'RUNNING' ? 'search-activity-add' : 'search-activity'}`}
+                             onClick={() => handleChosenOption('RUNNING')}
+                        >
+                            <FontAwesomeIcon icon={faPersonRunning} size="xl"/>
+                            <p>Running</p>
+                        </div>
+                        <div className={`${chosenOption === 'WALKING' ? 'search-activity-add' : 'search-activity'}`}
+                             onClick={() => handleChosenOption('WALKING')}
+                        >
+                            <FontAwesomeIcon icon={faPersonWalking} size="xl"/>
+                            <p>Walking</p>
+                        </div>
+                        <div className={`${chosenOption === 'SKATING' ? 'search-activity-add' : 'search-activity'}`}
+                             onClick={() => handleChosenOption('SKATING')}
+                        >
+                            <FontAwesomeIcon icon={faPersonSkating} size="xl"/>
+                            <p>Skating</p>
+                        </div>
+                        <div className={`${chosenOption === 'CYCLING' ? 'search-activity-add' : 'search-activity'}`}
+                             onClick={() => handleChosenOption('CYCLING')}
+                        >
+                            <FontAwesomeIcon icon={faPersonBiking} size="xl"/>
+                            <p>Cycling</p>
+                        </div>
                     </div>
                 </div>
                 <div>
                     <div className="select-city">
                         <h4>
-                            Select City
+                            Select city
                         </h4>
                         <input type="text" value={cityOptionsSuggestions}
                                placeholder={isInputActive ? '' : 'Type...'}
@@ -311,8 +351,11 @@ function Search() {
                         }
                     </div>
                     <div className="manage-searched-buttons">
-                        <button onClick={handleCarouselPrev}><FontAwesomeIcon icon={faAngleUp}/></button>
-                        <button onClick={handleCarouselNext}><FontAwesomeIcon icon={faAngleDown}/></button>
+                        <button className="search-button-prev disabled-button" onClick={handleCarouselPrev}>
+                            <FontAwesomeIcon
+                                icon={faAngleUp}/></button>
+                        <button className="search-button-next" onClick={handleCarouselNext}><FontAwesomeIcon
+                            icon={faAngleDown}/></button>
                     </div>
                 </div>
             </div>

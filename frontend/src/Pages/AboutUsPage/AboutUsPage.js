@@ -2,6 +2,7 @@ import './AboutUsPage.css'
 import {useEffect, useRef, useState} from "react";
 import testPhoto from '../../assets/images/test.jpg';
 import DominikPhoto from '../../assets/images/Dominik.png';
+import KamilPhoto from '../../assets/images/Kamil.jpg';
 import JakubPhoto from '../..//assets/images/Jakub_Szczygiel.jpeg'
 import emailjs from '@emailjs/browser';
 
@@ -9,14 +10,14 @@ const arrayOfOwners = [
     {
         id: 1,
         name: "Dominik Mrozik",
-        desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        desc: "Hi, I'm Dominik, and I absolutely love road and gravel biking. For me, cycling is not just a hobby, it is an important part of my life. Biking gives me that perfect mix of freedom and challenge that I can't get enough of.\n" + "\n" + "I firmly believe that the discipline and consistency developed through regular training on the bike can have an effect into every aspect of life. Whether it's conquering a challenging hill climb or tackling a demanding project, I've learned that sticking with it and staying dedicated are the keys to success.",
         photo: DominikPhoto
     },
     {
         id: 2,
         name: "Kamil Sadłocha",
         desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        photo: testPhoto
+        photo: KamilPhoto
     },
     {
         id: 3,
