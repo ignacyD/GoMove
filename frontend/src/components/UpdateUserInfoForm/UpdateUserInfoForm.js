@@ -95,13 +95,13 @@ function UpdateUserInfoForm() {
                         <div className="additional-info-form-right-side">
                             <div className="city-field">
                                 <label className="city-label">City</label>
-                                <input
+                                <textarea
                                     className="city-input"
                                     type="text"
                                     id="city"
                                     value={city}
                                     onChange={e => setCity(e.target.value)}
-                                ></input>
+                                ></textarea>
                             </div>
                             <div className="profile-description-field">
                                 <label className="profile-description-label">Description</label>

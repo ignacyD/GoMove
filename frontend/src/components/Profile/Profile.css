@@ -58,7 +58,7 @@
     cursor: pointer;
     text-align: center;
     transition: transform .5s;
-}
+ }
 .activity-card:hover {
     transform: scale(1.1);
     transition: transform .5s;
@@ -189,8 +189,9 @@
 }
 
 .profile-picture {
-    width: 25vh;
-    height: 25vh;
+    -webkit-box-shadow: 0px 0px 24px 0px rgba(66, 68, 90, 1);
+    -moz-box-shadow: 0px 0px 24px 0px rgba(66, 68, 90, 1);
+    box-shadow: 0px 0px 24px 0px rgba(66, 68, 90, 1);
     border-radius: 50%;
 }
 
