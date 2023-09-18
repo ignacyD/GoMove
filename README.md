@@ -6,10 +6,9 @@
 
 - [Description](#description)
 - [Demo](#demo)
-- [System Requirements](#system-requirements)
 - [Installation](#installation)
 - [Features](#features)
-- [Usage](#usage)
+- [System Requirements](#system-requirements)
 - [Authors](#authors)
 
 
@@ -18,10 +17,6 @@
 ---
 
 ## Demo
-
----
-
-## System Requirements
 
 ---
 
@@ -90,9 +85,17 @@ The "Go Move" application offers a range of features, making use of various tech
 These technologies work together to create a feature-rich and modern web application for various purposes.
 
 
-## Usage
+## System Requirements
 
----
+Before installing and running the "Go Move" application, ensure that your system meets the following requirements:
+
+- **Operating System**: Specify the supported operating systems, e.g., Windows, macOS, Linux
+- **Java**: Specify the required Java version, e.g., Java 8 or later
+- **Web Browsers**: Specify the supported web browsers, e.g., Google Chrome, Mozilla Firefox
+- **Docker**: Specify if Docker is required and any specific version
+- **Node.js**: Specify the required Node.js version, if applicable
+
+Please make sure your system meets these requirements to ensure the proper installation and functioning of the application.
 
 
 ## Authors
