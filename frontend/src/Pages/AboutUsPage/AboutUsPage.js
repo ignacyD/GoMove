@@ -16,7 +16,7 @@ const arrayOfOwners = [
     {
         id: 2,
         name: "Kamil Sadłocha",
-        desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        desc: "My name is Kamil and my passion is mountain trips and discovering previously unexplored landscapes. Apart from learning programming and designing applications, I play retro games and learn the history of their creation. Additionally, I am an explorer of the musical world, often searching Spotify for original and intriguing sounds.",
         photo: KamilPhoto
 
     },
