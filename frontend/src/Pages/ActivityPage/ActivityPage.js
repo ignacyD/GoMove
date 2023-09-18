@@ -37,6 +37,7 @@ function ActivityPage() {
         }
     }, [activityData])
 
+
     const handleEnrollButton = () => {
         fetch(`http://localhost:8080/users/enroll/${localStorage.getItem("userId")}/${activityId}`, {
             method: 'PATCH',
@@ -121,8 +122,8 @@ function ActivityPage() {
                     <h1>{activityData.title}</h1>
                     <hr/>
                     <br/>
-                    {activityData.activityPhotoUrl ?
-                        <img src={activityData.activityPhotoUrl} alt={activityData.title} className="activity-image"/>
+                    {activityData.activityPhoto ?
+                        <img src={activityData.activityPhoto ? 'data:image/jpeg;base64,' + activityData.activityPhoto : null} alt={activityData.title} className="activity-image"/>
                         : null}
 
                     <h3>Description:</h3>

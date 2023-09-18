@@ -14,8 +14,8 @@ const ActivitySmallCard = ({activity, handleJoinActivity}) => {
 
     return (
         <div className="searched-activity-card">
-            <div className="activity-photo">{activity.photoUrl ?
-                <img src={activity.photoUrl} alt="Activity"/> :
+            <div className="activity-photo">{activity.activityPhoto ?
+                <img src={'data:image/jpeg;base64,' + activity.activityPhoto} alt="Activity"/> :
                 <img src={testPhoto} alt="Activity"/>
             }</div>
             <div className="info-section">

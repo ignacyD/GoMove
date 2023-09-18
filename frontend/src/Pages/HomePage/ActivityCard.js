@@ -28,10 +28,10 @@ function ActivityCard({activity}) {
                 className="top-section"
                 onClick={() => navigate(`/activity-page/${activity.activityId}`)}
             >
-                {activity.photoUrl ?
-                    <img className="photo" src={activity.photoUrl} alt="Activity"/> :
-                    <img className="photo" src={testPhoto} alt="Activity"/>
-                }
+                <div className="activity-photo">{activity.activityPhoto ?
+                    <img src={'data:image/jpeg;base64,' + activity.activityPhoto} alt="Activity"/> :
+                    <img src={testPhoto} alt="Activity"/>
+                }</div>
                 <div className="title-section">
                     <div className="activityCard-icon">{iconSelector(activity.activityType)}</div>
                     <h2>{activity.title}</h2>

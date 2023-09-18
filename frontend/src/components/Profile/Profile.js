@@ -1,4 +1,4 @@
-import {useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import './Profile.css';
 import {Context} from "../../App";
@@ -41,7 +41,10 @@ function Profile() {
                                     <div className="activity-details">
                                         <div className="activity-city">{activity.city}</div>
                                     </div>
-                                    <img src={testPhoto} alt={activity.title} className="activity-image"/>
+                                    <div className="activity-photo">{activity.activityPhoto ?
+                                        <img src={'data:image/jpeg;base64,' + activity.activityPhoto} alt="Activity"/> :
+                                        <img src={testPhoto} alt="Activity"/>
+                                    }</div>
                                 </div>
                             ))}
                         </div>
