@@ -120,7 +120,7 @@ const AddActivity = () => {
             setShowWrongAddressModal(true);
             setTimeout(() => {
                 setShowWrongAddressModal(false);
-            },3000)
+            }, 3000)
             return;
         }
 
@@ -128,7 +128,7 @@ const AddActivity = () => {
             setShowIncorrectActivityModal(true);
             setTimeout(() => {
                 setShowIncorrectActivityModal(false);
-            },3000)
+            }, 3000)
             return;
         }
 
@@ -136,7 +136,7 @@ const AddActivity = () => {
             setShowWrongAddressModal(true);
             setTimeout(() => {
                 setShowWrongAddressModal(false);
-            },3000)
+            }, 3000)
             return;
         }
 
@@ -178,7 +178,8 @@ const AddActivity = () => {
 
     function addHours(date, hours) {
         date.setHours(date.getHours() + hours);
-        return date.toLocaleString().substring(11, 16);
+        const timeString = date.toLocaleTimeString();
+        return timeString.substring(0, timeString.length - 3);
     }
 
     function manageTime() {
@@ -193,7 +194,6 @@ const AddActivity = () => {
     }
 
 
-
     return isLoaded ? (
         <div className="add-activity">
             <Modal
@@ -206,14 +206,14 @@ const AddActivity = () => {
                 Choose correct address. Address must include city, street, and street number.
             </Modal>
             <Modal
-            isOpen={showIncorrectActivityModal}
-            onRequestClose={() => setShowIncorrectActivityModal(false)}
-            style={ModalStyles.activityAddedModalStyles}
-            className="activity-added-modal"
-            appElement={document.querySelector("#root") || undefined}
-        >
+                isOpen={showIncorrectActivityModal}
+                onRequestClose={() => setShowIncorrectActivityModal(false)}
+                style={ModalStyles.activityAddedModalStyles}
+                className="activity-added-modal"
+                appElement={document.querySelector("#root") || undefined}
+            >
                 Choose correct activity type.
-        </Modal>
+            </Modal>
             <form className="add-activity-form" onSubmit={handleSubmit}>
                 <div className="title-field">
                     <label className="title-label">Title</label>

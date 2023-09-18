@@ -1,9 +1,8 @@
-import {useContext, useState} from "react";
+import {useContext, useRef, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import './UpdateUserInfoForm.css'
 import Modal from "react-modal";
 import updateUserInfoModalStyles from "../../ModalStyles";
-import {useRef} from 'react';
 import {Context} from "../../App";
 
 function UpdateUserInfoForm() {
@@ -14,14 +13,35 @@ function UpdateUserInfoForm() {
     const [selectedImage, setSelectedImage] = useState(null);
     const uploadImageRef = useRef(null);
     const navigate = useNavigate();
-    const handleImageUpload = (event) => {
-        const imageFile = event.target.files[0];
-        console.log(imageFile);
-        console.log(URL.createObjectURL(imageFile))
-        setSelectedImage(URL.createObjectURL(imageFile));
+    const convertBase64 = (file) => {
+        return new Promise((resolve, reject) => {
+            const fileReader = new FileReader();
+            fileReader.readAsDataURL(file);
+
+            fileReader.onload = () => {
+                resolve(fileReader.result);
+            };
+
+            fileReader.onerror = (error) => {
+                reject(error);
+            };
+        });
+    };
+
+    const handleImageUpload = async (event) => {
+        const file = event.target.files[0];
+        const base64 = await convertBase64(file);
+        setSelectedImage(base64);
     };
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        userData.description = description;
+        userData.city = city;
+        userData.preferredActivity = preferredActivity;
+        if (selectedImage) {
+            userData.userPhoto = selectedImage.split(",")[1];
+        }
 
         fetch(`http://localhost:8080/users/update/${localStorage.getItem("userId")}`, {
             headers: {Authorization: localStorage.getItem("jwt"), "Content-Type": "application/json"},
@@ -30,7 +50,7 @@ function UpdateUserInfoForm() {
                 "city": city,
                 "preferredActivity": preferredActivity,
                 "description": description,
-                "userPhotoUrl": selectedImage
+                "userPhoto": selectedImage ? selectedImage.split(",")[1] : userData.userPhoto
             })
         }).then(response => {
             if (response.status === 200) {
@@ -58,7 +78,7 @@ function UpdateUserInfoForm() {
                                 <button className="custom-file-button" type="button"
                                         onClick={() => uploadImageRef.current.click()}>
                                     <img className='profile-picture'
-                                         src={selectedImage ? selectedImage : 'blank-profile-picture.png'}></img>
+                                         src={selectedImage ? selectedImage : 'data:image/jpeg;base64,' + userData.userPhoto}></img>
                                     <div className='change-photo-button'>
                                         Click to change
                                     </div>
@@ -66,7 +86,7 @@ function UpdateUserInfoForm() {
                                 <input
                                     ref={uploadImageRef}
                                     type="file"
-                                    accept="image/*"
+                                    accept=".jpg, .jpeg, .png,"
                                     onChange={(event) => handleImageUpload(event)}
                                     style={{display: 'none'}}
                                 />
