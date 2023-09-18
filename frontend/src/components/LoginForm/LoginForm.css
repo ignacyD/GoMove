@@ -41,6 +41,8 @@
 .username-input, .password-input {
     min-width: 12.5vw;
     max-width: 12.5vw;
+    height: 16px;
+    resize: none;
 }
 
 .username-input:hover, .password-input:hover {

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import './ActivityCard.css';
 import testPhoto from '../../assets/images/test.jpg'
 import GoogleMapComponent from "../../components/GoogleMap/GoogleMap";
@@ -8,8 +8,19 @@ import {iconSelector} from '../../components/IconSelector'
 function ActivityCard({activity}) {
 
     const [showMap, setShowMap] = useState(false);
+    const [isUserMobile, setIsUserMobile] = useState(false);
 
     const navigate = useNavigate();
+
+    useEffect(() => {
+        console.log(window.innerWidth)
+        if (window.innerWidth < 768) {
+            setIsUserMobile(true)
+        }
+        else{
+            setIsUserMobile(false);
+        }
+    }, [window.innerWidth])
 
     return (
         <div className="card">
@@ -47,7 +58,7 @@ function ActivityCard({activity}) {
                             onClick={() => setShowMap(!showMap)}>{showMap ? "Back to details" : "See on map"}</button>
                     </div>
                     <div className="google-maps">
-                        <GoogleMapComponent height={'270px'} width={'400px'}
+                        <GoogleMapComponent height={isUserMobile ? 'calc(50vh - 150px)' : '270px'} width={isUserMobile ? '60vw' : '400px'}
                                             address={`${activity.address}`}/>
                     </div>
                 </div>
