@@ -3,6 +3,7 @@ package com.codecool.goMove.controller;
 import com.codecool.goMove.model.Activity;
 import com.codecool.goMove.model.ActivityType;
 import com.codecool.goMove.model.User;
+import com.codecool.goMove.service.ActivityImageService;
 import com.codecool.goMove.service.ActivityService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -10,15 +11,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/activities")
 public class ActivityController {
 
     private final ActivityService activityService;
+    private final ActivityImageService activityImageService;
 
-    public ActivityController(ActivityService activityService) {
+    public ActivityController(ActivityService activityService, ActivityImageService activityImageService) {
         this.activityService = activityService;
+        this.activityImageService = activityImageService;
     }
 
     @GetMapping
@@ -28,12 +32,22 @@ public class ActivityController {
 
     @GetMapping("/future")
     public ResponseEntity<?> getFutureActivities() {
-        return ResponseEntity.status(HttpStatus.OK).body(activityService.getFutureActivities());
+        return ResponseEntity.status(HttpStatus.OK).body(activityService.getFutureActivities().stream().map(
+                activity -> {
+                    if (activity.getPhotoName() != null && !activity.getPhotoName().isEmpty()) {
+                        activity.setActivityPhoto(activityImageService.getImage(activity.getPhotoName()));
+                    }
+                    return activity;
+                }
+        ).collect(Collectors.toList()));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getActivityById(@PathVariable UUID id) {
         Activity activityById = activityService.getActivityById(id);
+        if (activityById.getPhotoName() != null && !activityById.getPhotoName().isEmpty()) {
+            activityById.setActivityPhoto(activityImageService.getImage(activityById.getPhotoName()));
+        }
         if (activityById != null) {
             return ResponseEntity.status(HttpStatus.OK).body(activityById);
         }
