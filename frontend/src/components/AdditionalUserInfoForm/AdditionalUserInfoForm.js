@@ -10,13 +10,28 @@ function AdditionalUserInfoForm() {
     const [preferredActivity, setPreferredActivity] = useState("");
     const [description, setDescription] = useState("");
     const navigate = useNavigate();
-    const [selectedImage, setSelectedImage] = useState(null);
+    const [selectedImage, setSelectedImage] = useState("");
     const uploadImageRef = useRef(null);
-    const handleImageUpload = (event) => {
-        const imageFile = event.target.files[0];
-        console.log(imageFile);
-        console.log(URL.createObjectURL(imageFile))
-        setSelectedImage(URL.createObjectURL(imageFile));
+
+    const convertBase64 = (file) => {
+        return new Promise((resolve, reject) => {
+            const fileReader = new FileReader();
+            fileReader.readAsDataURL(file);
+
+            fileReader.onload = () => {
+                resolve(fileReader.result);
+            };
+
+            fileReader.onerror = (error) => {
+                reject(error);
+            };
+        });
+    };
+
+    const handleImageUpload = async (event) => {
+        const file = event.target.files[0];
+        const base64 = await convertBase64(file);
+        setSelectedImage(base64);
     };
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -28,7 +43,7 @@ function AdditionalUserInfoForm() {
                 "city": city,
                 "preferredActivity": preferredActivity,
                 "description": description,
-                "userPhotoUrl": selectedImage
+                "userPhoto": selectedImage.split(",")[1]
             })
         }).then(response => {
             if (response.status === 200) {
@@ -62,8 +77,9 @@ function AdditionalUserInfoForm() {
                                 </button>
                                 <input
                                     ref={uploadImageRef}
+
                                     type="file"
-                                    accept="image/*"
+                                    accept=".jpg, .jpeg, .png"
                                     onChange={handleImageUpload}
                                     style={{display: 'none'}}
                                 />
@@ -83,7 +99,6 @@ function AdditionalUserInfoForm() {
                             <div className="profile-description-field">
                                 <label className="profile-description-label">Description</label>
                                 <textarea className="profile-description-input"
-                                    type="text"
                                     id="description"
                                     value={description}
                                     onChange={e => setDescription(e.target.value)}>

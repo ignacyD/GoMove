@@ -3,21 +3,21 @@ package com.codecool.goMove.service;
 import com.codecool.goMove.model.Activity;
 import com.codecool.goMove.model.User;
 import com.codecool.goMove.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
-
+@RequiredArgsConstructor
 @Service
 public class UserService {
 
     private final UserRepository userRepository;
+    private final ImageService imageService;
 
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
 
     public List<User> getAllUsers() {
         return userRepository.findAll();
@@ -58,8 +58,14 @@ public class UserService {
         if (user.getDescription() != null) {
             userToUpdate.setDescription(user.getDescription());
         }
-        if (user.getUserPhotoUrl() != null) {
-            userToUpdate.setUserPhotoUrl(user.getUserPhotoUrl());
+        if (user.getUserPhoto() != null) {
+            try {
+                imageService.removeImage(userToUpdate.getPhotoName());
+                userToUpdate.setPhotoName(imageService.uploadImage(user.getUserPhoto()));
+            } catch (IOException exception) {
+                //TODO add logging exception, send info to frontend
+                exception.printStackTrace();
+            }
         }
         userRepository.save(userToUpdate);
         return true;

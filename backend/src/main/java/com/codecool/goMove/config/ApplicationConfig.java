@@ -2,6 +2,7 @@ package com.codecool.goMove.config;
 
 import com.codecool.goMove.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,6 +19,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class ApplicationConfig {
 
     private final UserRepository userRepository;
+
+    @Value("${gomove.image.folder}")
+    private String photoFolder;
+
+    public String getPhotoFolder() {
+        return photoFolder;
+    }
 
     @Bean
     public UserDetailsService userDetailsService() {
@@ -42,4 +50,5 @@ public class ApplicationConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
 }
