@@ -85,6 +85,8 @@ The "Go Move" application offers a range of features, making use of various tech
 
 - **JavaScript**: Extensive use of JavaScript for enhancing the frontend interactivity.
 
+- **PostgreSQL**: The application uses PostgreSQL as its relational database management system, ensuring data reliability and performance.
+
 These technologies work together to create a feature-rich and modern web application for various purposes.
 
 
