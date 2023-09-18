@@ -19,7 +19,7 @@
 
 "GoMove" is an application designed for all enthusiasts of an active lifestyle and outdoor sports. Our app allows users to plan and participate in various physical activities such as cycling, running, rollerblading, walking, and more.
 
-### Key Features**
+### Key Features
 - **Registration and Login:** Users can create their accounts in the app, providing access to full functionality, including creating and participating in activities and commenting.
 
 - **Activity Creation:** You can create and plan your own activities. Add dates, times, and descriptions so that others can join.
