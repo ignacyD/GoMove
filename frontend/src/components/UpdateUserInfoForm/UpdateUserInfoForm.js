@@ -14,11 +14,25 @@ function UpdateUserInfoForm() {
     const [selectedImage, setSelectedImage] = useState(null);
     const uploadImageRef = useRef(null);
     const navigate = useNavigate();
-    const handleImageUpload = (event) => {
-        const imageFile = event.target.files[0];
-        console.log(imageFile);
-        console.log(URL.createObjectURL(imageFile))
-        setSelectedImage(URL.createObjectURL(imageFile));
+    const convertBase64 = (file) => {
+        return new Promise((resolve, reject) => {
+            const fileReader = new FileReader();
+            fileReader.readAsDataURL(file);
+
+            fileReader.onload = () => {
+                resolve(fileReader.result);
+            };
+
+            fileReader.onerror = (error) => {
+                reject(error);
+            };
+        });
+    };
+
+    const handleImageUpload = async (event) => {
+        const file = event.target.files[0];
+        const base64 = await convertBase64(file);
+        setSelectedImage(base64);
     };
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -30,7 +44,7 @@ function UpdateUserInfoForm() {
                 "city": city,
                 "preferredActivity": preferredActivity,
                 "description": description,
-                "userPhotoUrl": selectedImage
+                "userPhoto": selectedImage.split(",")[1]
             })
         }).then(response => {
             if (response.status === 200) {
@@ -65,7 +79,7 @@ function UpdateUserInfoForm() {
                                 <input
                                     ref={uploadImageRef}
                                     type="file"
-                                    accept="image/*"
+                                    accept=".jpg, .jpeg, .png,"
                                     onChange={(event) => handleImageUpload(event)}
                                     style={{display: 'none'}}
                                 />

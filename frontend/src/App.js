@@ -30,7 +30,7 @@ function App() {
                 }
             })
                 .then(response => response.json())
-                .then(userData => {setUserData(userData); console.log(userData.userPhoto)});
+                .then(userData => setUserData(userData));
         }
     }, [isUserLogged])
 

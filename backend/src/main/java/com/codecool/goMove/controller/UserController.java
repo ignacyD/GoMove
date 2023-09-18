@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -28,7 +29,9 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseEntity<?> getUserById(@PathVariable UUID id) {
         User userById = userService.getUserById(id);
-        userById.setUserPhoto(imageService.getImage(userById.getPhotoName()));
+        if (userById.getPhotoName() != null && !userById.getPhotoName().isEmpty()) {
+            userById.setUserPhoto(imageService.getImage(userById.getPhotoName()));
+        }
         if (userById != null) {
             return ResponseEntity.status(HttpStatus.OK).body(userById);
         }

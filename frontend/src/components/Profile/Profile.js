@@ -145,7 +145,7 @@ function Profile() {
                     <div className="profile-picture-container">
                         <img
                             className="profile-picture"
-                            src={'data:image/jpeg;base64,' + userData.userPhoto}
+                            src={userData.userPhoto ? 'data:image/jpeg;base64,' + userData.userPhoto : null}
                             alt="Profile picture"
                         />
                     </div>
