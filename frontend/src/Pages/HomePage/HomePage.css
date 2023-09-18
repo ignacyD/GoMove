@@ -60,3 +60,7 @@
     display: grid;
     place-items: center;
 }
+
+.card-activity{
+    overflow: hidden;
+}

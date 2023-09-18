@@ -88,14 +88,35 @@ function HomePage() {
 
 
     const handleAcceptActivity = async () => {
+        const card = document.querySelector('.card');
+        card.style.right = '-50vw';
+        card.style.transform = 'scale(0)';
+        setTimeout(() => {
+            card.style.transition = 'transform .5s'
+            card.style.right = '0vw';
+            card.style.transform = 'scale(1)';
+            fetchNextActivity();
+        }, 500)
+        card.style.transition = 'transform .5s, right .5s'
         await enrollUserToActivity();
+        await fetchNextActivity();
         setShowJoinedActivityModal(true);
         setTimeout(() => {
             setShowJoinedActivityModal(false);
         }, 3000)
-        await fetchNextActivity();
     };
-
+const handleDeleteActivity = () => {
+    const card = document.querySelector('.card');
+    card.style.right = '50vw';
+    card.style.transform = 'scale(0)';
+    setTimeout(() => {
+        card.style.transition = 'transform .5s'
+        card.style.right = '0vw';
+        card.style.transform = 'scale(1)';
+    fetchNextActivity();
+    }, 500)
+    card.style.transition = 'transform .5s, right .5s'
+}
     return (
         <div className='home-page'>
             <Modal
@@ -123,7 +144,7 @@ function HomePage() {
                 </h3>
             </Modal>
             {activities.length > 0 ? (
-                <div className='delete-activity' onClick={() => fetchNextActivity()}>
+                <div className='delete-activity' onClick={() => handleDeleteActivity()}>
                     <FontAwesomeIcon icon={faXmark} size="2xl" style={{color: "#000000",}}/>
                 </div>
 
