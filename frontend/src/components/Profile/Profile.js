@@ -34,12 +34,12 @@ function Profile() {
                                 >
                                     <div className="activity-title">{activity.title}</div>
                                     <div className="activity-type">{iconSelector(activity.activityType)}</div>
-                                    <div className="activity-details">
-                                        <div className="activity-city">{activity.city}</div>
                                         <div className="activity-date-time">
                                             <span className="activity-date">{activity.date + " "}</span>
                                             <span className="activity-time">{" " + activity.time.substring(0, 5)}</span>
                                         </div>
+                                    <div className="activity-details">
+                                        <div className="activity-city">{activity.city}</div>
                                     </div>
                                     <img src={testPhoto} alt={activity.title} className="activity-image"/>
                                 </div>

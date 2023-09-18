@@ -3,7 +3,7 @@ import {useContext, useEffect, useState} from "react";
 import GoogleMapComponent from "../../components/GoogleMap/GoogleMap";
 import ActivityComments from "../../components/ActivityComments/ActivityComments";
 import {
-    faCalendarDays,
+    faCalendarDays, faCopy,
     faLocationPin,
     faTrash,
     faUser,
@@ -97,6 +97,21 @@ function ActivityPage() {
             participant.userId === localStorage.getItem("userId")
         ).length > 0)
     }
+    const handleCopyClick = () => {
+        const invitationLink = "http://localhost:3000/activity-page/" + activityData.activityId;
+        const textToCopy = 'Hi! Join my activity ' + activityData.title + ' at ' + activityData.date + ' in ' +
+            activityData.address + ' using link below: \n' + invitationLink;
+//TODO zrobić link, którego kliknięcie powoduje dołączenie do aktywności
+        navigator.clipboard.writeText(textToCopy).then(() => {
+            const copiedAlert = document.querySelector('.copied-message-alert');
+            copiedAlert.style.bottom = '0px'
+            setTimeout(() => {
+                copiedAlert.style.bottom = '20px'
+            }, 3000)
+        }).catch((error) => {
+            console.error('Błąd kopiowania do schowka: ', error);
+        });
+    };
 
     return (
         <div className={"activity-page"}>
@@ -114,18 +129,30 @@ function ActivityPage() {
                     <p>{activityData.description}</p>
                     <br/>
                     <br/>
-                    <div className="place-date">
-                        <h3>Place of meeting:</h3>
-                        <div className="place">
-                            <FontAwesomeIcon icon={faLocationPin} size="2xl"/>
-                            <p>{activityData.address}</p>
+                    <div className="activity-page-middle-section">
+                        <div className="place-date">
+                            <h3>Place of meeting:</h3>
+                            <div className="place">
+                                <FontAwesomeIcon icon={faLocationPin} size="2xl"/>
+                                <p>{activityData.address}</p>
+                            </div>
+                            <div className="date">
+                                <FontAwesomeIcon icon={faCalendarDays} size="2xl"/>
+                                <p>{activityData.date}, {activityData.time.substring(0, 5)}</p>
+                            </div>
                         </div>
-                        <div className="date">
-                            <FontAwesomeIcon icon={faCalendarDays} size="2xl"/>
-                            <p>{activityData.date}, {activityData.time.substring(0, 5)}</p>
+                        <div className="share-activity">
+                            <h3>Share Activity</h3>
+                            <div className='share-activity-methods'>
+                                <FontAwesomeIcon className="copy-to-clipboard" onClick={handleCopyClick} icon={faCopy}/>
+                            </div>
+                            <div className="copied-message-alert-container">
+                                <div className="copied-message-alert">
+                                    Invitation text copied to clipboard!
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <br/>
                     <div className="google-maps">
                         <GoogleMapComponent height={'400px'} width={'1020px'}
                                             address={`${activityData.address}`}/>

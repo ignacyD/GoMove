@@ -11,6 +11,8 @@ import {
     faPersonWalking
 } from "@fortawesome/free-solid-svg-icons";
 import {Context} from "../../App";
+import ModalStyles from "../../ModalStyles";
+import Modal from "react-modal";
 
 function Search() {
 
@@ -29,6 +31,7 @@ function Search() {
     const [isInputActive, setInputActive] = useState(false);
     const [chosenOption, setChosenOption] = useState(null);
     const [activitiesFetched, setActivitiesFetched] = useState(false);
+    const [showJoinedActivityModal, setShowJoinedActivityModal] = useState(false);
 
     const today = new Date().toISOString().split("T")[0];
 
@@ -176,7 +179,15 @@ function Search() {
         return aDateTime - bDateTime;
     }
 
+    function manageModalDisplay() {
+    setShowJoinedActivityModal(true);
+    setTimeout(() => {
+        setShowJoinedActivityModal(false);
+    }, 3000)
+    }
+
     const enrollUserToActivity = (activityId) => {
+        manageModalDisplay();
         fetch(`http://localhost:8080/users/enroll/${userData.userId}/${activityId}`, {
             method: 'PATCH',
             headers: {
@@ -211,8 +222,16 @@ function Search() {
 
     return (
         <div className="activity-search-page">
+            <Modal
+                isOpen={showJoinedActivityModal}
+                onRequestClose={() => setShowJoinedActivityModal(false)}
+                style={ModalStyles.activityAddedModalStyles}
+                className="activity-added-modal"
+                appElement={document.querySelector("#root") || undefined}
+            >
+                You've successfully joined an activity!
+            </Modal>
             <div className="activity-search-filters">
-
                 <h2>Activity search filters</h2>
                 <div className="choose-activity">
                     <h4>Select activity type</h4>

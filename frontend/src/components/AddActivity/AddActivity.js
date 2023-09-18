@@ -7,6 +7,9 @@ import {v4 as UUID} from 'uuid';
 import './AddActivity.css'
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPersonBiking, faPersonRunning, faPersonSkating, faPersonWalking} from "@fortawesome/free-solid-svg-icons";
+import ModalStyles from "../../ModalStyles";
+import ActivityAddedModal from "../ActivityAddedModal/ActivityAddedModal";
+import Modal from "react-modal";
 
 const googleMapApiKey = process.env.REACT_APP_GOOGLE_MAP_API_KEY;
 const googleMapsLibraries = ["places"];
@@ -25,7 +28,8 @@ const AddActivity = () => {
     const [country, setCountry] = useState("");
     const [timeDisable, setTimeDisable] = useState(true);
     const [chosenOption, setChosenOption] = useState(null);
-
+    const [showIncorrectActivityModal, setShowIncorrectActivityModal] = useState(false);
+    const [showWrongAddressModal, setShowWrongAddressModal] = useState(false);
 
     const navigate = useNavigate();
 
@@ -113,17 +117,26 @@ const AddActivity = () => {
         e.preventDefault();
 
         if (!selectedAddress) {
-            alert("Choose correct address. Address must include city, street, and street number.");
+            setShowWrongAddressModal(true);
+            setTimeout(() => {
+                setShowWrongAddressModal(false);
+            },3000)
             return;
         }
 
         if (activityType === "") {
-            alert("Choose correct activity type.")
+            setShowIncorrectActivityModal(true);
+            setTimeout(() => {
+                setShowIncorrectActivityModal(false);
+            },3000)
             return;
         }
 
         if (![selectedAddress, city, street].every(Boolean)) {
-            alert("Choose correct address. Address must include city, street, and street number.");
+            setShowWrongAddressModal(true);
+            setTimeout(() => {
+                setShowWrongAddressModal(false);
+            },3000)
             return;
         }
 
@@ -182,8 +195,25 @@ const AddActivity = () => {
 
 
     return isLoaded ? (
-
         <div className="add-activity">
+            <Modal
+                isOpen={showWrongAddressModal}
+                onRequestClose={() => setShowWrongAddressModal(false)}
+                style={ModalStyles.activityAddedModalStyles}
+                className="activity-added-modal"
+                appElement={document.querySelector("#root") || undefined}
+            >
+                Choose correct address. Address must include city, street, and street number.
+            </Modal>
+            <Modal
+            isOpen={showIncorrectActivityModal}
+            onRequestClose={() => setShowIncorrectActivityModal(false)}
+            style={ModalStyles.activityAddedModalStyles}
+            className="activity-added-modal"
+            appElement={document.querySelector("#root") || undefined}
+        >
+                Choose correct activity type.
+        </Modal>
             <form className="add-activity-form" onSubmit={handleSubmit}>
                 <div className="title-field">
                     <label className="title-label">Title</label>
