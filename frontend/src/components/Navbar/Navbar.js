@@ -29,7 +29,7 @@ function Navbar({setDisplayLoginForm, handleLogout}) {
                 </Link>
             </div>
             <div className="mobile-menu">
-                <MobileMenu/>
+                <MobileMenu isUserLogged={isUserLogged} setDisplayLoginForm={setDisplayLoginForm} handleLogout={handleLogout}/>
             </div>
             <div className="PC-menu">
                 <ul className="nav-links">

@@ -2,17 +2,23 @@
     .navbar {
         flex-direction: column;
         align-items: center;
-        height: 12vh;
+        position: relative;
+        z-index: 2;
+        width: 100vw;
+        height: 100px;
+        padding: 20px 0px;
     }
 
     .navbar .logo {
         text-align: center;
-        width: 20vw;
+        width: 50vw;
+        display: flex;
+        justify-content: center;
         margin-bottom: 20px;
-        margin-left: 0;
     }
 
     .menu-icon {
+        height: 32px;
         display: block;
         text-align: center;
     }
@@ -24,25 +30,28 @@
         left: 0px;
         top: calc(12vh + 40px);
         width: 100vw;
-        height: 30vh;
+        height: 186.8px;
     }
 
     .mobile-menu-open, .mobile-menu-closed {
         position: absolute;
         background-color: #2a2a2a;
         width: 100vw;
+        height: 186.8px;
         display: flex;
         align-items: center;
         flex-direction: column;
     }
 
     .mobile-menu-open {
-        top: 0vh;
+        top: 0px;
+        z-index: 20;
         transition: top 1s;
     }
 
     .mobile-menu-closed {
-        top: -20vh;
+        top: -186.8px;
+        z-index: 20;
         transition: top 1s;
     }
 
@@ -65,26 +74,21 @@
     }
 
     .media-mobile {
-        margin-bottom: 5px;
+        margin-top: 10px;
+        margin-bottom: 10px;
     }
 
     .navbar .login-btn {
-        margin-right: 40px;
-        text-decoration: none;
-        color: lightgreen;
-        height: 21.6px;
+        margin-right: 0;
+    }
+
+    .login-and-profile-container {
+        display: none;
+    }
+
+    .login-and-profile-container-mobile {
         display: flex;
-        align-items: center;
-        transition: transform .3s;
-    }
-
-    .navbar .login-btn {
-        background: none;
-        border: none;
-        padding: 0px;
-        position: absolute;
-        left: 80vw;
-        top: calc(6vh + 6px);
-        font-size: 20px;
+        justify-content: center;
+        height: 30px;
     }
 }

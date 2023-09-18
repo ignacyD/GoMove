@@ -5,25 +5,50 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faBars, faChevronUp, faLaptopCode, faX} from "@fortawesome/free-solid-svg-icons";
 import {faFacebook, faYoutube} from "@fortawesome/free-brands-svg-icons";
 
-function MobileMenu() {
+function MobileMenu({isUserLogged, setDisplayLoginForm, handleLogout}) {
     const [showMenu, setShowMenu] = useState(false);
 
+    const handleMenuChange = () =>{
+        setShowMenu(!showMenu)
+        const pageEl = document.querySelector('.App > div')
+        const newOpacity = showMenu ? 1 : 0.5;
+        pageEl.style.transition = 'opacity .5s'
+        pageEl.style.opacity = newOpacity;
+    }
     return (<div>
-        <div className='menu-icon' onClick={() => setShowMenu(!showMenu)}>
+        <div className='menu-icon' onClick={() => handleMenuChange()}>
             <FontAwesomeIcon icon={showMenu ? faChevronUp : faBars} size="2x" style={{color: "#90EE90FF"}}/>
         </div>
         <div className="mobile-menu-space">
             <div className={`mobile-menu-${showMenu ? 'open' : 'closed'}`}>
                 <div className={`nav-links-mobile`}>
-                    <Link to='/search' className='nav-btn-mobile'>
+                    <Link to='/search' onClick={() => setShowMenu(false)}  className='nav-btn-mobile'>
                         Search
                     </Link>
-                    <Link to='/about' className='nav-btn-mobile'>
+                    <Link to='/about' onClick={() => setShowMenu(false)} className='nav-btn-mobile'>
                         About Us
                     </Link>
-                    <Link to='/add-activity' className='add-activity-btn'>
+                    <Link to='/add-activity' onClick={() => setShowMenu(false)}  className='add-activity-btn'>
                         Add Activity
                     </Link>
+                </div>
+                <div className="login-and-profile-container-mobile">
+                    {
+                        isUserLogged && <Link to='/profile' className='nav-btn'>
+                            <li>Profile</li>
+                        </Link>
+                    }
+                    {
+                        !isUserLogged &&
+                        <button className='login-btn' onClick={() => setDisplayLoginForm(true)}>
+                            Login
+                        </button>
+                    }
+                    {
+                        isUserLogged && <button className='login-btn' onClick={() => handleLogout()}>
+                            Logout
+                        </button>
+                    }
                 </div>
                 <div className="media-mobile">
                     <a><FontAwesomeIcon className='media-btn' icon={faFacebook} size="2x"

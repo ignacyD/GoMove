@@ -64,3 +64,8 @@
 .card-activity{
     overflow: hidden;
 }
+@media screen and (max-width: 768px) {
+.home-page {
+    height: calc(100vh - 140px);
+}
+}

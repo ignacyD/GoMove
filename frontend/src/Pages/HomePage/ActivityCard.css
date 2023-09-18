@@ -121,5 +121,11 @@
 .activityCard-icon {
     margin-top: 20px;
 }
+@media screen and (max-width: 768px) {
+    .card {
+        height: calc(100vh - 250px);
+        width: 400px;
+    }
 
+}
 
