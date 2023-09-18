@@ -223,6 +223,8 @@ const AddActivity = () => {
                         type="text"
                         id="title"
                         value={title}
+                        minLength={8}
+                        maxLength={32}
                         onChange={e => setTitle(e.target.value)}
                     />
                 </div>
@@ -275,6 +277,8 @@ const AddActivity = () => {
                         type="text"
                         id="description"
                         value={description}
+                        minLength={8}
+                        maxLength={1024}
                         onChange={e => setDescription(e.target.value)}
                     /></div>
                 <div className="date-field">
