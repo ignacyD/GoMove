@@ -32,12 +32,11 @@ public class ActivityController {
 
     @GetMapping("/future")
     public ResponseEntity<?> getFutureActivities() {
-        return ResponseEntity.status(HttpStatus.OK).body(activityService.getFutureActivities().stream().map(
+        return ResponseEntity.status(HttpStatus.OK).body(activityService.getFutureActivities().stream().peek(
                 activity -> {
                     if (activity.getPhotoName() != null && !activity.getPhotoName().isEmpty()) {
                         activity.setActivityPhoto(activityImageService.getImage(activity.getPhotoName()));
                     }
-                    return activity;
                 }
         ).collect(Collectors.toList()));
     }
@@ -48,26 +47,41 @@ public class ActivityController {
         if (activityById.getPhotoName() != null && !activityById.getPhotoName().isEmpty()) {
             activityById.setActivityPhoto(activityImageService.getImage(activityById.getPhotoName()));
         }
-        if (activityById != null) {
-            return ResponseEntity.status(HttpStatus.OK).body(activityById);
-        }
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No activity with requested id");
+        return ResponseEntity.status(HttpStatus.OK).body(activityById);
     }
 
     @GetMapping("/filter")
     public ResponseEntity<?> getActivitiesByTypeAndCity(@RequestParam(required = false) String city,
                                                         @RequestParam(required = false) ActivityType type) {
-        return ResponseEntity.status(HttpStatus.OK).body(activityService.getActivitiesByTypeAndCity(city, type));
+        return ResponseEntity.status(HttpStatus.OK).body(activityService.getActivitiesByTypeAndCity(city, type).stream().peek(
+                activity -> {
+                    if (activity.getPhotoName() != null && !activity.getPhotoName().isEmpty()) {
+                        activity.setActivityPhoto(activityImageService.getImage(activity.getPhotoName()));
+                    }
+                }
+        ).collect(Collectors.toList()));
     }
 
     @GetMapping("/user/{ownerId}")
     public ResponseEntity<?> getActivitiesByOwner(@PathVariable UUID ownerId) {
-        return ResponseEntity.status(HttpStatus.OK).body(activityService.getActivitiesByOwner(ownerId));
+        return ResponseEntity.status(HttpStatus.OK).body(activityService.getActivitiesByOwner(ownerId).stream().peek(
+                activity -> {
+                    if (activity.getPhotoName() != null && !activity.getPhotoName().isEmpty()) {
+                        activity.setActivityPhoto(activityImageService.getImage(activity.getPhotoName()));
+                    }
+                }
+        ).collect(Collectors.toList()));
     }
 
     @GetMapping("/participant/{participantId}")
     public ResponseEntity<?> getActivitiesByParticipant(@PathVariable UUID participantId) {
-        return ResponseEntity.status(HttpStatus.OK).body(activityService.getActivitiesByParticipantId(participantId));
+        return ResponseEntity.status(HttpStatus.OK).body(activityService.getActivitiesByParticipantId(participantId).stream().peek(
+                activity -> {
+                    if (activity.getPhotoName() != null && !activity.getPhotoName().isEmpty()) {
+                        activity.setActivityPhoto(activityImageService.getImage(activity.getPhotoName()));
+                    }
+                }
+        ).collect(Collectors.toList()));
     }
 
     @GetMapping("/cities")
