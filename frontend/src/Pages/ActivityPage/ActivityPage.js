@@ -3,7 +3,8 @@ import {useContext, useEffect, useState} from "react";
 import GoogleMapComponent from "../../components/GoogleMap/GoogleMap";
 import ActivityComments from "../../components/ActivityComments/ActivityComments";
 import {
-    faCalendarDays, faCopy,
+    faCalendarDays,
+    faCopy,
     faLocationPin,
     faTrash,
     faUser,
@@ -39,7 +40,7 @@ function ActivityPage() {
         }
     }, [activityData])
 
-console.log(userData)
+    console.log(userData)
 
     const handleEnrollButton = () => {
         fetch(`http://localhost:8080/users/enroll/${localStorage.getItem("userId")}/${activityId}`, {
@@ -72,12 +73,11 @@ console.log(userData)
                     console.log("User unsubscribed successfully");
                     setIsUserEnrolled(false);
                     let newActivityData = {...activityData};
-                    let indexOfUser = newActivityData.participants.indexOf(userData);
-                    console.log(indexOfUser);
-                    // let newEnrolledUsers = [...enrolledUsers];
-                    // let indexOfUser = newEnrolledUsers.indexOf(userData.username);
-                    // newEnrolledUsers.splice(indexOfUser, 1)
-                    // setEnrolledUsers(newEnrolledUsers);
+                    let indexOfUser = newActivityData.participants.findIndex(user => {
+                        return user.userId === userData.userId;
+                    })
+                    newActivityData.participants.splice(indexOfUser,1);
+                    setActivityData(newActivityData);
                 } else {
                     console.log("something went wrong")
                 }
@@ -129,7 +129,9 @@ console.log(userData)
                     <hr/>
                     <br/>
                     {activityData.activityPhoto ?
-                        <img src={activityData.activityPhoto ? 'data:image/jpeg;base64,' + activityData.activityPhoto : null} alt={activityData.title} className="activity-image"/>
+                        <img
+                            src={activityData.activityPhoto ? 'data:image/jpeg;base64,' + activityData.activityPhoto : null}
+                            alt={activityData.title} className="activity-image"/>
                         : null}
 
                     <h3>Description:</h3>
@@ -197,7 +199,8 @@ console.log(userData)
                     <h3>Participants:</h3>
                     <div>
                         {enrolledUsers.length > 0 ? activityData.participants.map(participant => (
-                            <div className="users" key={participant.userId} onClick={() => navigate(`/profile/${participant.userId}`)}>
+                            <div className="users" key={participant.userId}
+                                 onClick={() => navigate(`/profile/${participant.userId}`)}>
                                 <FontAwesomeIcon icon={faUser} size="2xl" style={{color: "#2a2a2a",}}/>
                                 <p>{participant.username}</p>
                             </div>
