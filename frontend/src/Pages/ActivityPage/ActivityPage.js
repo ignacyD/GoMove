@@ -24,7 +24,6 @@ function ActivityPage() {
 
     const [activityData, setActivityData] = useState("");
     const [isUserEnrolled, setIsUserEnrolled] = useState(true);
-    const [enrolledUsers, setEnrolledUsers] = useState([]);
 
     const navigate = useNavigate();
 
@@ -93,7 +92,6 @@ function ActivityPage() {
             }
             const data = await response.json();
             setActivityData(data);
-            setEnrolledUsers(data.participants.map(participant => participant.username));
         } catch (error) {
             console.error('Error fetching activity data:', error);
         }
@@ -198,7 +196,7 @@ function ActivityPage() {
                     <br/>
                     <h3>Participants:</h3>
                     <div>
-                        {enrolledUsers.length > 0 ? activityData.participants.map(participant => (
+                        {activityData.participants.length > 0 ? activityData.participants.map(participant => (
                             <div className="users" key={participant.userId}
                                  onClick={() => navigate(`/profile/${participant.userId}`)}>
                                 <FontAwesomeIcon icon={faUser} size="2xl" style={{color: "#2a2a2a",}}/>

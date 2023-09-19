@@ -55,7 +55,7 @@ function UpdateUserInfoForm() {
         }).then(response => {
             if (response.status === 200) {
                 console.log("Update info successful");
-                navigate("/profile")
+                navigate(`/profile/${userData.userId}`)
             } else {
                 console.log("something went wrong")
             }
@@ -68,7 +68,7 @@ function UpdateUserInfoForm() {
                 isOpen={true}
                 style={updateUserInfoModalStyles}
                 className="update-user-info-modal"
-                onRequestClose={() => navigate("/profile")}
+                onRequestClose={() => navigate(`/profile/${userData.userId}`)}
             >
                 <h4 className="additional-info-title">Edit profile info</h4>
                 <form className="additional-info-form" onSubmit={handleSubmit}>
@@ -77,7 +77,7 @@ function UpdateUserInfoForm() {
                             <div>
                                 <button className="custom-file-button" type="button"
                                         onClick={() => uploadImageRef.current.click()}>
-                                    <img className='profile-picture'
+                                    <img className='profile-picture' alt='profile picture'
                                          src={selectedImage ? selectedImage : userData.userPhoto ? 'data:image/jpeg;base64,' + userData.userPhoto : 'blank-profile-picture.png'}></img>
                                     <div className='change-photo-button'>
                                         Click to change
@@ -97,7 +97,6 @@ function UpdateUserInfoForm() {
                                 <label className="city-label">City</label>
                                 <textarea
                                     className="city-input"
-                                    type="text"
                                     id="city"
                                     value={city}
                                     onChange={e => setCity(e.target.value)}
@@ -106,7 +105,6 @@ function UpdateUserInfoForm() {
                             <div className="profile-description-field">
                                 <label className="profile-description-label">Description</label>
                                 <textarea className="profile-description-input"
-                                          type="text"
                                           id="description"
                                           value={description}
                                           onChange={e => setDescription(e.target.value)}>

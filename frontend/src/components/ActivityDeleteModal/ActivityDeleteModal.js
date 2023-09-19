@@ -9,6 +9,7 @@ function ActivityDeleteModal() {
 
     const setDisplayActivityDeleteModal = useContext(Context).setDisplayActivityDeleteModal;
     const {activityId} = useParams();
+    const userData = useContext(Context).userData;
     const navigate = useNavigate();
 
     function handleDelete() {
@@ -21,7 +22,7 @@ function ActivityDeleteModal() {
         }).then(response => {
             if (response.status === 200) {
                 setDisplayActivityDeleteModal(false);
-                navigate(`/profile`)
+                navigate(`/profile/${userData.userId}`)
                 console.log("Activity successfully deleted")
             } else {
                 console.log("Something went wrong")
