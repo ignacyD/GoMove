@@ -3,7 +3,8 @@ import {useContext, useEffect, useState} from "react";
 import GoogleMapComponent from "../../components/GoogleMap/GoogleMap";
 import ActivityComments from "../../components/ActivityComments/ActivityComments";
 import {
-    faCalendarDays, faCopy,
+    faCalendarDays,
+    faCopy,
     faLocationPin,
     faTrash,
     faUser,
@@ -11,7 +12,7 @@ import {
     faUserPlus
 } from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {Context} from "../../App";
 import {iconSelector} from '../../components/IconSelector'
 
@@ -23,7 +24,8 @@ function ActivityPage() {
 
     const [activityData, setActivityData] = useState("");
     const [isUserEnrolled, setIsUserEnrolled] = useState(true);
-    const [enrolledUsers, setEnrolledUsers] = useState([]);
+
+    const navigate = useNavigate();
 
     const {activityId} = useParams();
 
@@ -37,6 +39,7 @@ function ActivityPage() {
         }
     }, [activityData])
 
+    console.log(userData)
 
     const handleEnrollButton = () => {
         fetch(`http://localhost:8080/users/enroll/${localStorage.getItem("userId")}/${activityId}`, {
@@ -50,9 +53,9 @@ function ActivityPage() {
                 if (response.status === 200) {
                     console.log("User enrolled successfully");
                     setIsUserEnrolled(true);
-                    let newEnrolledUsers = [...enrolledUsers];
-                    newEnrolledUsers.push(userData.username);
-                    setEnrolledUsers(newEnrolledUsers);
+                    let newActivityData = {...activityData}
+                    newActivityData.participants.push(userData);
+                    setActivityData(newActivityData);
                 } else {
                     console.log("something went wrong")
                 }
@@ -68,10 +71,12 @@ function ActivityPage() {
                 if (response.status === 200) {
                     console.log("User unsubscribed successfully");
                     setIsUserEnrolled(false);
-                    let newEnrolledUsers = [...enrolledUsers];
-                    let indexOfUser = newEnrolledUsers.indexOf(userData.username);
-                    newEnrolledUsers.splice(indexOfUser, 1)
-                    setEnrolledUsers(newEnrolledUsers);
+                    let newActivityData = {...activityData};
+                    let indexOfUser = newActivityData.participants.findIndex(user => {
+                        return user.userId === userData.userId;
+                    })
+                    newActivityData.participants.splice(indexOfUser,1);
+                    setActivityData(newActivityData);
                 } else {
                     console.log("something went wrong")
                 }
@@ -87,7 +92,6 @@ function ActivityPage() {
             }
             const data = await response.json();
             setActivityData(data);
-            setEnrolledUsers(data.participants.map(participant => participant.username));
         } catch (error) {
             console.error('Error fetching activity data:', error);
         }
@@ -123,7 +127,9 @@ function ActivityPage() {
                     <hr/>
                     <br/>
                     {activityData.activityPhoto ?
-                        <img src={activityData.activityPhoto ? 'data:image/jpeg;base64,' + activityData.activityPhoto : null} alt={activityData.title} className="activity-image"/>
+                        <img
+                            src={activityData.activityPhoto ? 'data:image/jpeg;base64,' + activityData.activityPhoto : null}
+                            alt={activityData.title} className="activity-image"/>
                         : null}
 
                     <h3>Description:</h3>
@@ -190,10 +196,11 @@ function ActivityPage() {
                     <br/>
                     <h3>Participants {enrolledUsers.length > 0 ? `(${enrolledUsers.length})` : ""}</h3>
                     <div>
-                        {enrolledUsers.length > 0 ? enrolledUsers.map(participant => (
-                            <div className="users" key={participant}>
+                        {activityData.participants.length > 0 ? activityData.participants.map(participant => (
+                            <div className="users" key={participant.userId}
+                                 onClick={() => navigate(`/profile/${participant.userId}`)}>
                                 <FontAwesomeIcon icon={faUser} size="2xl" style={{color: "#2a2a2a",}}/>
-                                <p>{participant === activityData.owner.username ? participant + " (Owner)" : participant}</p>
+                                <p>{participant.username === activityData.owner.username ? participant.username + " (owner)" : participant.username}</p>
                             </div>
                         )) : <div className="users">
                         </div>}

@@ -57,7 +57,7 @@ function AdditionalUserInfoForm() {
         }).then(response => {
             if (response.status === 200) {
                 console.log("Update info successful");
-                navigate("/profile")
+                navigate(`/profile/${userData.userId}`)
             } else {
                 console.log("something went wrong")
             }
@@ -78,7 +78,7 @@ function AdditionalUserInfoForm() {
                         <div>
                             <div>
                                 <button className="custom-file-button" type="button" onClick={() => uploadImageRef.current.click()}>
-                                    <img className='profile-picture'
+                                    <img className='profile-picture' alt='profile picture'
                                          src={selectedImage ? selectedImage : 'blank-profile-picture.png'}></img>
                                     <div className='change-photo-button'>
                                         Click to change
@@ -99,7 +99,6 @@ function AdditionalUserInfoForm() {
                                 <label className="city-label">City</label>
                                 <textarea
                                     className="city-input"
-                                    type="text"
                                     id="city"
                                     value={city}
                                     onChange={e => setCity(e.target.value)}
