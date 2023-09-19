@@ -3,7 +3,8 @@ import {useEffect, useRef, useState} from "react";
 import testPhoto from '../../assets/images/test.jpg';
 import DominikPhoto from '../../assets/images/Dominik.png';
 import KamilPhoto from '../../assets/images/Kamil.jpg';
-import JakubPhoto from '../..//assets/images/Jakub_Szczygiel.jpeg'
+import JakubPhoto from '../..//assets/images/Jakub_Szczygiel.jpeg';
+import IgnacyPhoto from '../../assets/images/Ignacy.jpg';
 import emailjs from '@emailjs/browser';
 
 const arrayOfOwners = [
@@ -24,7 +25,7 @@ const arrayOfOwners = [
         id: 3,
         name: "Ignacy Gąsiorowski",
         desc: "Hello, I'm Ignacy. I'm 20-year-old graduate of a music school, specializing in the cello. Outside the world of music, my diverse interests include programming, rock climbing, mountain hiking, and immersing myself in a wide range of musical genres. I have a deep love for outdoor activities, which made creating this app all the more entertaining for me.",
-        photo: testPhoto
+        photo: IgnacyPhoto
     },
     {
         id: 4,
