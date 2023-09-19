@@ -20,7 +20,7 @@ function Profile() {
             return (
                 <div className='activities-carousel-inner-container'>
                     <div className='activities-in-profile-swipe-left-container'
-                         onClick={() => handleIndexChange(-1, type)}>
+                         onClick={() => handleIndexChange(-1, type, activities)}>
                         <button className="activities-in-profile-swipe-left-button">
                             <FontAwesomeIcon icon={faChevronLeft}/></button>
                     </div>
@@ -52,7 +52,7 @@ function Profile() {
                     <div className='activities-in-profile-swipe-right-container'>
                         <button className="activities-in-profile-swipe-right-button"
                                 style={{visibility: activities.length <= 5 ? 'hidden' : 'visible'}}
-                                onClick={() => handleIndexChange(1, type)}>
+                                onClick={() => handleIndexChange(1, type, activities)}>
                             <FontAwesomeIcon icon={faChevronRight}/>
                         </button>
                     </div>
@@ -63,9 +63,9 @@ function Profile() {
         }
     }
 
-    const handleIndexChange = (amount, type) => {
+    const handleIndexChange = (amount, type, activities) => {
         const newIndex = carouselIndex[type] + amount;
-        if (newIndex >= 0 && newIndex <= allUserActivities.length - 5) {
+        if (newIndex >= 0 && newIndex <= activities.length - 5) {
             setCarouselIndex({...carouselIndex, [type]: newIndex});
         }
     }
@@ -84,7 +84,7 @@ function Profile() {
             } else {
                 displayButton(swipeRightButton)
             }
-            displayedActivities.style.right = `${index * 230 + 'px'}`
+            displayedActivities.style.right = `${(index * 230) - 15 + 'px'}`
         }
     }
     const displayButton = (button) => {
@@ -148,7 +148,7 @@ function Profile() {
                     <div className="profile-picture-container">
                         <img
                             className="profile-picture"
-                            src={userData.userPhoto ? 'data:image/jpeg;base64,' + userData.userPhoto : null}
+                            src={userData.userPhoto ? 'data:image/jpeg;base64,' + userData.userPhoto : 'blank-profile-picture.png'}
                             alt="Profile picture"
                         />
                     </div>

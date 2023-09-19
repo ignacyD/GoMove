@@ -78,7 +78,7 @@ function UpdateUserInfoForm() {
                                 <button className="custom-file-button" type="button"
                                         onClick={() => uploadImageRef.current.click()}>
                                     <img className='profile-picture'
-                                         src={selectedImage ? selectedImage : 'data:image/jpeg;base64,' + userData.userPhoto}></img>
+                                         src={selectedImage ? selectedImage : userData.userPhoto ? 'data:image/jpeg;base64,' + userData.userPhoto : 'blank-profile-picture.png'}></img>
                                     <div className='change-photo-button'>
                                         Click to change
                                     </div>
