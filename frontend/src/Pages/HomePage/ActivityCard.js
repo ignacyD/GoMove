@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import './ActivitCard.css';
+import React, {useEffect, useState} from 'react';
+import './ActivityCard.css';
 import testPhoto from '../../assets/images/test.jpg'
 import GoogleMapComponent from "../../components/GoogleMap/GoogleMap";
 import {useNavigate} from "react-router-dom";
@@ -8,8 +8,19 @@ import {iconSelector} from '../../components/IconSelector'
 function ActivityCard({activity}) {
 
     const [showMap, setShowMap] = useState(false);
+    const [isUserMobile, setIsUserMobile] = useState(false);
 
     const navigate = useNavigate();
+
+    useEffect(() => {
+        console.log(window.innerWidth)
+        if (window.innerWidth < 768) {
+            setIsUserMobile(true)
+        }
+        else{
+            setIsUserMobile(false);
+        }
+    }, [window.innerWidth])
 
     return (
         <div className="card">
@@ -17,10 +28,10 @@ function ActivityCard({activity}) {
                 className="top-section"
                 onClick={() => navigate(`/activity-page/${activity.activityId}`)}
             >
-                {activity.photoUrl ?
-                    <img className="photo" src={activity.photoUrl} alt="Activity"/> :
-                    <img className="photo" src={testPhoto} alt="Activity"/>
-                }
+                <div className="activity-photo">{activity.activityPhoto ?
+                    <img src={'data:image/jpeg;base64,' + activity.activityPhoto} alt="Activity"/> :
+                    <img src={testPhoto} alt="Activity"/>
+                }</div>
                 <div className="title-section">
                     <div className="activityCard-icon">{iconSelector(activity.activityType)}</div>
                     <h2>{activity.title}</h2>
@@ -47,7 +58,7 @@ function ActivityCard({activity}) {
                             onClick={() => setShowMap(!showMap)}>{showMap ? "Back to details" : "See on map"}</button>
                     </div>
                     <div className="google-maps">
-                        <GoogleMapComponent height={'270px'} width={'400px'}
+                        <GoogleMapComponent height={isUserMobile ? 'calc(50vh - 150px)' : '270px'} width={isUserMobile ? '60vw' : '400px'}
                                             address={`${activity.address}`}/>
                     </div>
                 </div>

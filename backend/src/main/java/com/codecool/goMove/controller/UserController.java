@@ -2,13 +2,13 @@ package com.codecool.goMove.controller;
 
 import com.codecool.goMove.model.User;
 import com.codecool.goMove.service.ImageService;
+import com.codecool.goMove.service.UserImageService;
 import com.codecool.goMove.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -18,7 +18,7 @@ import java.util.UUID;
 public class UserController {
 
     private final UserService userService;
-    private final ImageService imageService;
+    private final UserImageService imageService;
 
 
     @GetMapping
@@ -41,6 +41,9 @@ public class UserController {
     @GetMapping("/name/{name}")
     public ResponseEntity<?> getUserByName(@PathVariable String name) {
         User userByName = userService.getUserByName(name);
+        if (userByName.getPhotoName() != null && !userByName.getPhotoName().isEmpty()) {
+            userByName.setUserPhoto(imageService.getImage(userByName.getPhotoName()));
+        }
         if (userByName != null) {
             return ResponseEntity.status(HttpStatus.OK).body(userByName);
         }

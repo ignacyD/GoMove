@@ -71,7 +71,7 @@ body {
     font-weight: lighter;
 }
 
-.about-us-page{
+.about-us-page {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -99,7 +99,7 @@ body {
     font-weight: lighter;
 }
 
-.about-us-page hr{
+.about-us-page hr {
     width: 80%;
 }
 
@@ -148,7 +148,7 @@ body {
     background-color: #e6ece6;
 }
 
-.about-us-page .contact label{
+.about-us-page .contact label {
     font-size: 15px;
     color: #f0f0f0;
     font-weight: lighter;
@@ -177,8 +177,38 @@ body {
     transition: transform .4s ease, background-color .4s ease;
 }
 
+@media screen and (max-width: 768px) {
+    .about-us-page > .creators {
+        width: 90vw;
+        padding-right: 0;
+        padding-left: 0;
+    }
 
+    .about-us-page > .creators > .creator {
+        width: 90vw;
+        justify-content: center;
+    }
+    .about-us-page .creators .visible {
+        gap: 0px;
+    }
+    .about-us-page > .creators > .creator > .content {
+        min-width: 50%;
+        max-width: 50%;
+    }
 
+    .about-us-page > .creators > .creator > .img {
+        max-width: 40%;
+        min-width: 40%;
+        margin-left: 10%;
+        display: flex;
+        align-items: center;
+    }
+
+    .about-us-page > .creators > .creator > .img > img {
+        min-width: 80%;
+        max-width: 80%;
+    }
+}
 
 
 

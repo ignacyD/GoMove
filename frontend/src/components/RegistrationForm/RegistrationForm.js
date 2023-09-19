@@ -128,43 +128,43 @@ function RegistrationForm({setDisplayLoginForm, setDisplayRegistrationForm}) {
             <form className="registration-form" onSubmit={handleSubmit}>
                 <div className="username-field">
                     <label className="username-label">Username</label>
-                    <input
+                    <textarea
                         className="username-input"
                         type="text"
                         id="username"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
-                    ></input>
+                    ></textarea>
                 </div>
                 <div className="e-mail-field">
                     <label className="e-mail-label">E-mail</label>
-                    <input
+                    <textarea
                         className="e-mail-input"
                         type="text"
                         id="e-mail"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                    ></input>
+                    ></textarea>
                 </div>
                 <div className="password-field">
                     <label className="password-label">Password</label>
-                    <input
+                    <textarea
                         className="password-input"
                         type="password"
                         id="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                    ></input>
+                    ></textarea>
                 </div>
                 <div className="confirm-password-field">
                     <label className="confirm-password-label">Confirm password</label>
-                    <input
+                    <textarea
                         className="confirm-password-input"
                         type="password"
                         id="confirm-password"
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
-                    ></input>
+                    ></textarea>
                 </div>
                 <button className="register-submit-btn" type="submit">Register</button>
                 <div className={errorMessage.length > 0 || passwordErrorMessage.length > 0 ? "errors-space" : ""}>

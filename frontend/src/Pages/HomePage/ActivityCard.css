@@ -122,4 +122,55 @@
     margin-top: 20px;
 }
 
+@media screen and (max-width: 768px) {
+    .card {
+        height: calc(100vh - 250px);
+        width: 60vw;
+    }
+
+    .card .top-section {
+        width: 60vw;
+        height: 200px;
+        margin-bottom: 0;
+    }
+
+    .top-section > .photo {
+        height: 200px;
+        width: 30vw;
+        margin-right: 0px;
+    }
+
+    .card .top-section .title-section {
+        min-width: 30vw;
+        max-width: 30vw;
+        position: relative;
+        left: 20px;
+    }
+
+    .middle-section {
+        height: 15vh;
+    }
+
+    .location h3, .datetime h3 {
+        margin-top: 10px;
+    }
+
+    .description-section {
+        height: calc(35vh - 150px);
+    }
+
+    .description-section h3 {
+        margin-top: 0px;
+    }
+
+    .map-button {
+        height: calc(50vh - 300px);
+    }
+
+    .map-side {
+        position: relative;
+        bottom: calc(50vh - 150px);
+        transition: bottom 1s;
+    }
+}
 

@@ -1,11 +1,13 @@
-import {useState} from "react";
+import {useContext, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import './AdditionalUserInfoForm.css'
 import Modal from "react-modal";
 import additionalProfileInfoModalStyles from "../../ModalStyles";
 import {useRef} from 'react';
+import {Context} from "../../App";
 
 function AdditionalUserInfoForm() {
+    const userData = useContext(Context).userData;
     const [city, setCity] = useState("");
     const [preferredActivity, setPreferredActivity] = useState("");
     const [description, setDescription] = useState("");
@@ -35,6 +37,13 @@ function AdditionalUserInfoForm() {
     };
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        userData.description = description;
+        userData.city = city;
+        userData.preferredActivity = preferredActivity;
+        if (selectedImage) {
+            userData.userPhoto = selectedImage.split(",")[1];
+        }
 
         fetch(`http://localhost:8080/users/update/${localStorage.getItem("userId")}`, {
             headers: {Authorization: localStorage.getItem("jwt"), "Content-Type": "application/json"},
@@ -88,13 +97,13 @@ function AdditionalUserInfoForm() {
                         <div className="additional-info-form-right-side">
                             <div className="city-field">
                                 <label className="city-label">City</label>
-                                <input
+                                <textarea
                                     className="city-input"
                                     type="text"
                                     id="city"
                                     value={city}
                                     onChange={e => setCity(e.target.value)}
-                                ></input>
+                                ></textarea>
                             </div>
                             <div className="profile-description-field">
                                 <label className="profile-description-label">Description</label>
