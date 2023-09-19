@@ -22,6 +22,13 @@
     width: 400px;
 }
 
+.card .top-section .activity-photo > img {
+    border-radius: 8px;
+    object-fit: cover;
+    width: 200px;
+    height: 200px;
+}
+
 .card .top-section .title-section {
     display: flex;
     text-align: center;

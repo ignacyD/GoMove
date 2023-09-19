@@ -51,23 +51,23 @@ function LoginForm({setDisplayLoginForm, setDisplayRegistrationForm}) {
         <form className="login-form" onSubmit={handleSubmit}>
             <div className="username-field">
                 <label className="username-label">Username</label>
-                <textarea
+                <input
                     className="username-input"
                     type="text"
                     id="username"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
-                ></textarea>
+                ></input>
             </div>
             <div className="password-field">
                 <label className="password-label">Password</label>
-                <textarea
+                <input
                     className="password-input"
                     type="password"
                     id="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                ></textarea>
+                ></input>
             </div>
             {showErrorMessage &&
                 <div className="log-error-message">

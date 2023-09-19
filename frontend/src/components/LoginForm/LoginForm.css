@@ -42,11 +42,11 @@
     min-width: 12.5vw;
     max-width: 12.5vw;
     height: 16px;
-    resize: none;
 }
 
 .username-input:hover, .password-input:hover {
     box-shadow: 0 0 5px yellowgreen;
+    border:1px solid black;
 }
 
 .log-error-message{
