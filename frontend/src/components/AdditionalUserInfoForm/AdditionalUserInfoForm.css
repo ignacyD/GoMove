@@ -87,18 +87,18 @@
     height: 200px;
     margin-left: 100px;
     background-color: white;
-    border: 0px;
-    padding: 0px;
+    border: 0;
+    padding: 0;
     overflow: hidden;
-    -webkit-box-shadow: 0px 0px 24px 0px rgba(66, 68, 90, 1);
-    -moz-box-shadow: 0px 0px 24px 0px rgba(66, 68, 90, 1);
-    box-shadow: 0px 0px 24px 0px rgba(66, 68, 90, 1);
+    -webkit-box-shadow: 0 0 24px 0 rgba(66, 68, 90, 1);
+    -moz-box-shadow: 0 0 24px 0 rgba(66, 68, 90, 1);
+    box-shadow: 0 0 24px 0 rgba(66, 68, 90, 1);
     transition: box-shadow .5s;
 }
 .custom-file-button:hover {
-    -webkit-box-shadow: 0px 0px 24px 0px yellowgreen;
-    -moz-box-shadow: 0px 0px 24px 0px yellowgreen;
-    box-shadow: 0px 0px 24px 0px yellowgreen;
+    -webkit-box-shadow: 0 0 24px 0 yellowgreen;
+    -moz-box-shadow: 0 0 24px 0 yellowgreen;
+    box-shadow: 0 0 24px 0 yellowgreen;
     transition: box-shadow .5s;
 }
 
@@ -115,7 +115,7 @@
 }
 
 .custom-file-button:hover .change-photo-button {
-    bottom: 0px;
+    bottom: 0;
     transition: bottom .5s;
 }
 

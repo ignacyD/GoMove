@@ -4,7 +4,7 @@
     align-items: center;
     justify-content: space-evenly;
     height: calc(95vh - 40px);
-    background: url("../../assets/images/video_running.gif") no-repeat center;
+    /*background: url("../../assets/images/video_running.gif") no-repeat center;*/
     background-size: cover;
     background-attachment: fixed;
 }
