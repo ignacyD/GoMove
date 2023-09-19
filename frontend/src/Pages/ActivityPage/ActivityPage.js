@@ -194,13 +194,13 @@ function ActivityPage() {
                     </div>
                     <hr/>
                     <br/>
-                    <h3>Participants:</h3>
+                    <h3>Participants {enrolledUsers.length > 0 ? `(${enrolledUsers.length})` : ""}</h3>
                     <div>
                         {activityData.participants.length > 0 ? activityData.participants.map(participant => (
                             <div className="users" key={participant.userId}
                                  onClick={() => navigate(`/profile/${participant.userId}`)}>
                                 <FontAwesomeIcon icon={faUser} size="2xl" style={{color: "#2a2a2a",}}/>
-                                <p>{participant.username}</p>
+                                <p>{participant.username === activityData.owner.username ? participant.username + " (owner)" : participant.username}</p>
                             </div>
                         )) : <div className="users">
                         </div>}

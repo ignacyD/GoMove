@@ -225,7 +225,7 @@ function Search() {
             <Modal
                 isOpen={showJoinedActivityModal}
                 onRequestClose={() => setShowJoinedActivityModal(false)}
-                style={ModalStyles.activityAddedModalStyles}
+                style={ModalStyles.smallModalStyles}
                 className="activity-added-modal"
                 appElement={document.querySelector("#root") || undefined}
             >

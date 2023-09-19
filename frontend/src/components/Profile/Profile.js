@@ -13,6 +13,7 @@ function Profile() {
     const [carouselIndex, setCarouselIndex] = useState({owned: 0, takePart: 0});
     const [ownedActivities, setOwnedActivities] = useState([]);
     const [allUserActivities, setAllUserActivities] = useState([]);
+    const [isUserMobile, setIsUserMobile] = useState(false);
 
     const navigate = useNavigate();
 
@@ -28,6 +29,15 @@ function Profile() {
             fetchAllUserActivities(profileUserData.userId);
         }
     }, [profileUserData]);
+  
+    useEffect(() => {
+        if (window.innerWidth < 768) {
+            setIsUserMobile(true)
+        }
+        else{
+            setIsUserMobile(false);
+        }
+    }, [window.innerWidth])
 
     const fetchProfileUserData = async () => {
         try {
@@ -68,8 +78,6 @@ function Profile() {
         setAllUserActivities(sortedUserActivities);
     }
 
-    console.log(profileUserData);
-
     function displayActivities(activities, type) {
 
         if (activities.length > 0) {
@@ -90,6 +98,7 @@ function Profile() {
                                 >
                                     <div className="activity-title">{activity.title}</div>
                                     <div className="activity-type">{iconSelector(activity.activityType)}</div>
+                                    <div className="participants">Participants {`(${activity.participants.length})`}</div>
                                         <div className="activity-date-time">
                                             <span className="activity-date">{activity.date + " "}</span>
                                             <span className="activity-time">{" " + activity.time.substring(0, 5)}</span>
@@ -121,7 +130,7 @@ function Profile() {
 
     const handleIndexChange = (amount, type, activities) => {
         const newIndex = carouselIndex[type] + amount;
-        if (newIndex >= 0 && newIndex <= activities.length - 5) {
+        if (newIndex >= 0 && newIndex <= activities.length - (isUserMobile ? 1 : 5)) {
             setCarouselIndex({...carouselIndex, [type]: newIndex});
         }
     }
@@ -140,7 +149,7 @@ function Profile() {
             } else {
                 displayButton(swipeRightButton)
             }
-            displayedActivities.style.right = `${(index * 230) - 15 + 'px'}`
+            displayedActivities.style.right = `${(index * 240) - 15 + 'px'}`
         }
     }
     const displayButton = (button) => {

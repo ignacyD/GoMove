@@ -23,6 +23,7 @@ body {
     gap: 100px;
     position: relative;
     right: 100vw;
+    align-items: center;
     transition: right 1s;
 }
 
@@ -49,13 +50,17 @@ body {
 
 .about-us-page .creators .creator .img img {
     width: 400px;
+    max-width: 400px;
+    min-height: 400px;
     max-height: 400px;
     object-fit: cover;
+    border-radius: 50%;
 }
 
 .about-us-page .creators .creator .content {
     flex: 3;
     display: flex;
+    align-items: center;
     flex-direction: column;
     justify-content: space-between;
 }
@@ -207,6 +212,8 @@ body {
     .about-us-page > .creators > .creator > .img > img {
         min-width: 80%;
         max-width: 80%;
+        min-height: 80%;
+        max-height: 80%;
     }
 }
 

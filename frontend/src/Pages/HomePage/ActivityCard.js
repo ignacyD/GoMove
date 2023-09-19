@@ -4,6 +4,8 @@ import testPhoto from '../../assets/images/test.jpg'
 import GoogleMapComponent from "../../components/GoogleMap/GoogleMap";
 import {useNavigate} from "react-router-dom";
 import {iconSelector} from '../../components/IconSelector'
+import {faUser} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 function ActivityCard({activity}) {
 
@@ -15,8 +17,7 @@ function ActivityCard({activity}) {
     useEffect(() => {
         if (window.innerWidth < 768) {
             setIsUserMobile(true)
-        }
-        else{
+        } else {
             setIsUserMobile(false);
         }
     }, [window.innerWidth])
@@ -48,16 +49,26 @@ function ActivityCard({activity}) {
                             <p>{activity.date}, {activity.time.substring(0, 5)}</p>
                         </div>
                     </div>
-                    <div className="description-section">
-                        <h3>Description: </h3>
-                        <p>{activity.description}</p>
+                    <div className="bottom-section">
+                        <div className="description">
+                            <h3>Description: </h3>
+                            <p>{activity.description}</p>
+                        </div>
+                        <div className="participants-container">
+                            <h3>Participants: </h3>
+                            <div className="participants">
+                            <FontAwesomeIcon icon={faUser} size="2xl" style={{color: "#FFFFFF",}}/>
+                            <h2>{activity.participants.length}</h2>
+                            </div>
+                        </div>
                     </div>
                     <div className="map-button">
                         <button
                             onClick={() => setShowMap(!showMap)}>{showMap ? "Back to details" : "See on map"}</button>
                     </div>
                     <div className="google-maps">
-                        <GoogleMapComponent height={isUserMobile ? 'calc(50vh - 150px)' : '270px'} width={isUserMobile ? '60vw' : '400px'}
+                        <GoogleMapComponent height={isUserMobile ? 'calc(50vh - 150px)' : '270px'}
+                                            width={isUserMobile ? '60vw' : '400px'}
                                             address={`${activity.address}`}/>
                     </div>
                 </div>
