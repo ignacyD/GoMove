@@ -219,3 +219,15 @@
     width: 150px;
     height: 120px;
 }
+@media screen and (max-width: 768px) {
+    .activities-in-profile-carousel {
+        display: flex;
+        overflow: hidden;
+        width: 240px;
+        align-items: center;
+        height: 400px;
+    }
+    .user-card{
+        margin-right: 10vw;
+    }
+}

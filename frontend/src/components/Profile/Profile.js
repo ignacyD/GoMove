@@ -12,7 +12,17 @@ function Profile() {
     const [carouselIndex, setCarouselIndex] = useState({owned: 0, takePart: 0});
     const [ownedActivities, setOwnedActivities] = useState([]);
     const [allUserActivities, setAllUserActivities] = useState([]);
+    const [isUserMobile, setIsUserMobile] = useState(false);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if (window.innerWidth < 768) {
+            setIsUserMobile(true)
+        }
+        else{
+            setIsUserMobile(false);
+        }
+    }, [window.innerWidth])
 
     function displayActivities(activities, type) {
 
@@ -65,7 +75,7 @@ function Profile() {
 
     const handleIndexChange = (amount, type, activities) => {
         const newIndex = carouselIndex[type] + amount;
-        if (newIndex >= 0 && newIndex <= activities.length - 5) {
+        if (newIndex >= 0 && newIndex <= activities.length - (isUserMobile ? 1 : 5)) {
             setCarouselIndex({...carouselIndex, [type]: newIndex});
         }
     }
