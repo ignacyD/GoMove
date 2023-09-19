@@ -168,7 +168,7 @@ function AboutUsPage() {
                                 minLength={8}
                                 maxLength={64}
                             />
-                            <label>Email</label>
+                            <label onClick={() => setShowEmailSentModal(true)}>Email</label>
                             <input
                                 type="email"
                                 name="user_email"
@@ -197,10 +197,13 @@ function AboutUsPage() {
                     </div>
                 </div>
             </div>
-            <Modal isOpen={showEmailSentModal}
-                   onRequestClose={() => setShowEmailSentModal(false)}
-                   style={ModalStyles.activityAddedModalStyles}
-                   clasName="activity-added-modal">
+            <Modal
+                // isOpen={true}
+                isOpen={showEmailSentModal}
+                onRequestClose={() => setShowEmailSentModal(false)}
+                style={ModalStyles.smallModalStyles}
+                appElement={document.querySelector("#root") || undefined}
+                className="email-sent-modal">
                 <h3>Email sent</h3>
             </Modal>
         </div>

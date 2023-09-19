@@ -195,7 +195,7 @@ const AddActivity = () => {
             <Modal
                 isOpen={showWrongAddressModal}
                 onRequestClose={() => setShowWrongAddressModal(false)}
-                style={ModalStyles.activityAddedModalStyles}
+                style={ModalStyles.smallModalStyles}
                 className="activity-added-modal"
                 appElement={document.querySelector("#root") || undefined}
             >
@@ -204,7 +204,7 @@ const AddActivity = () => {
             <Modal
                 isOpen={showIncorrectActivityModal}
                 onRequestClose={() => setShowIncorrectActivityModal(false)}
-                style={ModalStyles.activityAddedModalStyles}
+                style={ModalStyles.smallModalStyles}
                 className="activity-added-modal"
                 appElement={document.querySelector("#root") || undefined}
             >
