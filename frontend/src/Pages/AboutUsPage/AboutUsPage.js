@@ -23,7 +23,7 @@ const arrayOfOwners = [
     {
         id: 3,
         name: "Ignacy Gąsiorowski",
-        desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        desc: "Hello, I'm Ignacy. I'm 20-year-old graduate of a music school, specializing in the cello. Outside the world of music, my diverse interests include programming, rock climbing, mountain hiking, and immersing myself in a wide range of musical genres. I have a deep love for outdoor activities, which made creating this app all the more entertaining for me.",
         photo: testPhoto
     },
     {
