@@ -303,11 +303,11 @@ const AddActivity = () => {
                 </div>
                 <div className="add-activity-add-photo">
                     <button className="custom-file-button" type="button" onClick={() => uploadImageRef.current.click()}>
-                        <img className='activity-picture'
-                             src={activityImage ? activityImage : null}></img>
+                        {activityImage ? <img className='activity-picture'
+                             src={activityImage}></img> :
                         <div className='change-photo-button'>
                             Click to choose activity image
-                        </div>
+                        </div>}
                     </button>
                     <div className="image-field">
                         <input
