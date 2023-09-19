@@ -29,12 +29,11 @@ function Profile() {
             fetchAllUserActivities(profileUserData.userId);
         }
     }, [profileUserData]);
-  
+
     useEffect(() => {
         if (window.innerWidth < 768) {
             setIsUserMobile(true)
-        }
-        else{
+        } else {
             setIsUserMobile(false);
         }
     }, [window.innerWidth])
@@ -44,7 +43,7 @@ function Profile() {
             const response = await fetch(`http://localhost:8080/users/${userId}`, {
                 headers: {
                     Authorization: localStorage.getItem("jwt"),
-                    "Content-Type" : "application/json"
+                    "Content-Type": "application/json"
                 }
             });
 
@@ -98,11 +97,10 @@ function Profile() {
                                 >
                                     <div className="activity-title">{activity.title}</div>
                                     <div className="activity-type">{iconSelector(activity.activityType)}</div>
-                                    <div className="participants">Participants {`(${activity.participants.length})`}</div>
-                                        <div className="activity-date-time">
-                                            <span className="activity-date">{activity.date + " "}</span>
-                                            <span className="activity-time">{" " + activity.time.substring(0, 5)}</span>
-                                        </div>
+                                    <div className="activity-date-time">
+                                        <span className="activity-date">{activity.date + " "}</span>
+                                        <span className="activity-time">{" " + activity.time.substring(0, 5)}</span>
+                                    </div>
                                     <div className="activity-details">
                                         <div className="activity-city">{activity.city}</div>
                                     </div>
@@ -200,7 +198,8 @@ function Profile() {
                     <h3 className="activity-label">Description:</h3>
                     <p className="activity-info">{profileUserData.description}</p>
                     {profileUserData.userId === userData.userId ?
-                        <button className="update-info-button" onClick={() => navigate("/update-info")}>Update info</button>
+                        <button className="update-info-button" onClick={() => navigate("/update-info")}>Update
+                            info</button>
                         :
                         <></>
                     }
