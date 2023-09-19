@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import {Autocomplete, useJsApiLoader} from '@react-google-maps/api';
 import GoogleMapComponent from "../GoogleMap/GoogleMap";
 import {useNavigate} from "react-router-dom";
@@ -16,16 +16,19 @@ const googleMapsLibraries = ["places"];
 
 const AddActivity = () => {
     const setDisplayActivityAddedModal = useContext(Context).setDisplayActivityAddedModal;
-    const [selectedUserPlace, setSelectedUserPlace] = useState(null)
     const [title, setTitle] = useState("");
+    const [selectedUserPlace, setSelectedUserPlace] = useState(null)
     const [activityType, setActivityType] = useState("");
     const [description, setDescription] = useState("");
     const [date, setDate] = useState("");
     const [time, setTime] = useState("");
+    const [activityImage, setActivityImage] = useState("");
     const [timeDisable, setTimeDisable] = useState(true);
     const [chosenOption, setChosenOption] = useState(null);
     const [showIncorrectActivityModal, setShowIncorrectActivityModal] = useState(false);
     const [showWrongAddressModal, setShowWrongAddressModal] = useState(false);
+    const uploadImageRef = useRef(null);
+
 
     const navigate = useNavigate();
 
@@ -77,10 +80,7 @@ const AddActivity = () => {
         });
 
         setSelectedUserPlace(formattedPlace);
-
-        console.log(formattedPlace);
     };
-
 
     const {isLoaded} = useJsApiLoader({
         id: 'google-map-script',
@@ -88,6 +88,26 @@ const AddActivity = () => {
         libraries: googleMapsLibraries
     });
 
+    const convertBase64 = (file) => {
+        return new Promise((resolve, reject) => {
+            const fileReader = new FileReader();
+            fileReader.readAsDataURL(file);
+
+            fileReader.onload = () => {
+                resolve(fileReader.result);
+            };
+
+            fileReader.onerror = (error) => {
+                reject(error);
+            };
+        });
+    };
+
+    const handleImageUpload = async (event) => {
+        const file = event.target.files[0];
+        const base64 = await convertBase64(file);
+        setActivityImage(base64);
+    };
     function handleSubmit(e) {
         e.preventDefault();
 
@@ -115,6 +135,7 @@ const AddActivity = () => {
             return;
         }
 
+
         const activityId = UUID();
         fetch("http://localhost:8080/activities", {
             headers: {Authorization: localStorage.getItem("jwt"), "Content-Type": "application/json"},
@@ -135,7 +156,7 @@ const AddActivity = () => {
                 "time": time,
                 "description": description,
                 "participants": null,
-                "activityPhotoUrl": null
+                "activityPhoto": activityImage.split(",")[1]
             })
         }).then(response => {
             if (response.status !== 200) {
@@ -166,6 +187,7 @@ const AddActivity = () => {
         setDate(e.target.value);
         setTimeDisable(false);
     }
+
 
     return isLoaded ? (
         <div className="add-activity">
@@ -277,6 +299,23 @@ const AddActivity = () => {
                         name="time"
                         min={manageTime()}
                         onChange={(e) => setTime(e.target.value)}/>
+                </div>
+                <button className="custom-file-button" type="button" onClick={() => uploadImageRef.current.click()}>
+                    <img className='activity-picture'
+                         src={activityImage ? activityImage : null}></img>
+                    <div className='change-photo-button'>
+                        Click to change
+                    </div>
+                </button>
+                <div className="image-field">
+                    <label className="image-label">Image</label>
+                    <input
+                        ref={uploadImageRef}
+                        type="file"
+                        accept=".jpg, .jpeg, .png"
+                        onChange={handleImageUpload}
+                        style={{display: 'none'}}
+                    />
                 </div>
                 <button className="submit-btn" type="submit">Create activity</button>
             </form>
