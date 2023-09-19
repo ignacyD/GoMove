@@ -108,6 +108,7 @@ const AddActivity = () => {
         const base64 = await convertBase64(file);
         setActivityImage(base64);
     };
+
     function handleSubmit(e) {
         e.preventDefault();
 
@@ -300,22 +301,23 @@ const AddActivity = () => {
                         min={manageTime()}
                         onChange={(e) => setTime(e.target.value)}/>
                 </div>
-                <button className="custom-file-button" type="button" onClick={() => uploadImageRef.current.click()}>
-                    <img className='activity-picture'
-                         src={activityImage ? activityImage : null}></img>
-                    <div className='change-photo-button'>
-                        Click to change
+                <div className="add-activity-add-photo">
+                    <button className="custom-file-button" type="button" onClick={() => uploadImageRef.current.click()}>
+                        <img className='activity-picture'
+                             src={activityImage ? activityImage : null}></img>
+                        <div className='change-photo-button'>
+                            Click to choose activity image
+                        </div>
+                    </button>
+                    <div className="image-field">
+                        <input
+                            ref={uploadImageRef}
+                            type="file"
+                            accept=".jpg, .jpeg, .png"
+                            onChange={handleImageUpload}
+                            style={{display: 'none'}}
+                        />
                     </div>
-                </button>
-                <div className="image-field">
-                    <label className="image-label">Image</label>
-                    <input
-                        ref={uploadImageRef}
-                        type="file"
-                        accept=".jpg, .jpeg, .png"
-                        onChange={handleImageUpload}
-                        style={{display: 'none'}}
-                    />
                 </div>
                 <button className="submit-btn" type="submit">Create activity</button>
             </form>
