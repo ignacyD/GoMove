@@ -168,7 +168,7 @@ function AboutUsPage() {
                                 minLength={8}
                                 maxLength={64}
                             />
-                            <label onClick={() => setShowEmailSentModal(true)}>Email</label>
+                            <label>Email</label>
                             <input
                                 type="email"
                                 name="user_email"
@@ -198,7 +198,6 @@ function AboutUsPage() {
                 </div>
             </div>
             <Modal
-                // isOpen={true}
                 isOpen={showEmailSentModal}
                 onRequestClose={() => setShowEmailSentModal(false)}
                 style={ModalStyles.smallModalStyles}
