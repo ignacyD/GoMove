@@ -1,5 +1,5 @@
 import './Navbar.css'
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import React, {useContext, useState} from "react";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faFacebook, faYoutube} from "@fortawesome/free-brands-svg-icons";
@@ -11,6 +11,8 @@ import logo from "../../assets/images/logo.png"
 function Navbar({setDisplayLoginForm, handleLogout}) {
 
     const isUserLogged = useContext(Context).isUserLogged;
+    const userData = useContext(Context).userData;
+    const navigate = useNavigate();
 
     const [displayMedia, setDisplayMedia] = useState(false);
     const [mediaContainerOpen, setMediaContainerOpen] = useState(true);
@@ -51,8 +53,6 @@ function Navbar({setDisplayLoginForm, handleLogout}) {
                     >
                         <li>Add Activity</li>
                     </Link>
-
-
                 </ul>
                 <div
                     className={`media ${displayMedia ? 'media-displayed' : 'media-undisplayed'}`}>
@@ -70,9 +70,9 @@ function Navbar({setDisplayLoginForm, handleLogout}) {
             </div>
             <div className="login-and-profile-container">
             {
-                isUserLogged && <Link to='/profile' className='nav-btn'>
-                    <li>Profile</li>
-                </Link>
+                isUserLogged && <button onClick={() => navigate(`/profile/${userData.userId}`)} className='nav-btn'>
+                    Profile
+                </button>
             }
             {
                 !isUserLogged &&

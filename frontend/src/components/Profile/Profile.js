@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from "react";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import './Profile.css';
 import {Context} from "../../App";
 import testPhoto from "../../assets/images/test.jpg";
@@ -9,10 +9,66 @@ import {iconSelector} from '../IconSelector'
 
 function Profile() {
     const userData = useContext(Context).userData;
+    const [profileUserData, setProfileUserData] = useState({})
     const [carouselIndex, setCarouselIndex] = useState({owned: 0, takePart: 0});
     const [ownedActivities, setOwnedActivities] = useState([]);
     const [allUserActivities, setAllUserActivities] = useState([]);
+
     const navigate = useNavigate();
+
+    const {userId} = useParams();
+
+    useEffect(() => {
+        fetchProfileUserData()
+    }, [])
+
+    useEffect(() => {
+        if (Object.keys(profileUserData).length !== 0) {
+            fetchOwnedActivities(profileUserData.userId);
+            fetchAllUserActivities(profileUserData.userId);
+        }
+    }, [profileUserData]);
+
+    const fetchProfileUserData = async () => {
+        try {
+            const response = await fetch(`http://localhost:8080/users/${userId}`, {
+                headers: {
+                    Authorization: localStorage.getItem("jwt"),
+                    "Content-Type" : "application/json"
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const data = await response.json();
+            setProfileUserData(data);
+        } catch (error) {
+            console.error('Error fetching user data:', error);
+        }
+    };
+
+    async function fetchOwnedActivities(userId) {
+        const response = await fetch(
+            `http://localhost:8080/activities/user/${userId}`, {
+                headers: {Authorization: localStorage.getItem("jwt")}
+            })
+        const ownedActivities = await response.json();
+        const sortedOwnedActivities = ownedActivities.sort(chronologicalSort);
+        setOwnedActivities(sortedOwnedActivities);
+    }
+
+    async function fetchAllUserActivities(userId) {
+        const response = await fetch(
+            `http://localhost:8080/activities/participant/${userId}`, {
+                headers: {Authorization: localStorage.getItem("jwt")}
+            })
+        const userActivities = await response.json();
+        const sortedUserActivities = userActivities.sort(chronologicalSort);
+        setAllUserActivities(sortedUserActivities);
+    }
+
+    console.log(profileUserData);
 
     function displayActivities(activities, type) {
 
@@ -106,63 +162,39 @@ function Profile() {
         manageCarouselChange(carouselIndex.owned, ownedActivities, 1)
     }, [carouselIndex.owned])
 
-    async function fetchOwnedActivities(userId) {
-        const response = await fetch(
-            `http://localhost:8080/activities/user/${userId}`, {
-                headers: {Authorization: localStorage.getItem("jwt")}
-            })
-        const ownedActivities = await response.json();
-        const sortedOwnedActivities = ownedActivities.sort(chronologicalSort);
-        setOwnedActivities(sortedOwnedActivities);
-    }
-
-    async function fetchAllUserActivities(userId) {
-        const response = await fetch(
-            `http://localhost:8080/activities/participant/${userId}`, {
-                headers: {Authorization: localStorage.getItem("jwt")}
-            })
-        const userActivities = await response.json();
-        const sortedUserActivities = userActivities.sort(chronologicalSort);
-        setAllUserActivities(sortedUserActivities);
-    }
-
     function chronologicalSort(a, b) {
         const aDateTime = new Date(`${a.date} ${a.time}`);
         const bDateTime = new Date(`${b.date} ${b.time}`);
         return aDateTime - bDateTime;
     }
 
-    useEffect(() => {
-        if (Object.keys(userData).length !== 0) {
-            fetchOwnedActivities(userData.userId);
-            fetchAllUserActivities(userData.userId);
-        }
-    }, [userData]);
-
-
     return (
         <div>
             <div className="user-inner-container">
                 <div className="user-card">
-                    <p className="username">{userData.username}</p>
+                    <p className="username">{profileUserData.username}</p>
                     <div className="profile-picture-container">
                         <img
                             className="profile-picture"
-                            src={userData.userPhoto ? 'data:image/jpeg;base64,' + userData.userPhoto : 'blank-profile-picture.png'}
+                            src={profileUserData.userPhoto ? 'data:image/jpeg;base64,' + profileUserData.userPhoto : 'blank-profile-picture.png'}
                             alt="Profile picture"
                         />
                     </div>
                 </div>
                 <div className="user-details">
                     <h3 className="activity-label">Preferred Activity:</h3>
-                    <p className="activity-info">{userData.preferredActivity}</p>
+                    <p className="activity-info">{profileUserData.preferredActivity}</p>
 
                     <h3 className="activity-label">City:</h3>
-                    <p className="activity-info">{userData.city}</p>
+                    <p className="activity-info">{profileUserData.city}</p>
 
                     <h3 className="activity-label">Description:</h3>
-                    <p className="activity-info">{userData.description}</p>
-                    <button className="update-info-button" onClick={() => navigate("/update-info")}>Update info</button>
+                    <p className="activity-info">{profileUserData.description}</p>
+                    {profileUserData.userId === userData.userId ?
+                        <button className="update-info-button" onClick={() => navigate("/update-info")}>Update info</button>
+                        :
+                        <></>
+                    }
                 </div>
             </div>
             <h3 className="activity-type-title">Taking part</h3>
