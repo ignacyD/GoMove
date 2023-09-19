@@ -70,9 +70,9 @@ function Navbar({setDisplayLoginForm, handleLogout}) {
             </div>
             <div className="login-and-profile-container">
             {
-                isUserLogged && <button onClick={() => navigate(`/profile/${userData.userId}`)} className='nav-btn'>
-                    Profile
-                </button>
+                isUserLogged && <Link to={`/profile/${userData.userId}`} className='nav-btn'>
+                    <li>Profile</li>
+                </Link>
             }
             {
                 !isUserLogged &&
