@@ -52,19 +52,35 @@
     justify-content: space-between;
     padding: 0 20px;
     flex-direction: row;
-    height: 5vw;
-    margin-bottom: 3vw;
+    height: 130px;
 }
 
 .participants h2 {
     color: #ffffff
+}
 
+.participants-container {
+    width: 40%;
+}
+
+.participants-container h3 {
+    /*margin-bottom: 0px;*/
 }
 
 .participants {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
+}
+.participants h2 {
+    margin: 0;
+width: 70%;
+
+    justify-content: left;
+    text-align: left;
+}
+.participants svg {
+    width: 20%;
 }
 
 .location p, .datatime p {
@@ -75,18 +91,18 @@
     width: 60%;
 }
 
-.description-section {
-    padding: 0 20px;
+.description {
+    padding: 0px;
     height: 130px;
     justify-content: space-around;
     width: 60%;
 }
 
-.description-section p {
+.description p {
     margin-bottom: 0;
 }
 
-.description-section h3 {
+.description h3 {
     margin-top: 20px;
 }
 
@@ -150,6 +166,10 @@
     margin-top: 20px;
 }
 
+div.middle-section > div.datetime {
+    width: 40%;
+}
+
 @media screen and (max-width: 768px) {
     .card {
         height: calc(100vh - 250px);
@@ -177,17 +197,18 @@
 
     .middle-section {
         height: 15vh;
+        margin-bottom: 0;
     }
 
     .location h3, .datetime h3 {
         margin-top: 10px;
     }
 
-    .description-section {
+    .bottom-section {
         height: calc(35vh - 150px);
     }
 
-    .description-section h3 {
+    .bottom-section h3 {
         margin-top: 0px;
     }
 
