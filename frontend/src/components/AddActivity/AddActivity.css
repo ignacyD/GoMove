@@ -73,7 +73,8 @@
     margin: 0;
     font-weight: bold;
 }
-.description-input{
+
+.description-input {
     resize: none;
 }
 
@@ -129,3 +130,29 @@
     font-weight: bold;
 }
 
+.activity-picture {
+    width: 200px;
+    height: 200px;
+}
+
+.add-activity-form div.change-photo-button {
+    position: relative;
+    bottom: 45px;
+    transition: bottom .5s;
+    width: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 45px;
+    background-color: white;
+}
+
+.custom-file-button:hover .change-photo-button {
+    bottom: 0;
+    transition: bottom .5s;
+}
+
+.add-activity-form .custom-file-button {
+    margin: 10px 0 20px 0;
+    align-self: center;
+}

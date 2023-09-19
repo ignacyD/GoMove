@@ -8,7 +8,6 @@ import './AddActivity.css'
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPersonBiking, faPersonRunning, faPersonSkating, faPersonWalking} from "@fortawesome/free-solid-svg-icons";
 import ModalStyles from "../../ModalStyles";
-import ActivityAddedModal from "../ActivityAddedModal/ActivityAddedModal";
 import Modal from "react-modal";
 
 const googleMapApiKey = process.env.REACT_APP_GOOGLE_MAP_API_KEY;
@@ -108,6 +107,7 @@ const AddActivity = () => {
         const base64 = await convertBase64(file);
         setActivityImage(base64);
     };
+
     function handleSubmit(e) {
         e.preventDefault();
 
@@ -300,13 +300,6 @@ const AddActivity = () => {
                         min={manageTime()}
                         onChange={(e) => setTime(e.target.value)}/>
                 </div>
-                <button className="custom-file-button" type="button" onClick={() => uploadImageRef.current.click()}>
-                    <img className='activity-picture'
-                         src={activityImage ? activityImage : null}></img>
-                    <div className='change-photo-button'>
-                        Click to change
-                    </div>
-                </button>
                 <div className="image-field">
                     <label className="image-label">Image</label>
                     <input
@@ -317,6 +310,13 @@ const AddActivity = () => {
                         style={{display: 'none'}}
                     />
                 </div>
+                <button className="custom-file-button" type="button" onClick={() => uploadImageRef.current.click()}>
+                    <img className='activity-picture'
+                         src={activityImage ? activityImage : null}></img>
+                    <div className='change-photo-button'>
+                        Click to change
+                    </div>
+                </button>
                 <button className="submit-btn" type="submit">Create activity</button>
             </form>
             {selectedUserPlace && selectedUserPlace.selectedAddress ?
