@@ -194,7 +194,7 @@ function ActivityPage() {
                     </div>
                     <hr/>
                     <br/>
-                    <h3>Participants {enrolledUsers.length > 0 ? `(${enrolledUsers.length})` : ""}</h3>
+                    <h3>Participants {activityData.participants.length > 0 ? `(${activityData.participants.length})` : ""}</h3>
                     <div>
                         {activityData.participants.length > 0 ? activityData.participants.map(participant => (
                             <div className="users" key={participant.userId}
