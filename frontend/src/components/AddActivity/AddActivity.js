@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useRef, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Autocomplete, useJsApiLoader} from '@react-google-maps/api';
 import GoogleMapComponent from "../GoogleMap/GoogleMap";
 import {useNavigate} from "react-router-dom";
@@ -16,23 +16,16 @@ const googleMapsLibraries = ["places"];
 
 const AddActivity = () => {
     const setDisplayActivityAddedModal = useContext(Context).setDisplayActivityAddedModal;
+    const [selectedUserPlace, setSelectedUserPlace] = useState(null)
     const [title, setTitle] = useState("");
-    const [selectedAddress, setSelectedAddress] = useState("");
     const [activityType, setActivityType] = useState("");
     const [description, setDescription] = useState("");
     const [date, setDate] = useState("");
     const [time, setTime] = useState("");
-    const [activityImage, setActivityImage] = useState("");
-    const [city, setCity] = useState("");
-    const [street, setStreet] = useState("");
-    const [streetNumber, setStreetNumber] = useState("");
-    const [country, setCountry] = useState("");
     const [timeDisable, setTimeDisable] = useState(true);
     const [chosenOption, setChosenOption] = useState(null);
     const [showIncorrectActivityModal, setShowIncorrectActivityModal] = useState(false);
     const [showWrongAddressModal, setShowWrongAddressModal] = useState(false);
-    const uploadImageRef = useRef(null);
-
 
     const navigate = useNavigate();
 
@@ -53,62 +46,41 @@ const AddActivity = () => {
         setActivityType(value);
     };
 
-    const clearAddress = () => {
-        setSelectedAddress("");
-        setCity("");
-        setStreet("");
-        setStreetNumber("");
-        setCountry("");
-    }
-
     const handlePlaceSelect = () => {
         const selectedPlace = window.autocomplete.getPlace();
 
         if (!selectedPlace || !selectedPlace.address_components) {
-            clearAddress();
+            setSelectedUserPlace(null);
             return;
         }
-        setSelectedAddress(selectedPlace.formatted_address);
-        const cityComponent = selectedPlace.address_components.find(
-            (component) => component.types.includes("locality")
-        );
-        if (cityComponent) {
-            setCity(cityComponent.long_name);
-        } else {
-            setCity("");
-        }
 
-        const streetComponent = selectedPlace.address_components.find(
-            (component) => component.types.includes("route")
-        );
-        if (streetComponent) {
-            setStreet(streetComponent.long_name);
-        } else {
-            setStreet("");
-        }
+        const formattedPlace = {
+            selectedAddress: "",
+            city: "",
+            street: "",
+            streetNumber: "",
+            country: "",
+        };
 
-        const streetNumberComponent = selectedPlace.address_components.find(
-            (component) => component.types.includes("street_number")
-        );
-        if (streetNumberComponent) {
-            setStreetNumber(streetNumberComponent.long_name);
-        } else {
-            setStreetNumber("");
-        }
+        formattedPlace.selectedAddress = selectedPlace.formatted_address;
 
-        const countryComponent = selectedPlace.address_components.find(
-            (component) => component.types.includes("country")
-        );
-        if (countryComponent) {
-            setCountry(countryComponent.long_name);
-        } else {
-            setCountry("");
-        }
+        selectedPlace.address_components.forEach((component) => {
+            if (component.types.includes("locality")) {
+                formattedPlace.city = component.long_name;
+            } else if (component.types.includes("route")) {
+                formattedPlace.street = component.long_name;
+            } else if (component.types.includes("street_number")) {
+                formattedPlace.streetNumber = component.long_name;
+            } else if (component.types.includes("country")) {
+                formattedPlace.country = component.long_name;
+            }
+        });
 
+        setSelectedUserPlace(formattedPlace);
 
-        console.log(selectedPlace)
-
+        console.log(formattedPlace);
     };
+
 
     const {isLoaded} = useJsApiLoader({
         id: 'google-map-script',
@@ -116,30 +88,10 @@ const AddActivity = () => {
         libraries: googleMapsLibraries
     });
 
-    const convertBase64 = (file) => {
-        return new Promise((resolve, reject) => {
-            const fileReader = new FileReader();
-            fileReader.readAsDataURL(file);
-
-            fileReader.onload = () => {
-                resolve(fileReader.result);
-            };
-
-            fileReader.onerror = (error) => {
-                reject(error);
-            };
-        });
-    };
-
-    const handleImageUpload = async (event) => {
-        const file = event.target.files[0];
-        const base64 = await convertBase64(file);
-        setActivityImage(base64);
-    };
     function handleSubmit(e) {
         e.preventDefault();
 
-        if (!selectedAddress) {
+        if (!selectedUserPlace) {
             setShowWrongAddressModal(true);
             setTimeout(() => {
                 setShowWrongAddressModal(false);
@@ -155,14 +107,13 @@ const AddActivity = () => {
             return;
         }
 
-        if (![selectedAddress, city, street].every(Boolean)) {
+        if (![selectedUserPlace.selectedAddress, selectedUserPlace.city, selectedUserPlace.street].every(Boolean)) {
             setShowWrongAddressModal(true);
             setTimeout(() => {
                 setShowWrongAddressModal(false);
             }, 3000)
             return;
         }
-
 
         const activityId = UUID();
         fetch("http://localhost:8080/activities", {
@@ -175,16 +126,16 @@ const AddActivity = () => {
                     "userId": userId
                 },
                 "title": title,
-                "city": city,
-                "street": street,
-                "streetNumber": streetNumber,
-                "country": country,
-                "address": selectedAddress,
+                "city": selectedUserPlace.city,
+                "street": selectedUserPlace.street,
+                "streetNumber": selectedUserPlace.streetNumber,
+                "country": selectedUserPlace.country,
+                "address": selectedUserPlace.selectedAddress,
                 "date": date,
                 "time": time,
                 "description": description,
                 "participants": null,
-                "activityPhoto": activityImage.split(",")[1]
+                "activityPhotoUrl": null
             })
         }).then(response => {
             if (response.status !== 200) {
@@ -215,7 +166,6 @@ const AddActivity = () => {
         setDate(e.target.value);
         setTimeDisable(false);
     }
-
 
     return isLoaded ? (
         <div className="add-activity">
@@ -328,29 +278,13 @@ const AddActivity = () => {
                         min={manageTime()}
                         onChange={(e) => setTime(e.target.value)}/>
                 </div>
-                <button className="custom-file-button" type="button" onClick={() => uploadImageRef.current.click()}>
-                    <img className='activity-picture'
-                         src={activityImage ? activityImage : 'blank-profile-picture.png'}></img>
-                    <div className='change-photo-button'>
-                        Click to change
-                    </div>
-                </button>
-                <div className="image-field">
-                    <label className="image-label">Image</label>
-                    <input
-                        ref={uploadImageRef}
-                        type="file"
-                        accept=".jpg, .jpeg, .png"
-                        onChange={handleImageUpload}
-                        style={{display: 'none'}}
-                    />
-                </div>
                 <button className="submit-btn" type="submit">Create activity</button>
             </form>
-            {selectedAddress ?
+            {selectedUserPlace && selectedUserPlace.selectedAddress ?
                 <div className="google-maps">
-                    <p>Selected Address: {selectedAddress}</p>
-                    <GoogleMapComponent height={'400px'} width={'1020px'} address={selectedAddress}/></div> : <></>}
+                    <p>Selected Address: {selectedUserPlace.selectedAddress}</p>
+                    <GoogleMapComponent height={'400px'} width={'1020px'} address={selectedUserPlace.selectedAddress}/>
+                </div> : <></>}
         </div>
     ) : <></>;
 };
