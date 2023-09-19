@@ -6,6 +6,8 @@ import KamilPhoto from '../../assets/images/Kamil.jpg';
 import JakubPhoto from '../..//assets/images/Jakub_Szczygiel.jpeg';
 import IgnacyPhoto from '../../assets/images/Ignacy.jpg';
 import emailjs from '@emailjs/browser';
+import Modal from "react-modal";
+import ModalStyles from "../../ModalStyles";
 
 const arrayOfOwners = [
     {
@@ -56,6 +58,8 @@ function AboutUsPage() {
 
     const form = useRef();
 
+    const [showEmailSentModal, setShowEmailSentModal] = useState(false)
+
 
     const [formData, setFormData] = useState({
         user_name: "",
@@ -81,7 +85,10 @@ function AboutUsPage() {
                         user_email: "",
                         message: "",
                     });
-                    alert("Email sent successfully!");
+                    setShowEmailSentModal(true);
+                    setTimeout(() => {
+                        setShowEmailSentModal(false)
+                    }, 3000)
                 },
                 (error) => {
                     console.log(error.text);
@@ -154,7 +161,7 @@ function AboutUsPage() {
                                 name="user_name"
                                 value={formData.user_name}
                                 onChange={(e) =>
-                                    setFormData({ ...formData, user_name: e.target.value })
+                                    setFormData({...formData, user_name: e.target.value})
                                 }
                                 required={true}
                                 minLength={8}
@@ -166,7 +173,7 @@ function AboutUsPage() {
                                 name="user_email"
                                 value={formData.user_email}
                                 onChange={(e) =>
-                                    setFormData({ ...formData, user_email: e.target.value })
+                                    setFormData({...formData, user_email: e.target.value})
                                 }
                                 required={true}
                                 minLength={8}
@@ -177,9 +184,9 @@ function AboutUsPage() {
                                 name="message"
                                 value={formData.message}
                                 onChange={(e) =>
-                                    setFormData({ ...formData, message: e.target.value })
+                                    setFormData({...formData, message: e.target.value})
                                 }
-                                style={{ resize: "none" }}
+                                style={{resize: "none"}}
                                 required={true}
                                 minLength={8}
                                 maxLength={1024}
@@ -189,9 +196,14 @@ function AboutUsPage() {
                     </div>
                 </div>
             </div>
+            <Modal isOpen={showEmailSentModal}
+                   onRequestClose={() => setShowEmailSentModal(false)}
+                   style={ModalStyles.activityAddedModalStyles}
+                   clasName="activity-added-modal">
+                <h3>Email sent</h3>
+            </Modal>
         </div>
-    )
-        ;
+    );
 }
 
 export default AboutUsPage;
