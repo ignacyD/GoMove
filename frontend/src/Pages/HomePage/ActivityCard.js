@@ -13,7 +13,6 @@ function ActivityCard({activity}) {
     const navigate = useNavigate();
 
     useEffect(() => {
-        console.log(window.innerWidth)
         if (window.innerWidth < 768) {
             setIsUserMobile(true)
         }
