@@ -34,6 +34,7 @@ function Profile() {
                                 >
                                     <div className="activity-title">{activity.title}</div>
                                     <div className="activity-type">{iconSelector(activity.activityType)}</div>
+                                    <div className="participants">Participants {`(${activity.participants.length})`}</div>
                                         <div className="activity-date-time">
                                             <span className="activity-date">{activity.date + " "}</span>
                                             <span className="activity-time">{" " + activity.time.substring(0, 5)}</span>

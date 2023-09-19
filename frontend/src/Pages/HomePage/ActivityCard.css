@@ -44,7 +44,27 @@
     padding: 0 20px;
     flex-direction: row;
     height: 100px;
-    margin-bottom: 0;
+    margin-bottom: 30px;
+}
+
+.bottom-section {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px;
+    flex-direction: row;
+    height: 5vw;
+    margin-bottom: 3vw;
+}
+
+.participants h2 {
+    color: #ffffff
+
+}
+
+.participants {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
 }
 
 .location p, .datatime p {
@@ -52,13 +72,14 @@
 }
 
 .location {
-    margin-right: 4vw;
+    width: 60%;
 }
 
 .description-section {
     padding: 0 20px;
     height: 130px;
     justify-content: space-around;
+    width: 60%;
 }
 
 .description-section p {
