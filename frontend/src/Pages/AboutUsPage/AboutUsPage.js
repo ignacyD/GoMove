@@ -2,6 +2,7 @@ import './AboutUsPage.css'
 import {useEffect, useRef, useState} from "react";
 import testPhoto from '../../assets/images/test.jpg';
 import DominikPhoto from '../../assets/images/Dominik.png';
+import MichalPhoto from '../../assets/images/Michal.png';
 import KamilPhoto from '../../assets/images/Kamil.jpg';
 import JakubPhoto from '../..//assets/images/Jakub_Szczygiel.jpeg';
 import IgnacyPhoto from '../../assets/images/Ignacy.jpg';
@@ -30,8 +31,8 @@ const arrayOfOwners = [
     {
         id: 4,
         name: "Michał Jeleniewski",
-        desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        photo: testPhoto
+        desc: "Hi! I'm Michał. I'm 19-year-old full-stack developer and student of law and economy. Besides programming, I'm keen on martial arts and calisthenics. In my opinion being psychically active is key to long and satisfying life, so I'm glad that I've got the chance of encouraging others to do so!",
+        photo: MichalPhoto
     },
     {
         id: 5,
