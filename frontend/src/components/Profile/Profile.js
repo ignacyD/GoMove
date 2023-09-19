@@ -21,7 +21,7 @@ function Profile() {
 
     useEffect(() => {
         fetchProfileUserData()
-    }, [])
+    }, [userId])
 
     useEffect(() => {
         if (Object.keys(profileUserData).length !== 0) {
