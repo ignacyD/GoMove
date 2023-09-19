@@ -95,7 +95,7 @@ function Profile() {
             } else {
                 displayButton(swipeRightButton)
             }
-            displayedActivities.style.right = `${(index * 230) - 15 + 'px'}`
+            displayedActivities.style.right = `${(index * 240) - 15 + 'px'}`
         }
     }
     const displayButton = (button) => {
