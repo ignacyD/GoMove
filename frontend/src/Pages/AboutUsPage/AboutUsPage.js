@@ -56,20 +56,40 @@ function AboutUsPage() {
 
     const form = useRef();
 
+
+    const [formData, setFormData] = useState({
+        user_name: "",
+        user_email: "",
+        message: "",
+    });
+
     const sendEmail = (e) => {
         e.preventDefault();
 
-        emailjs.sendForm(
-            'service_548nzhb',
-            'template_3romkvl',
-            form.current,
-            'EwwxewBKhlUdLB4B5')
-            .then((result) => {
-                console.log(result.text);
-            }, (error) => {
-                console.log(error.text);
-            });
+        emailjs
+            .sendForm(
+                "service_548nzhb",
+                "template_3romkvl",
+                form.current,
+                "EwwxewBKhlUdLB4B5"
+            )
+            .then(
+                (result) => {
+                    console.log(result.text);
+                    setFormData({
+                        user_name: "",
+                        user_email: "",
+                        message: "",
+                    });
+                    alert("Email sent successfully!");
+                },
+                (error) => {
+                    console.log(error.text);
+                    alert("Email sending failed. Please try again later.");
+                }
+            );
     };
+
 
     useEffect(() => {
         const handleScroll = () => {
@@ -129,11 +149,41 @@ function AboutUsPage() {
                     <div className="message">
                         <form ref={form} onSubmit={sendEmail}>
                             <label>Name</label>
-                            <input type="text" name="user_name"/>
+                            <input
+                                type="text"
+                                name="user_name"
+                                value={formData.user_name}
+                                onChange={(e) =>
+                                    setFormData({ ...formData, user_name: e.target.value })
+                                }
+                                required={true}
+                                minLength={8}
+                                maxLength={64}
+                            />
                             <label>Email</label>
-                            <input type="email" name="user_email"/>
+                            <input
+                                type="email"
+                                name="user_email"
+                                value={formData.user_email}
+                                onChange={(e) =>
+                                    setFormData({ ...formData, user_email: e.target.value })
+                                }
+                                required={true}
+                                minLength={8}
+                                maxLength={64}
+                            />
                             <label>Message</label>
-                            <textarea name="message"/>
+                            <textarea
+                                name="message"
+                                value={formData.message}
+                                onChange={(e) =>
+                                    setFormData({ ...formData, message: e.target.value })
+                                }
+                                style={{ resize: "none" }}
+                                required={true}
+                                minLength={8}
+                                maxLength={1024}
+                            />
                             <input className="contact-btn" type="submit" value="Send"/>
                         </form>
                     </div>
