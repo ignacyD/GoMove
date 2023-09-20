@@ -29,25 +29,30 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseEntity<?> getUserById(@PathVariable UUID id) {
         User userById = userService.getUserById(id);
+        if (userById == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No user with requested id");
+
+        }
+
         if (userById.getPhotoName() != null && !userById.getPhotoName().isEmpty()) {
             userById.setUserPhoto(imageService.getImage(userById.getPhotoName()));
         }
-        if (userById != null) {
-            return ResponseEntity.status(HttpStatus.OK).body(userById);
-        }
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No user with requested id");
+
+        return ResponseEntity.status(HttpStatus.OK).body(userById);
     }
 
     @GetMapping("/name/{name}")
     public ResponseEntity<?> getUserByName(@PathVariable String name) {
         User userByName = userService.getUserByName(name);
+        if (userByName == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No user with requested name");
+        }
+
         if (userByName.getPhotoName() != null && !userByName.getPhotoName().isEmpty()) {
             userByName.setUserPhoto(imageService.getImage(userByName.getPhotoName()));
         }
-        if (userByName != null) {
-            return ResponseEntity.status(HttpStatus.OK).body(userByName);
-        }
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No user with requested name");
+
+        return ResponseEntity.status(HttpStatus.OK).body(userByName);
     }
 
     @PatchMapping("/update/{id}")

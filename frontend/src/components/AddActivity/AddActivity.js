@@ -22,7 +22,7 @@ const AddActivity = () => {
     const [description, setDescription] = useState("");
     const [date, setDate] = useState("");
     const [time, setTime] = useState("");
-    const [activityImage, setActivityImage] = useState("");
+    const [activityImage, setActivityImage] = useState(null);
     const [timeDisable, setTimeDisable] = useState(true);
     const [chosenOption, setChosenOption] = useState(null);
     const [showIncorrectActivityModal, setShowIncorrectActivityModal] = useState(false);
@@ -157,7 +157,7 @@ const AddActivity = () => {
                 "time": time,
                 "description": description,
                 "participants": null,
-                "activityPhoto": activityImage.split(",")[1]
+                "activityPhoto": activityImage ? activityImage.split(",")[1] : null
             })
         }).then(response => {
             if (response.status !== 200) {
@@ -311,6 +311,7 @@ const AddActivity = () => {
                     </button>
                     <div className="image-field">
                         <input
+                            required={false}
                             ref={uploadImageRef}
                             type="file"
                             accept=".jpg, .jpeg, .png"

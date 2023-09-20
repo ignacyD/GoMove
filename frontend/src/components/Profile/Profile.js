@@ -2,10 +2,10 @@ import React, {useContext, useEffect, useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
 import './Profile.css';
 import {Context} from "../../App";
-import testPhoto from "../../assets/images/test.jpg";
+import testPhoto from "../../assets/images/cycling.jpg";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faChevronLeft, faChevronRight} from "@fortawesome/free-solid-svg-icons";
-import {iconSelector} from '../IconSelector'
+import {iconSelector, photoSelector} from '../iconPhotoSelector'
 
 function Profile() {
     const userData = useContext(Context).userData;
@@ -108,10 +108,9 @@ function Profile() {
                                     <div className="activity-details">
                                         <div className="activity-city">{activity.city}</div>
                                     </div>
-                                    <div className="activity-photo">{activity.activityPhoto ?
-                                        <img src={'data:image/jpeg;base64,' + activity.activityPhoto} alt="Activity"/> :
-                                        <img src={testPhoto} alt="Activity"/>
-                                    }</div>
+                                    <div className="activity-photo">
+                                        <img src={activity.activityPhoto ? 'data:image/jpeg;base64,' + activity.activityPhoto : photoSelector(activity.activityType)} alt="Activity"/>
+                                    </div>
                                 </div>
                             ))}
                         </div>

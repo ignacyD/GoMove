@@ -74,8 +74,10 @@ public class ActivityService {
         if (activity.getDate().isAfter(today)
                 || activity.getDate().equals(today) && activity.getTime().isAfter(now)) {
             try {
-                activityImageService.removeImage(activity.getPhotoName());
-                activity.setPhotoName(activityImageService.uploadImage(activity.getActivityPhoto()));
+                if (activity.getPhotoName() != null) {
+                    activityImageService.removeImage(activity.getPhotoName());
+                    activity.setPhotoName(activityImageService.uploadImage(activity.getActivityPhoto()));
+                }
             } catch (IOException exception) {
                 //TODO add logging exception, send info to frontend
                 exception.printStackTrace();

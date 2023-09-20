@@ -22,8 +22,8 @@ function ActivityDeleteModal() {
         }).then(response => {
             if (response.status === 200) {
                 setDisplayActivityDeleteModal(false);
-                navigate(`/profile/${userData.userId}`)
-                console.log("Activity successfully deleted")
+                navigate(`/profile/${userData.userId}`);
+                console.log("Activity successfully deleted");
             } else {
                 console.log("Something went wrong")
             }
@@ -32,28 +32,28 @@ function ActivityDeleteModal() {
     }
 
     return (
-        <>
+        <div className="delete-activity-modal">
             <div className="delete-message">Are you sure you want to delete this activity?</div>
             <div className="delete-buttons">
                 <div className="delete-icon">
                     <FontAwesomeIcon
-                        icon={faCircleCheck}
+                        icon={faCircleXmark}
                         size="2xl"
                         style={{color: "red"}}
-                        onClick={() => handleDelete()}
+                        onClick={() => setDisplayActivityDeleteModal(false)}
                     />
                 </div>
                 <div className="delete-icon">
                     <FontAwesomeIcon
-                        icon={faCircleXmark}
+                        icon={faCircleCheck}
                         size="2xl"
                         style={{color: "#90EE90FF"}}
-                        onClick={() => setDisplayActivityDeleteModal(false)}
+                        onClick={() => handleDelete()}
                     />
                 </div>
 
             </div>
-        </>
+        </div>
     )
 
 }
