@@ -1,6 +1,6 @@
 import './AboutUsPage.css'
 import {useEffect, useRef, useState} from "react";
-import testPhoto from '../../assets/images/test.jpg';
+import testPhoto from '../../assets/images/cycling.jpg';
 import DominikPhoto from '../../assets/images/Dominik.png';
 import MichalPhoto from '../../assets/images/Michal.png';
 import KamilPhoto from '../../assets/images/Kamil.jpg';

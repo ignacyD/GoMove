@@ -14,7 +14,16 @@ import {
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {useNavigate, useParams} from "react-router-dom";
 import {Context} from "../../App";
-import {iconSelector} from '../../components/IconSelector'
+import {iconSelector, photoSelector} from '../../components/iconPhotoSelector'
+import {
+    FacebookShareButton,
+    FacebookIcon,
+    TwitterIcon,
+    TwitterShareButton,
+    EmailShareButton,
+    EmailIcon,
+} from "react-share";
+
 
 function ActivityPage() {
     const userData = useContext(Context).userData;
@@ -73,7 +82,7 @@ function ActivityPage() {
                     let indexOfUser = newActivityData.participants.findIndex(user => {
                         return user.userId === userData.userId;
                     })
-                    newActivityData.participants.splice(indexOfUser,1);
+                    newActivityData.participants.splice(indexOfUser, 1);
                     setActivityData(newActivityData);
                 } else {
                     console.log("something went wrong")
@@ -123,13 +132,10 @@ function ActivityPage() {
                     <h1>{activityData.title}</h1>
                     <hr/>
                     <br/>
-                    {activityData.activityPhoto ?
-                        <div className="activity-page-image-container">
-                        <img
-                            src={activityData.activityPhoto ? 'data:image/jpeg;base64,' + activityData.activityPhoto : null}
-                            alt={activityData.title} className="activity-image"/>
-                        </div>
-                        : null}
+                    <img
+                        src={activityData.activityPhoto ? 'data:image/jpeg;base64,' + activityData.activityPhoto : photoSelector(activityData.activityType)}
+                        alt={activityData.title} className="activity-image"
+                    />
                     <h3>Description:</h3>
                     <p>{activityData.description}</p>
                     <br/>
@@ -148,8 +154,30 @@ function ActivityPage() {
                         </div>
                         <div className="share-activity">
                             <h3>Share Activity</h3>
+
                             <div className='share-activity-methods'>
-                                <FontAwesomeIcon className="copy-to-clipboard" onClick={handleCopyClick} icon={faCopy}/>
+                                <FacebookShareButton
+                                    url={`www.gomove.com/${activityId}`}>
+                                    <FacebookIcon
+                                        className="share-icon"
+                                        size={32} round/>
+                                </FacebookShareButton>
+                                <TwitterShareButton
+                                    url={`www.gomove.com/${activityId}`}>
+                                    <TwitterIcon
+                                        className="share-icon"
+                                        size={32} round/>
+                                </TwitterShareButton>
+                                <EmailShareButton
+                                    url={`www.gomove.com/${activityId}`}
+                                    subject={`Invite for activity: ${activityData.title}`}
+                                    separator={"\n"}
+                                    body={`Hi! Join my activity ${activityData.title} at ${activityData.date} in ${activityData.address} using link below: `}>
+                                    <EmailIcon
+                                        className="share-icon"
+                                        size={32} round/>
+                                </EmailShareButton>
+                                <FontAwesomeIcon className="share-icon" onClick={handleCopyClick} icon={faCopy}/>
                             </div>
                             <div className="copied-message-alert-container">
                                 <div className="copied-message-alert">
