@@ -76,14 +76,14 @@ function Navbar({setDisplayLoginForm, handleLogout}) {
             }
             {
                 !isUserLogged &&
-                <button className='login-btn' onClick={() => setDisplayLoginForm(true)}>
+                <a className='login-btn' onClick={() => setDisplayLoginForm(true)}>
                     Login
-                </button>
+                </a>
             }
             {
-                isUserLogged && <button className='login-btn' onClick={() => handleLogout()}>
+                isUserLogged && <a className='login-btn' onClick={() => handleLogout()}>
                     Logout
-                </button>
+                </a>
             }
             </div>
         </nav>
