@@ -8,11 +8,17 @@ import {Context} from "../../App";
 
 function AdditionalUserInfoForm() {
     const userData = useContext(Context).userData;
-    const [city, setCity] = useState("");
-    const [preferredActivity, setPreferredActivity] = useState("");
-    const [description, setDescription] = useState("");
+    const [additionalInfo, setAdditionalInfo] = useState({
+        city: null,
+        preferredActivity: null,
+        description: null,
+        selectedImage: null
+    })
+    // const [city, setCity] = useState("");
+    // const [preferredActivity, setPreferredActivity] = useState("");
+    // const [description, setDescription] = useState("");
     const navigate = useNavigate();
-    const [selectedImage, setSelectedImage] = useState("");
+    // const [selectedImage, setSelectedImage] = useState("");
     const uploadImageRef = useRef(null);
 
     const convertBase64 = (file) => {
@@ -30,29 +36,36 @@ function AdditionalUserInfoForm() {
         });
     };
 
+    const updateInfo = (property, value) => {
+        setAdditionalInfo(prevInfo => ({
+            ...prevInfo,
+            [property]: value
+        }));
+    };
+
     const handleImageUpload = async (event) => {
         const file = event.target.files[0];
         const base64 = await convertBase64(file);
-        setSelectedImage(base64);
+        updateInfo("selectedImage", base64);
     };
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        userData.description = description;
-        userData.city = city;
-        userData.preferredActivity = preferredActivity;
-        if (selectedImage) {
-            userData.userPhoto = selectedImage.split(",")[1];
+        userData.description = additionalInfo.description;
+        userData.city = additionalInfo.city;
+        userData.preferredActivity = additionalInfo.preferredActivity;
+        if (additionalInfo.selectedImage) {
+            userData.userPhoto = additionalInfo.selectedImage.split(",")[1];
         }
 
         fetch(`http://localhost:8080/users/update/${localStorage.getItem("userId")}`, {
             headers: {Authorization: localStorage.getItem("jwt"), "Content-Type": "application/json"},
             method: "PATCH",
             body: JSON.stringify({
-                "city": city,
-                "preferredActivity": preferredActivity,
-                "description": description,
-                "userPhoto": selectedImage.split(",")[1]
+                "city": additionalInfo.city,
+                "preferredActivity": additionalInfo.preferredActivity,
+                "description": additionalInfo.description,
+                "userPhoto": additionalInfo.selectedImage.split(",")[1]
             })
         }).then(response => {
             if (response.status === 200) {
@@ -79,7 +92,7 @@ function AdditionalUserInfoForm() {
                             <div>
                                 <button className="custom-file-button" type="button" onClick={() => uploadImageRef.current.click()}>
                                     <img className='profile-picture' alt='profile picture'
-                                         src={selectedImage ? selectedImage : 'blank-profile-picture.png'}></img>
+                                         src={additionalInfo.selectedImage ? additionalInfo.selectedImage : 'blank-profile-picture.png'}></img>
                                     <div className='change-photo-button'>
                                         Click to change
                                     </div>
@@ -100,16 +113,16 @@ function AdditionalUserInfoForm() {
                                 <textarea
                                     className="city-input"
                                     id="city"
-                                    value={city}
-                                    onChange={e => setCity(e.target.value)}
+                                    value={additionalInfo.city}
+                                    onChange={e => updateInfo("city", e.target.value)}
                                 ></textarea>
                             </div>
                             <div className="profile-description-field">
                                 <label className="profile-description-label">Description</label>
                                 <textarea className="profile-description-input"
                                     id="description"
-                                    value={description}
-                                    onChange={e => setDescription(e.target.value)}>
+                                    value={additionalInfo.description}
+                                    onChange={e => updateInfo("description", e.target.value)}>
                                 </textarea>
                             </div>
                             <div className="preferred-activity-field">
@@ -118,8 +131,8 @@ function AdditionalUserInfoForm() {
                                     className="preferred-activity-select"
                                     id="preferred-activity"
                                     defaultValue="Select"
-                                    style={{color: preferredActivity ? 'black' : 'grey'}}
-                                    onChange={e => setPreferredActivity(e.target.value)}
+                                    style={{color: additionalInfo.preferredActivity ? 'black' : 'grey'}}
+                                    onChange={e => updateInfo("preferredActivity", e.target.value)}
                                 >
                                     <option hidden value="Select">Select</option>
                                     <option style={{color: 'black'}} value="SKATING">Skating</option>

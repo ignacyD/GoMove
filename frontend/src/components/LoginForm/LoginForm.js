@@ -57,7 +57,7 @@ function LoginForm({setDisplayLoginForm, setDisplayRegistrationForm}) {
                     className="username-input"
                     type="text"
                     id="username"
-                    value={username}
+                    value={loginData.username}
                     onChange={(e) => setLoginData(
                         prevState => ({...prevState, username: e.target.value})
                     )}
@@ -69,7 +69,7 @@ function LoginForm({setDisplayLoginForm, setDisplayRegistrationForm}) {
                     className="password-input"
                     type="password"
                     id="password"
-                    value={password}
+                    value={loginData.password}
                     onChange={(e) => setLoginData(
                         prevState => ({...prevState, password:e.target.value})
                     )}
