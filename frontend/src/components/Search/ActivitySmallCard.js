@@ -11,7 +11,7 @@ const ActivitySmallCard = ({activity, handleJoinActivity}) => {
     const setDisplayLoginForm = useContext(Context).setDisplayLoginForm;
 
     const navigate = useNavigate();
-
+    console.log(activity)
     return (
         <div className="searched-activity-card">
             <div className="activity-photo">{activity.activityPhoto ?
@@ -21,7 +21,7 @@ const ActivitySmallCard = ({activity, handleJoinActivity}) => {
             <div className="info-section">
                 <div className="activity-title">{activity.title}</div>
                 <div className="activity-type">{iconSelector(activity.activityType)}</div>
-                <div className="activity-city">{activity.address}</div>
+                <div className="activity-city">{activity.city},<br/>{activity.street} {activity.streetNumber ? activity.streetNumber : ""}</div>
                 <div className="activity-date">{activity.date}, {activity.time.substring(0, 5)}</div>
                 <div className="searched-card-buttons">
                     <button onClick={() => navigate(`/activity-page/${activity.activityId}`)}
