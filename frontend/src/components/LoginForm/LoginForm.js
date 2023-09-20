@@ -1,12 +1,13 @@
 import {useContext, useState} from "react";
 import './LoginForm.css'
 import {Context} from "../../App";
+import {updateInfo} from "../functions";
 
 function LoginForm({setDisplayLoginForm, setDisplayRegistrationForm}) {
 
     const [loginData, setLoginData] = useState({
-        username: null,
-        password: null
+        username: "",
+        password: ""
     })
     const [showErrorMessage, setShowErrorMessage] = useState(false);
 
@@ -58,9 +59,7 @@ function LoginForm({setDisplayLoginForm, setDisplayRegistrationForm}) {
                     type="text"
                     id="username"
                     value={loginData.username}
-                    onChange={(e) => setLoginData(
-                        prevState => ({...prevState, username: e.target.value})
-                    )}
+                    onChange={(e) => updateInfo(setLoginData, "username", e.target.value)}
                 ></input>
             </div>
             <div className="password-field">
@@ -70,9 +69,7 @@ function LoginForm({setDisplayLoginForm, setDisplayRegistrationForm}) {
                     type="password"
                     id="password"
                     value={loginData.password}
-                    onChange={(e) => setLoginData(
-                        prevState => ({...prevState, password:e.target.value})
-                    )}
+                    onChange={(e) => updateInfo(setLoginData, "password", e.target.value)}
                 ></input>
             </div>
             {showErrorMessage &&

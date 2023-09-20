@@ -3,7 +3,7 @@ import './ActivityCard.css';
 import testPhoto from '../../assets/images/cycling.jpg'
 import GoogleMapComponent from "../../components/GoogleMap/GoogleMap";
 import {useNavigate} from "react-router-dom";
-import {iconSelector, photoSelector} from '../../components/iconPhotoSelector'
+import {iconSelector, photoSelector} from '../../components/functions'
 import {faUser} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 

@@ -5,48 +5,23 @@ import Modal from "react-modal";
 import additionalProfileInfoModalStyles from "../../ModalStyles";
 import {useRef} from 'react';
 import {Context} from "../../App";
+import {convertBase64, updateInfo} from "../functions";
 
 function AdditionalUserInfoForm() {
     const userData = useContext(Context).userData;
     const [additionalInfo, setAdditionalInfo] = useState({
-        city: null,
-        preferredActivity: null,
-        description: null,
-        selectedImage: null
+        city: "",
+        preferredActivity: "",
+        description: "",
+        selectedImage: ""
     })
-    // const [city, setCity] = useState("");
-    // const [preferredActivity, setPreferredActivity] = useState("");
-    // const [description, setDescription] = useState("");
     const navigate = useNavigate();
-    // const [selectedImage, setSelectedImage] = useState("");
     const uploadImageRef = useRef(null);
-
-    const convertBase64 = (file) => {
-        return new Promise((resolve, reject) => {
-            const fileReader = new FileReader();
-            fileReader.readAsDataURL(file);
-
-            fileReader.onload = () => {
-                resolve(fileReader.result);
-            };
-
-            fileReader.onerror = (error) => {
-                reject(error);
-            };
-        });
-    };
-
-    const updateInfo = (property, value) => {
-        setAdditionalInfo(prevInfo => ({
-            ...prevInfo,
-            [property]: value
-        }));
-    };
 
     const handleImageUpload = async (event) => {
         const file = event.target.files[0];
         const base64 = await convertBase64(file);
-        updateInfo("selectedImage", base64);
+        updateInfo(setAdditionalInfo, "selectedImage", base64);
     };
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -114,7 +89,7 @@ function AdditionalUserInfoForm() {
                                     className="city-input"
                                     id="city"
                                     value={additionalInfo.city}
-                                    onChange={e => updateInfo("city", e.target.value)}
+                                    onChange={e => updateInfo(setAdditionalInfo, "city", e.target.value)}
                                 ></textarea>
                             </div>
                             <div className="profile-description-field">
@@ -122,7 +97,7 @@ function AdditionalUserInfoForm() {
                                 <textarea className="profile-description-input"
                                     id="description"
                                     value={additionalInfo.description}
-                                    onChange={e => updateInfo("description", e.target.value)}>
+                                    onChange={e => updateInfo(setAdditionalInfo, "description", e.target.value)}>
                                 </textarea>
                             </div>
                             <div className="preferred-activity-field">
@@ -132,7 +107,7 @@ function AdditionalUserInfoForm() {
                                     id="preferred-activity"
                                     defaultValue="Select"
                                     style={{color: additionalInfo.preferredActivity ? 'black' : 'grey'}}
-                                    onChange={e => updateInfo("preferredActivity", e.target.value)}
+                                    onChange={e => updateInfo(setAdditionalInfo, "preferredActivity", e.target.value)}
                                 >
                                     <option hidden value="Select">Select</option>
                                     <option style={{color: 'black'}} value="SKATING">Skating</option>

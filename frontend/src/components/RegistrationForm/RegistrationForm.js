@@ -2,13 +2,14 @@ import {useContext, useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import './RegistrationForm.css'
 import {Context} from "../../App";
+import {updateInfo} from "../functions";
 
 function RegistrationForm({setDisplayLoginForm, setDisplayRegistrationForm}) {
     const [registrationData, setRegistrationData] = useState({
-        username: null,
-        email: null,
-        password: null,
-        confirmPassword: null
+        username: "",
+        email: "",
+        password: "",
+        confirmPassword: ""
     })
     const [errorMessage, setErrorMessage] = useState([]);
     const [passwordErrorMessage, setPasswordErrorMessage] = useState([]);
@@ -134,7 +135,7 @@ function RegistrationForm({setDisplayLoginForm, setDisplayRegistrationForm}) {
                         type="text"
                         id="username"
                         value={registrationData.username}
-                        onChange={(e) => setRegistrationData(prevState => ({...prevState, username: e.target.value}))}
+                        onChange={(e) => updateInfo(setRegistrationData, "username", e.target.value)}
                     ></input>
                 </div>
                 <div className="e-mail-field">
@@ -144,7 +145,7 @@ function RegistrationForm({setDisplayLoginForm, setDisplayRegistrationForm}) {
                         type="text"
                         id="e-mail"
                         value={registrationData.email}
-                        onChange={(e) => setRegistrationData(prevState => ({...prevState, email: e.target.value}))}
+                        onChange={(e) => updateInfo(setRegistrationData, "email", e.target.value)}
                     ></input>
                 </div>
                 <div className="password-field">
@@ -154,7 +155,7 @@ function RegistrationForm({setDisplayLoginForm, setDisplayRegistrationForm}) {
                         type="password"
                         id="password"
                         value={registrationData.password}
-                        onChange={(e) => setRegistrationData(prevState => ({...prevState, password: e.target.value}))}
+                        onChange={(e) => updateInfo(setRegistrationData, "password", e.target.value)}
                     ></input>
                 </div>
                 <div className="confirm-password-field">
@@ -164,7 +165,7 @@ function RegistrationForm({setDisplayLoginForm, setDisplayRegistrationForm}) {
                         type="password"
                         id="confirm-password"
                         value={registrationData.confirmPassword}
-                        onChange={(e) => setRegistrationData(prevState => ({...prevState, confirmPassword: e.target.value}))}
+                        onChange={(e) => updateInfo(setRegistrationData, "confirmPassword", e.target.value)}
                     ></input>
                 </div>
                 <button className="register-submit-btn" type="submit">Register</button>

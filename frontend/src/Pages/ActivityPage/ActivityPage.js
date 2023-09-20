@@ -14,7 +14,7 @@ import {
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {useNavigate, useParams} from "react-router-dom";
 import {Context} from "../../App";
-import {iconSelector, photoSelector} from '../../components/iconPhotoSelector'
+import {iconSelector, photoSelector} from '../../components/functions'
 import {
     FacebookShareButton,
     FacebookIcon,

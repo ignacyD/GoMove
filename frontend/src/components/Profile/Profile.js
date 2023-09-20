@@ -5,7 +5,7 @@ import {Context} from "../../App";
 import testPhoto from "../../assets/images/cycling.jpg";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faChevronLeft, faChevronRight} from "@fortawesome/free-solid-svg-icons";
-import {iconSelector, photoSelector} from '../iconPhotoSelector'
+import {iconSelector, photoSelector} from '../functions'
 
 function Profile() {
     const userData = useContext(Context).userData;

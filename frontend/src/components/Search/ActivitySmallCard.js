@@ -3,7 +3,7 @@ import './ActivitySmallCard.css';
 import testPhoto from "../../assets/images/cycling.jpg";
 import {useNavigate} from "react-router-dom";
 import {Context} from "../../App";
-import {iconSelector, photoSelector} from '../iconPhotoSelector'
+import {iconSelector, photoSelector} from '../functions'
 
 const ActivitySmallCard = ({activity, handleJoinActivity}) => {
 
