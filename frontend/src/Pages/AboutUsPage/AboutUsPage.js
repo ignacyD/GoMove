@@ -59,7 +59,6 @@ const emailJSTemplateId = process.env.REACT_APP_EMAILJS_TEMPLATE_ID;
 const emailJSPublicKey = process.env.REACT_APP_EMAILJS_PUBLIC_KEY;
 
 
-
 function AboutUsPage() {
     const [creators, setCreators] = useState(shuffleArray(arrayOfOwners));
 
@@ -107,9 +106,12 @@ function AboutUsPage() {
 
     useEffect(() => {
         const handleScroll = () => {
-            creators.forEach((creator) => {
+            creators.forEach(creator => {
                 const element = document.getElementById(creator.id.toString());
                 const rect = element.getBoundingClientRect();
+                if (creator === creators[0]) {
+                    element.classList.add('visible');
+                }
                 if (rect.top < window.innerHeight) {
                     element.classList.add('visible');
                 } else {
@@ -117,7 +119,7 @@ function AboutUsPage() {
                 }
             });
         };
-
+        handleScroll();
         window.addEventListener('scroll', handleScroll);
         return () => {
             window.removeEventListener('scroll', handleScroll);
