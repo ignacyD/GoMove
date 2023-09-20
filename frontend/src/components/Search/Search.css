@@ -117,7 +117,11 @@
 }
 
 .activities-carousel {
-    height: 620px;
+    display: flex;
+    justify-content: center;
+    width: calc(100vw - 254px);
+    overflow: hidden;
+    height: 635px;
 }
 
 .found-activities {
@@ -136,16 +140,10 @@
     position: relative;
     transition: bottom .5s;
 }
-.activities-carousel{
-    display: flex;
-    justify-content: center;
-    width: calc(100vw - 254px);
-    overflow: hidden;
-}
 
 .active-card {
     opacity: 1;
-    transform: scale(1.2);
+    transform: scale(1.4);
     transition: transform .5s, opacity .5s;
 }
 
@@ -159,6 +157,7 @@
     flex-direction: column;
     position: relative;
     top:246px;
+    left: 30px;
     padding: 10px;
 }
 
