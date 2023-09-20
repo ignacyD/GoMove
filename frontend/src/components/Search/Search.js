@@ -4,7 +4,7 @@ import "./Search.css";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
     faAngleDown,
-    faAngleUp,
+    faAngleUp, faChevronUp,
     faPersonBiking,
     faPersonRunning,
     faPersonSkating,
@@ -13,6 +13,7 @@ import {
 import {Context} from "../../App";
 import ModalStyles from "../../ModalStyles";
 import Modal from "react-modal";
+import {useNavigate} from "react-router-dom";
 
 function Search() {
 
@@ -32,8 +33,18 @@ function Search() {
     const [chosenOption, setChosenOption] = useState(null);
     const [activitiesFetched, setActivitiesFetched] = useState(false);
     const [showJoinedActivityModal, setShowJoinedActivityModal] = useState(false);
-
+    const [isUserMobile, setIsUserMobile] = useState(false);
+    const [touchStartY, setTouchStartY] = useState(null);
     const today = new Date().toISOString().split("T")[0];
+
+
+    useEffect(() => {
+        if (window.innerWidth < 768) {
+            setIsUserMobile(true)
+        } else {
+            setIsUserMobile(false);
+        }
+    }, [window.innerWidth])
 
     useEffect(() => {
         getActivities();
@@ -58,7 +69,7 @@ function Search() {
 
     useEffect(() => {
         const carousel = document.querySelector('.activities-carousel-visible')
-        carousel.style.bottom = `${(carouselIndex - 1) * 225}px`;
+        carousel.style.bottom = `${(carouselIndex - 1) * (isUserMobile ? 215 : 225)}px`;
     }, [carouselIndex])
 
     useEffect(() => {
@@ -82,6 +93,58 @@ function Search() {
             };
         }
     }, [carouselIndex, activities]);
+
+
+    useEffect(() => {
+        if (isUserMobile) {
+
+            const handleCarouselTouchStart = (e) => {
+                setTouchStartY(e.touches[0].clientY);
+            };
+
+            const handleCarouselTouchMove = (e) => {
+                if (touchStartY !== null) {
+                    const touchMoveY = e.touches[0].clientY;
+                    const deltaY = touchStartY - touchMoveY;
+                    const maxIndex = activities.length - 1;
+
+                    if (Math.abs(deltaY) >= 20) {
+                        if (deltaY > 0 && carouselIndex < maxIndex) {
+                            setCarouselIndex(carouselIndex + 1);
+                        } else if (deltaY < 0 && carouselIndex > 0) {
+                            setCarouselIndex(carouselIndex - 1);
+                        }
+                        setTouchStartY(null);
+                    }
+                }
+            };
+            const carouselElement = document.querySelector('.activities-carousel');
+            if (carouselElement) {
+                carouselElement.addEventListener('touchstart', handleCarouselTouchStart);
+                carouselElement.addEventListener('touchmove', handleCarouselTouchMove);
+                return () => {
+                    carouselElement.removeEventListener('touchstart', handleCarouselTouchStart);
+                    carouselElement.removeEventListener('touchmove', handleCarouselTouchMove);
+                };
+            }
+        }
+    }, [carouselIndex, activities, touchStartY]);
+    const scrollToTop = () => {
+        const goToTopButton = document.querySelector('.scroll-to-top-button');
+        window.scrollTo({
+            top: '0',
+            behavior: 'smooth',
+        });
+    };
+    const scrollToActivities = () => {
+        const goToTopButton = document.querySelector('.scroll-to-top-button');
+        const filtersContainer = document.querySelector('.activity-search-filters');
+        console.log(filtersContainer.offsetHeight)
+        window.scrollTo({
+            top: filtersContainer.offsetHeight + 140,
+            behavior: 'smooth'
+        });
+    };
     const handleCarouselPrev = () => {
         if (carouselIndex > 0) {
             setCarouselIndex(carouselIndex - 1);
@@ -121,6 +184,9 @@ function Search() {
     }
 
     async function getFilteredActivities() {
+        if (isUserMobile) {
+            scrollToActivities();
+        }
         setCarouselIndex(0);
 
         let url = "http://localhost:8080/activities/future";
@@ -344,11 +410,14 @@ function Search() {
                 </div>
 
                 <div className="filter-buttons">
-                    <button className="filter-button" onClick={() => getFilteredActivities()}>Filter</button>
+                    <button className="filter-button" onClick={() => getFilteredActivities()}>Search</button>
                     <button className="reset-filters-button" onClick={() => resetFilter()}>Reset filters</button>
                 </div>
             </div>
             <div className="found-activities">
+                <button className="scroll-to-top-button" onClick={() => scrollToTop()}>
+                    <FontAwesomeIcon icon={faChevronUp} />
+                </button>
                 <div className="activities-carousel">
                     <div className="activities-carousel-visible">
                         {

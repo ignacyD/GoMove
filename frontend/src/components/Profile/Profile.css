@@ -76,7 +76,7 @@
     text-align: center;
 }
 
-.activity-title {
+.activities-in-profile-carousel .activity-title {
     min-height: 40px;
     max-height: 40px;
     display: flex;

@@ -27,13 +27,18 @@
 }
 
 .info-section > .activity-title {
-    height: 57px;
     border-bottom: 1px solid grey;
     font-size: 16px;
     white-space: break-spaces;
     word-break: break-word;
     margin-top: 0px;
     padding: 0px 0;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    color: #333;
 }
 
 .info-section > .activity-type {
@@ -74,3 +79,23 @@
     flex-direction: row;
     justify-content: space-around;
 }
+
+@media screen and (max-width: 768px) {
+    .searched-activity-card {
+        width: 320px;
+        height: 160px;
+    }
+
+    .searched-activity-card > .activity-photo img {
+        width: 160px;
+        height: 160px;
+    }
+    .info-section > .activity-title {
+        font-size: 14px;
+        height: 35px;
+    }
+    .info-section > .activity-type {
+        font-size:12px;
+    }
+}
+
