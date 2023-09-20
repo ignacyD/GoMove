@@ -19,6 +19,7 @@
 .activity-search-filters h4 {
     margin-top: 0;
 }
+
 .choose-activity-container {
     display: flex;
     flex-wrap: wrap;
@@ -156,7 +157,7 @@
     display: flex;
     flex-direction: column;
     position: relative;
-    top:246px;
+    top: 246px;
     left: 30px;
     padding: 10px;
 }
@@ -178,13 +179,14 @@
     transition: transform .5s, background-color .5s;
 }
 
-.manage-searched-buttons button.disabled-button{
+.manage-searched-buttons button.disabled-button {
     transform: scale(1);
     cursor: default;
     background-color: darkgrey;
-    color:grey;
+    color: grey;
 }
-.manage-searched-buttons button.disabled-button:hover{
+
+.manage-searched-buttons button.disabled-button:hover {
     transform: scale(1);
     background-color: darkgrey;
 }
@@ -236,4 +238,53 @@
 .search-activity:hover, .search-activity-add:hover {
     transform: scale(1.2);
     transition: transform .5s;
+}
+.scroll-to-top-button{
+    display: none;
+}
+@media screen and (max-width: 768px) {
+    .activity-search-page {
+        flex-direction: column;
+        width: 100vw;
+    }
+
+    .activity-search-filters {
+        width: 100vw;
+        position: relative;
+        height: auto;
+    }
+
+    .found-activities {
+        width: 100vw;
+        left: 0px;
+        position: relative;
+        height: 675px;
+    }
+    .activities-carousel {
+        position: relative;
+        top:20px;
+        width: 100vw;
+        touch-action: none;
+    }
+    .active-card{
+        transform: scale(1.2);
+    }
+    .manage-searched-buttons{
+        display: none;
+    }
+    .scroll-to-top-button{
+        z-index: 5;
+        display: block;
+        position: absolute;
+        left:92vw;
+        width: 8vw;
+        height: 8vw;
+        top:5vh;
+        opacity: 0.8;
+        background-color: black;
+        color: grey;
+        border: none;
+        border-top-left-radius: 4px;
+        border-bottom-left-radius: 4px;
+    }
 }
