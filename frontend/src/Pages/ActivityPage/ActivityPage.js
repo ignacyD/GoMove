@@ -15,6 +15,15 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {useNavigate, useParams} from "react-router-dom";
 import {Context} from "../../App";
 import {iconSelector, photoSelector} from '../../components/iconPhotoSelector'
+import {
+    FacebookShareButton,
+    FacebookIcon,
+    TwitterIcon,
+    TwitterShareButton,
+    EmailShareButton,
+    EmailIcon,
+} from "react-share";
+
 
 function ActivityPage() {
     const userData = useContext(Context).userData;
@@ -145,8 +154,30 @@ function ActivityPage() {
                         </div>
                         <div className="share-activity">
                             <h3>Share Activity</h3>
+
                             <div className='share-activity-methods'>
-                                <FontAwesomeIcon className="copy-to-clipboard" onClick={handleCopyClick} icon={faCopy}/>
+                                <FacebookShareButton
+                                    url={`www.gomove.com/${activityId}`}>
+                                    <FacebookIcon
+                                        className="share-icon"
+                                        size={32} round/>
+                                </FacebookShareButton>
+                                <TwitterShareButton
+                                    url={`www.gomove.com/${activityId}`}>
+                                    <TwitterIcon
+                                        className="share-icon"
+                                        size={32} round/>
+                                </TwitterShareButton>
+                                <EmailShareButton
+                                    url={`www.gomove.com/${activityId}`}
+                                    subject={`Invite for activity: ${activityData.title}`}
+                                    separator={"\n"}
+                                    body={`Hi! Join my activity ${activityData.title} at ${activityData.date} in ${activityData.address} using link below: `}>
+                                    <EmailIcon
+                                        className="share-icon"
+                                        size={32} round/>
+                                </EmailShareButton>
+                                <FontAwesomeIcon className="share-icon" onClick={handleCopyClick} icon={faCopy}/>
                             </div>
                             <div className="copied-message-alert-container">
                                 <div className="copied-message-alert">
