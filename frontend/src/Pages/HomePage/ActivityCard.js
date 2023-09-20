@@ -57,7 +57,7 @@ function ActivityCard({activity}) {
                         <div className="participants-container">
                             <h3>Participants: </h3>
                             <div className="participants">
-                            <FontAwesomeIcon icon={faUser} size="2xl" style={{color: "#FFFFFF",}}/>
+                            <FontAwesomeIcon icon={faUser} style={{color: "#FFFFFF",}}/>
                             <h2>{activity.participants.length}</h2>
                             </div>
                         </div>
