@@ -20,7 +20,11 @@ function Profile() {
     const {userId} = useParams();
 
     useEffect(() => {
-        fetchProfileUserData()
+        if (userId === userData.userId) {
+            setProfileUserData(userData);
+        } else {
+            fetchProfileUserData();
+        }
     }, [userId])
 
     useEffect(() => {

@@ -39,8 +39,6 @@ function ActivityPage() {
         }
     }, [activityData])
 
-    console.log(userData)
-
     const handleEnrollButton = () => {
         fetch(`http://localhost:8080/users/enroll/${localStorage.getItem("userId")}/${activityId}`, {
             method: 'PATCH',
