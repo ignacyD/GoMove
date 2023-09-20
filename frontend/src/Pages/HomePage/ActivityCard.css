@@ -11,6 +11,7 @@
     width: 400px;
     overflow: hidden;
     transition: right .5s, transform .5s;
+    cursor: pointer;
 }
 
 .card .top-section {

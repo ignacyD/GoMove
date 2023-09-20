@@ -23,10 +23,11 @@ function ActivityCard({activity}) {
     }, [window.innerWidth])
 
     return (
-        <div className="card">
+        <div className="card"
+             onClick={() => navigate(`/activity-page/${activity.activityId}`)}
+        >
             <div
                 className="top-section"
-                onClick={() => navigate(`/activity-page/${activity.activityId}`)}
             >
                 <div className="activity-photo">
                     <img src={activity.activityPhoto ? 'data:image/jpeg;base64,' + activity.activityPhoto : photoSelector(activity.activityType)} alt="Activity"/>
