@@ -60,7 +60,27 @@ function Search() {
         const carousel = document.querySelector('.activities-carousel-visible')
         carousel.style.bottom = `${(carouselIndex - 1) * 220}px`;
     }, [carouselIndex])
+    useEffect(() => {
+        const handleCarouselScroll = (e) => {
+            const scrollDelta = e.deltaY;
+            const maxIndex = activities.length - 1;
 
+            if (scrollDelta > 0 && carouselIndex < maxIndex) {
+                setCarouselIndex(carouselIndex + 1);
+            } else if (scrollDelta < 0 && carouselIndex > 0) {
+                setCarouselIndex(carouselIndex - 1);
+            }
+        };
+
+        const carouselElement = document.querySelector('.activities-carousel');
+
+        if (carouselElement) {
+            carouselElement.addEventListener('wheel', handleCarouselScroll);
+            return () => {
+                carouselElement.removeEventListener('wheel', handleCarouselScroll);
+            };
+        }
+    }, [carouselIndex, activities]);
     const handleCarouselPrev = () => {
         if (carouselIndex > 0) {
             setCarouselIndex(carouselIndex - 1);
@@ -180,10 +200,10 @@ function Search() {
     }
 
     function manageModalDisplay() {
-    setShowJoinedActivityModal(true);
-    setTimeout(() => {
-        setShowJoinedActivityModal(false);
-    }, 3000)
+        setShowJoinedActivityModal(true);
+        setTimeout(() => {
+            setShowJoinedActivityModal(false);
+        }, 3000)
     }
 
     const enrollUserToActivity = (activityId) => {
@@ -219,7 +239,6 @@ function Search() {
             setActivityType(option);
         }
     };
-
     return (
         <div className="activity-search-page">
             <Modal
