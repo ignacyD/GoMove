@@ -21,12 +21,9 @@ function ActivityDeleteModal() {
             method: "DELETE"
         }).then(response => {
             if (response.status === 200) {
-                setDisplayActivityDeleteModal(true);
-                setTimeout(() => {
-                    setDisplayActivityDeleteModal(false)
-                }, 3000)
-                navigate(`/profile/${userData.userId}`)
-                console.log("Activity successfully deleted")
+                setDisplayActivityDeleteModal(false);
+                navigate(`/profile/${userData.userId}`);
+                console.log("Activity successfully deleted");
             } else {
                 console.log("Something went wrong")
             }
