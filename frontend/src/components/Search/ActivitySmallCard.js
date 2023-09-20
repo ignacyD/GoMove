@@ -11,7 +11,7 @@ const ActivitySmallCard = ({activity, handleJoinActivity}) => {
     const setDisplayLoginForm = useContext(Context).setDisplayLoginForm;
 
     const navigate = useNavigate();
-    console.log(activity)
+
     return (
         <div className="searched-activity-card">
             <div className="activity-photo">{activity.activityPhoto ?
