@@ -58,8 +58,9 @@ function Search() {
 
     useEffect(() => {
         const carousel = document.querySelector('.activities-carousel-visible')
-        carousel.style.bottom = `${(carouselIndex - 1) * 220}px`;
+        carousel.style.bottom = `${(carouselIndex - 1) * 225}px`;
     }, [carouselIndex])
+
     useEffect(() => {
         const handleCarouselScroll = (e) => {
             const scrollDelta = e.deltaY;
