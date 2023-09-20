@@ -54,6 +54,12 @@ function shuffleArray(array) {
     return shuffledArray;
 }
 
+const emailJSServiceId = process.env.REACT_APP_EMAILJS_SERVICE_ID;
+const emailJSTemplateId = process.env.REACT_APP_EMAILJS_TEMPLATE_ID;
+const emailJSPublicKey = process.env.REACT_APP_EMAILJS_PUBLIC_KEY;
+
+
+
 function AboutUsPage() {
     const [creators, setCreators] = useState(shuffleArray(arrayOfOwners));
 
@@ -73,10 +79,10 @@ function AboutUsPage() {
 
         emailjs
             .sendForm(
-                "service_548nzhb",
-                "template_3romkvl",
+                emailJSServiceId,
+                emailJSTemplateId,
                 form.current,
-                "EwwxewBKhlUdLB4B5"
+                emailJSPublicKey
             )
             .then(
                 (result) => {
