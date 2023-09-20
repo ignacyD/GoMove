@@ -1,9 +1,9 @@
 import React, {useContext} from 'react';
 import './ActivitySmallCard.css';
-import testPhoto from "../../assets/images/test.jpg";
+import testPhoto from "../../assets/images/cycling.jpg";
 import {useNavigate} from "react-router-dom";
 import {Context} from "../../App";
-import {iconSelector} from '../IconSelector'
+import {iconSelector, photoSelector} from '../iconPhotoSelector'
 
 const ActivitySmallCard = ({activity, handleJoinActivity}) => {
 
@@ -14,10 +14,9 @@ const ActivitySmallCard = ({activity, handleJoinActivity}) => {
 
     return (
         <div className="searched-activity-card">
-            <div className="activity-photo">{activity.activityPhoto ?
-                <img src={'data:image/jpeg;base64,' + activity.activityPhoto} alt="Activity"/> :
-                <img src={testPhoto} alt="Activity"/>
-            }</div>
+            <div className="activity-photo">
+                <img src={activity.activityPhoto ? 'data:image/jpeg;base64,' + activity.activityPhoto : photoSelector(activity.activityType)} alt="Activity"/>
+            </div>
             <div className="info-section">
                 <div className="activity-title">{activity.title}</div>
                 <div className="activity-type">{iconSelector(activity.activityType)}</div>

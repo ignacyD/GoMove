@@ -14,7 +14,7 @@ import {
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {useNavigate, useParams} from "react-router-dom";
 import {Context} from "../../App";
-import {iconSelector} from '../../components/IconSelector'
+import {iconSelector, photoSelector} from '../../components/iconPhotoSelector'
 
 function ActivityPage() {
     const userData = useContext(Context).userData;
@@ -73,7 +73,7 @@ function ActivityPage() {
                     let indexOfUser = newActivityData.participants.findIndex(user => {
                         return user.userId === userData.userId;
                     })
-                    newActivityData.participants.splice(indexOfUser,1);
+                    newActivityData.participants.splice(indexOfUser, 1);
                     setActivityData(newActivityData);
                 } else {
                     console.log("something went wrong")
@@ -124,12 +124,10 @@ function ActivityPage() {
                     <h1>{activityData.title}</h1>
                     <hr/>
                     <br/>
-                    {activityData.activityPhoto ?
-                        <img
-                            src={activityData.activityPhoto ? 'data:image/jpeg;base64,' + activityData.activityPhoto : null}
-                            alt={activityData.title} className="activity-image"/>
-                        : null}
-
+                    <img
+                        src={activityData.activityPhoto ? 'data:image/jpeg;base64,' + activityData.activityPhoto : photoSelector(activityData.activityType)}
+                        alt={activityData.title} className="activity-image"
+                    />
                     <h3>Description:</h3>
                     <p>{activityData.description}</p>
                     <br/>

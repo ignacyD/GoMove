@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import './ActivityCard.css';
-import testPhoto from '../../assets/images/test.jpg'
+import testPhoto from '../../assets/images/cycling.jpg'
 import GoogleMapComponent from "../../components/GoogleMap/GoogleMap";
 import {useNavigate} from "react-router-dom";
-import {iconSelector} from '../../components/IconSelector'
+import {iconSelector, photoSelector} from '../../components/iconPhotoSelector'
 import {faUser} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
@@ -28,10 +28,9 @@ function ActivityCard({activity}) {
                 className="top-section"
                 onClick={() => navigate(`/activity-page/${activity.activityId}`)}
             >
-                <div className="activity-photo">{activity.activityPhoto ?
-                    <img src={'data:image/jpeg;base64,' + activity.activityPhoto} alt="Activity"/> :
-                    <img src={testPhoto} alt="Activity"/>
-                }</div>
+                <div className="activity-photo">
+                    <img src={activity.activityPhoto ? 'data:image/jpeg;base64,' + activity.activityPhoto : photoSelector(activity.activityType)} alt="Activity"/>
+                </div>
                 <div className="title-section">
                     <div className="activityCard-icon">{iconSelector(activity.activityType)}</div>
                     <h2>{activity.title}</h2>
