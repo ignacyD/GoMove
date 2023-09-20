@@ -77,6 +77,8 @@ public class ActivityService {
                 if (activity.getPhotoName() != null) {
                     activityImageService.removeImage(activity.getPhotoName());
                     activity.setPhotoName(activityImageService.uploadImage(activity.getActivityPhoto()));
+                } else {
+                    activity.setPhotoName(activityImageService.uploadImage(activity.getActivityPhoto()));
                 }
             } catch (IOException exception) {
                 //TODO add logging exception, send info to frontend

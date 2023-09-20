@@ -44,11 +44,22 @@ export function photoSelector(activityType) {
     return photoToDisplay;
 }
 
-export function updateInfo (func, property, value) {
-    func(prevInfo => ({
-        ...prevInfo,
-        [property]: value
-    }));
+export function updateInfo(func, property, value) {
+    const properties = property.split(".");
+    func(prevInfo => {
+        let currentObj = { ...prevInfo };
+        let currentRef = currentObj;
+
+        for (let i = 0; i < properties.length - 1; i++) {
+            const prop = properties[i];
+            currentRef[prop] = { ...currentRef[prop] };
+            currentRef = currentRef[prop];
+        }
+
+        currentRef[properties[properties.length - 1]] = value;
+
+        return currentObj;
+    });
 }
 
 export function convertBase64(file)  {

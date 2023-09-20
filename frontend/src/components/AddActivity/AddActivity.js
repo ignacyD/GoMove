@@ -10,19 +10,29 @@ import {faPersonBiking, faPersonRunning, faPersonSkating, faPersonWalking} from 
 import ModalStyles from "../../ModalStyles";
 import ActivityAddedModal from "../ActivityAddedModal/ActivityAddedModal";
 import Modal from "react-modal";
+import {convertBase64, updateInfo} from "../functions";
 
 const googleMapApiKey = process.env.REACT_APP_GOOGLE_MAP_API_KEY;
 const googleMapsLibraries = ["places"];
 
 const AddActivity = () => {
     const setDisplayActivityAddedModal = useContext(Context).setDisplayActivityAddedModal;
-    const [title, setTitle] = useState("");
-    const [selectedUserPlace, setSelectedUserPlace] = useState(null)
-    const [activityType, setActivityType] = useState("");
-    const [description, setDescription] = useState("");
-    const [date, setDate] = useState("");
-    const [time, setTime] = useState("");
-    const [activityImage, setActivityImage] = useState(null);
+    const selectedUserPlace = {
+        selectedAddress: "",
+        city: "",
+        street: "",
+        streetNumber: "",
+        country: "",
+    }
+    const [activityData, setActivityData] = useState({
+        title: "",
+        activityType: "",
+        description: "",
+        date: "",
+        time: "",
+        activityPhoto: null,
+        selectedUserPlace: selectedUserPlace
+    })
     const [timeDisable, setTimeDisable] = useState(true);
     const [chosenOption, setChosenOption] = useState(null);
     const [showIncorrectActivityModal, setShowIncorrectActivityModal] = useState(false);
@@ -41,45 +51,35 @@ const AddActivity = () => {
 
     useEffect(() => {
         manageTime();
-    }, [date])
+    }, [activityData.date])
 
     const handleChosenOption = (option) => {
         const value = chosenOption === option ? null : option;
         setChosenOption(value);
-        setActivityType(value);
+        updateInfo(setActivityData, "activityType", value);
     };
 
     const handlePlaceSelect = () => {
         const selectedPlace = window.autocomplete.getPlace();
 
         if (!selectedPlace || !selectedPlace.address_components) {
-            setSelectedUserPlace(null);
+            updateInfo(setActivityData, "selectedUserPlace", null);
             return;
         }
 
-        const formattedPlace = {
-            selectedAddress: "",
-            city: "",
-            street: "",
-            streetNumber: "",
-            country: "",
-        };
-
-        formattedPlace.selectedAddress = selectedPlace.formatted_address;
+        activityData.selectedUserPlace.selectedAddress = selectedPlace.formatted_address;
 
         selectedPlace.address_components.forEach((component) => {
             if (component.types.includes("locality")) {
-                formattedPlace.city = component.long_name;
+                updateInfo(setActivityData, "selectedUserPlace.city", component.long_name)
             } else if (component.types.includes("route")) {
-                formattedPlace.street = component.long_name;
+                updateInfo(setActivityData, "selectedUserPlace.street", component.long_name)
             } else if (component.types.includes("street_number")) {
-                formattedPlace.streetNumber = component.long_name;
+                updateInfo(setActivityData, "selectedUserPlace.streetNumber", component.long_name)
             } else if (component.types.includes("country")) {
-                formattedPlace.country = component.long_name;
+                updateInfo(setActivityData, "selectedUserPlace.country", component.long_name)
             }
         });
-
-        setSelectedUserPlace(formattedPlace);
     };
 
     const {isLoaded} = useJsApiLoader({
@@ -88,25 +88,10 @@ const AddActivity = () => {
         libraries: googleMapsLibraries
     });
 
-    const convertBase64 = (file) => {
-        return new Promise((resolve, reject) => {
-            const fileReader = new FileReader();
-            fileReader.readAsDataURL(file);
-
-            fileReader.onload = () => {
-                resolve(fileReader.result);
-            };
-
-            fileReader.onerror = (error) => {
-                reject(error);
-            };
-        });
-    };
-
     const handleImageUpload = async (event) => {
         const file = event.target.files[0];
         const base64 = await convertBase64(file);
-        setActivityImage(base64);
+        updateInfo(setActivityData, "activityPhoto", base64);
     };
 
     function handleSubmit(e) {
@@ -120,7 +105,7 @@ const AddActivity = () => {
             return;
         }
 
-        if (activityType === "") {
+        if (activityData.activityType === "") {
             setShowIncorrectActivityModal(true);
             setTimeout(() => {
                 setShowIncorrectActivityModal(false);
@@ -128,7 +113,7 @@ const AddActivity = () => {
             return;
         }
 
-        if (![selectedUserPlace.selectedAddress, selectedUserPlace.city, selectedUserPlace.street].every(Boolean)) {
+        if (![activityData.selectedUserPlace.selectedAddress, activityData.selectedUserPlace.city, activityData.selectedUserPlace.street].every(Boolean)) {
             setShowWrongAddressModal(true);
             setTimeout(() => {
                 setShowWrongAddressModal(false);
@@ -136,28 +121,27 @@ const AddActivity = () => {
             return;
         }
 
-
         const activityId = UUID();
         fetch("http://localhost:8080/activities", {
             headers: {Authorization: localStorage.getItem("jwt"), "Content-Type": "application/json"},
             method: "POST",
             body: JSON.stringify({
                 "activityId": activityId,
-                "activityType": activityType,
+                "activityType": activityData.activityType,
                 "owner": {
                     "userId": userId
                 },
-                "title": title,
-                "city": selectedUserPlace.city,
-                "street": selectedUserPlace.street,
-                "streetNumber": selectedUserPlace.streetNumber,
-                "country": selectedUserPlace.country,
-                "address": selectedUserPlace.selectedAddress,
-                "date": date,
-                "time": time,
-                "description": description,
+                "title": activityData.title,
+                "city": activityData.selectedUserPlace.city,
+                "street": activityData.selectedUserPlace.street,
+                "streetNumber": activityData.selectedUserPlace.streetNumber,
+                "country": activityData.selectedUserPlace.country,
+                "address": activityData.selectedUserPlace.selectedAddress,
+                "date": activityData.date,
+                "time": activityData.time,
+                "description": activityData.description,
                 "participants": null,
-                "activityPhoto": activityImage ? activityImage.split(",")[1] : null
+                "activityPhoto": activityData.activityPhoto && activityData.activityPhoto.length > 0 ? activityData.activityPhoto.split(",")[1] : null
             })
         }).then(response => {
             if (response.status !== 200) {
@@ -179,13 +163,13 @@ const AddActivity = () => {
     }
 
     function manageTime() {
-        if (new Date(date).getDate() === new Date().getDate()) {
+        if (new Date(activityData.date).getDate() === new Date().getDate()) {
             return addHours(new Date(), 2);
         }
     }
 
     function dateHandler(e) {
-        setDate(e.target.value);
+        updateInfo(setActivityData, "date", e.target.value);
         setTimeDisable(false);
     }
 
@@ -218,10 +202,10 @@ const AddActivity = () => {
                         className="title-input"
                         type="text"
                         id="title"
-                        value={title}
+                        value={activityData.title}
                         minLength={8}
                         maxLength={32}
-                        onChange={e => setTitle(e.target.value)}
+                        onChange={e => updateInfo(setActivityData, "title", e.target.value)}
                     />
                 </div>
                 <div className="location-field">
@@ -272,16 +256,16 @@ const AddActivity = () => {
                         className="description-input"
                         type="text"
                         id="description"
-                        value={description}
+                        value={activityData.description}
                         minLength={8}
                         maxLength={1024}
-                        onChange={e => setDescription(e.target.value)}
+                        onChange={e => updateInfo(setActivityData, "description", e.target.value)}
                     /></div>
                 <div className="date-field">
                     <label className="date-label">Date</label>
                     <input
                         required={true}
-                        value={date}
+                        value={activityData.date}
                         type="date"
                         id="date"
                         name="date"
@@ -294,17 +278,17 @@ const AddActivity = () => {
                     <input
                         disabled={timeDisable}
                         required={true}
-                        value={time}
+                        value={activityData.time}
                         type="time"
                         id="time"
                         name="time"
                         min={manageTime()}
-                        onChange={(e) => setTime(e.target.value)}/>
+                        onChange={(e) => updateInfo(setActivityData, "time", e.target.value)}/>
                 </div>
                 <div className="add-activity-add-photo">
                     <button className="custom-file-button" type="button" onClick={() => uploadImageRef.current.click()}>
-                        {activityImage ? <img className='activity-picture'
-                             src={activityImage}></img> :
+                        {activityData.activityPhoto ? <img className='activity-picture'
+                             src={activityData.activityPhoto}></img> :
                         <div className='change-photo-button'>
                             Click to choose activity image
                         </div>}
@@ -322,10 +306,10 @@ const AddActivity = () => {
                 </div>
                 <button className="submit-btn" type="submit">Create activity</button>
             </form>
-            {selectedUserPlace && selectedUserPlace.selectedAddress ?
+            {activityData.selectedUserPlace && activityData.selectedUserPlace.selectedAddress ?
                 <div className="google-maps">
-                    <p>Selected Address: {selectedUserPlace.selectedAddress}</p>
-                    <GoogleMapComponent height={'400px'} width={'1020px'} address={selectedUserPlace.selectedAddress}/>
+                    <p>Selected Address: {activityData.selectedUserPlace.selectedAddress}</p>
+                    <GoogleMapComponent height={'400px'} width={'1020px'} address={activityData.selectedUserPlace.selectedAddress}/>
                 </div> : <></>}
         </div>
     ) : <></>;
