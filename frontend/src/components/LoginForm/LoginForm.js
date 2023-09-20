@@ -4,6 +4,11 @@ import {Context} from "../../App";
 
 function LoginForm({setDisplayLoginForm, setDisplayRegistrationForm}) {
 
+    const [loginData, setLoginData] = useState({
+        username: null,
+        password: null
+    })
+
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [showErrorMessage, setShowErrorMessage] = useState(false);
