@@ -104,7 +104,6 @@ function ActivityPage() {
         const invitationLink = "http://localhost:3000/activity-page/" + activityData.activityId;
         const textToCopy = 'Hi! Join my activity ' + activityData.title + ' at ' + activityData.date + ' in ' +
             activityData.address + ' using link below: \n' + invitationLink;
-//TODO zrobić link, którego kliknięcie powoduje dołączenie do aktywności
         navigator.clipboard.writeText(textToCopy).then(() => {
             const copiedAlert = document.querySelector('.copied-message-alert');
             copiedAlert.style.bottom = '0px'
@@ -125,11 +124,12 @@ function ActivityPage() {
                     <hr/>
                     <br/>
                     {activityData.activityPhoto ?
+                        <div className="activity-page-image-container">
                         <img
                             src={activityData.activityPhoto ? 'data:image/jpeg;base64,' + activityData.activityPhoto : null}
                             alt={activityData.title} className="activity-image"/>
+                        </div>
                         : null}
-
                     <h3>Description:</h3>
                     <p>{activityData.description}</p>
                     <br/>
@@ -193,9 +193,9 @@ function ActivityPage() {
                     <hr/>
                     <br/>
                     <h3>Participants {activityData.participants.length > 0 ? `(${activityData.participants.length})` : ""}</h3>
-                    <div>
+                    <div className="users">
                         {activityData.participants.length > 0 ? activityData.participants.map(participant => (
-                            <div className="users" key={participant.userId}
+                            <div className="participant-info" key={participant.userId}
                                  onClick={() => navigate(`/profile/${participant.userId}`)}>
                                 <FontAwesomeIcon icon={faUser} size="2xl" style={{color: "#2a2a2a",}}/>
                                 <p>{participant.username === activityData.owner.username ? participant.username + " (owner)" : participant.username}</p>
