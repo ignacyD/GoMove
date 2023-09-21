@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from "react";
-import ActivitySmallCard from "./ActivitySmallCard";
-import "./Search.css";
+import SearchActivityCard from "../../components/SearchActivityCard/SearchActivityCard";
+import "./SearchPage.css";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
     faAngleDown,
@@ -15,7 +15,7 @@ import ModalStyles from "../../ModalStyles";
 import Modal from "react-modal";
 import {useNavigate} from "react-router-dom";
 
-function Search() {
+function SearchPage() {
 
     const isUserLogged = useContext(Context).isUserLogged;
     const userData = useContext(Context).userData;
@@ -428,7 +428,7 @@ function Search() {
                                             className={index === carouselIndex ? 'active-card' : 'non-active-card'}
                                             key={activity.activityId}
                                         >
-                                            <ActivitySmallCard
+                                            <SearchActivityCard
                                                 activity={activity}
                                                 handleJoinActivity={() => enrollUserToActivity(activity.activityId)}
                                             />
@@ -452,4 +452,4 @@ function Search() {
     )
 }
 
-export default Search;
+export default SearchPage;

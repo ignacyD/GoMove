@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import './ActivityCard.css';
-import testPhoto from '../../assets/images/cycling.jpg'
 import GoogleMapComponent from "../../components/GoogleMap/GoogleMap";
 import {useNavigate} from "react-router-dom";
 import {iconSelector, photoSelector} from '../../components/functions'
@@ -21,16 +20,24 @@ function ActivityCard({activity}) {
             setIsUserMobile(false);
         }
     }, [window.innerWidth])
+    const navigateToActivityPage = (e) => {
+        const mapButton = document.querySelector('.map-button button')
+        if(e.target !== mapButton){
+        navigate(`/activity-page/${activity.activityId}`)
+        }
+    }
 
     return (
         <div className="card"
-             onClick={() => navigate(`/activity-page/${activity.activityId}`)}
+             onClick={(e) => navigateToActivityPage(e)}
         >
             <div
                 className="top-section"
             >
                 <div className="activity-photo">
-                    <img src={activity.activityPhoto ? 'data:image/jpeg;base64,' + activity.activityPhoto : photoSelector(activity.activityType)} alt="Activity"/>
+                    <img
+                        src={activity.activityPhoto ? 'data:image/jpeg;base64,' + activity.activityPhoto : photoSelector(activity.activityType)}
+                        alt="Activity"/>
                 </div>
                 <div className="title-section">
                     <div className="activityCard-icon">{iconSelector(activity.activityType)}</div>
@@ -52,13 +59,17 @@ function ActivityCard({activity}) {
                     <div className="bottom-section">
                         <div className="description">
                             <h3>Description: </h3>
-                            <p>{activity.description}</p>
+                            {activity.description.length > 120 ?
+                                <p>{activity.description.substring(0, 120)}...</p>
+                                :
+                                <p>{activity.description}</p>
+                            }
                         </div>
                         <div className="participants-container">
                             <h3>Participants: </h3>
                             <div className="participants">
-                            <FontAwesomeIcon icon={faUser} style={{color: "#FFFFFF",}}/>
-                            <h2>{activity.participants.length}</h2>
+                                <FontAwesomeIcon icon={faUser} style={{color: "#FFFFFF",}}/>
+                                <h2>{activity.participants.length}</h2>
                             </div>
                         </div>
                     </div>
