@@ -86,9 +86,11 @@ const AddActivity = () => {
 
     const handleImageUpload = async (event) => {
         const file = event.target.files[0];
-        setFileFormat(file.name.split(".")[file.name.split(".").length - 1]);
-        const base64 = await convertBase64(file);
-        updateInfo(setActivityData, "activityPhoto", base64);
+        if (file) {
+            setFileFormat(file.name.split(".")[file.name.split(".").length - 1]);
+            const base64 = await convertBase64(file);
+            updateInfo(setActivityData, "activityPhoto", base64);
+        }
     };
 
     function dateHandler(e) {
