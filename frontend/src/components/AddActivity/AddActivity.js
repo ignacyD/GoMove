@@ -36,7 +36,9 @@ const AddActivity = () => {
     const [chosenOption, setChosenOption] = useState(null);
     const [showIncorrectActivityModal, setShowIncorrectActivityModal] = useState(false);
     const [showWrongAddressModal, setShowWrongAddressModal] = useState(false);
+    const [showWrongFileFormatModal, setShowWrongFileFormatModal] = useState(false);
     const uploadImageRef = useRef(null);
+    const [fileFormat, setFileFormat] = useState("");
 
     const navigate = useNavigate();
 
@@ -47,7 +49,7 @@ const AddActivity = () => {
     maxDate.setFullYear(maxDate.getFullYear() + 1);
     const maxDateISO = maxDate.toISOString().split('T')[0];
 
-    console.log(activityData)
+    const allowedFormats = ["", "jpg", "jpeg", "png"]
 
     useEffect(() => {
         manageTime();
@@ -84,6 +86,7 @@ const AddActivity = () => {
 
     const handleImageUpload = async (event) => {
         const file = event.target.files[0];
+        setFileFormat(file.name.split(".")[file.name.split(".").length - 1]);
         const base64 = await convertBase64(file);
         updateInfo(setActivityData, "activityPhoto", base64);
     };
@@ -144,6 +147,17 @@ const AddActivity = () => {
         return true;
     }
 
+    function validateFileFormat() {
+        if (!allowedFormats.includes(fileFormat)) {
+            setShowWrongFileFormatModal(true);
+            setTimeout(() => {
+                setShowWrongFileFormatModal(false);
+            }, 3000)
+            return false;
+        }
+        return true;
+    }
+
     function createRequestBody() {
         const activityId = UUID();
         return {
@@ -170,7 +184,7 @@ const AddActivity = () => {
     function handleSubmit(e) {
         e.preventDefault();
 
-        if (!validateAddress() || !validateSelectedUserPlace() || !validateActivityType()) return false;
+        if (!validateAddress() || !validateSelectedUserPlace() || !validateActivityType() || !validateFileFormat()) return false;
 
         const requestBody = createRequestBody();
 
@@ -210,6 +224,15 @@ const AddActivity = () => {
                 appElement={document.querySelector("#root") || undefined}
             >
                 Choose correct activity type.
+            </Modal>
+            <Modal
+                isOpen={showWrongFileFormatModal}
+                onRequestClose={() => setShowWrongFileFormatModal(false)}
+                style={ModalStyles.smallModalStyles}
+                className="activity-added-modal"
+                appElement={document.querySelector("#root") || undefined}
+            >
+                Select a file with the correct extension. Valid extensions are: .jpg, .jpeg, .png.
             </Modal>
             <form className="add-activity-form" onSubmit={handleSubmit}>
                 <div className="title-field">
