@@ -156,6 +156,7 @@
     flex-direction: column;
     justify-content: center;
     word-wrap: break-word;
+    max-width: 600px;
 }
 .update-info-button{
     margin-top: 30px;
