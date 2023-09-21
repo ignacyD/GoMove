@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import './ActivityCard.css';
-import testPhoto from '../../assets/images/cycling.jpg'
 import GoogleMapComponent from "../../components/GoogleMap/GoogleMap";
 import {useNavigate} from "react-router-dom";
 import {iconSelector, photoSelector} from '../../components/functions'
@@ -101,7 +100,11 @@ function ActivityCard({activity, setDisplayLoginForm, handleAcceptActivity, hand
                     <div className="bottom-section">
                         <div className="description">
                             <h3>Description: </h3>
-                            <p>{activity.description}</p>
+                            {activity.description.length > 120 ?
+                                <p>{activity.description.substring(0, 120)}...</p>
+                                :
+                                <p>{activity.description}</p>
+                            }
                         </div>
                         <div className="participants-container">
                             <h3>Participants: </h3>

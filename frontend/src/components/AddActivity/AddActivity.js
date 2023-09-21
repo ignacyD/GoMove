@@ -8,7 +8,6 @@ import './AddActivity.css'
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPersonBiking, faPersonRunning, faPersonSkating, faPersonWalking} from "@fortawesome/free-solid-svg-icons";
 import ModalStyles from "../../ModalStyles";
-import ActivityAddedModal from "../ActivityAddedModal/ActivityAddedModal";
 import Modal from "react-modal";
 import {convertBase64, updateInfo} from "../functions";
 
@@ -39,7 +38,6 @@ const AddActivity = () => {
     const [showWrongAddressModal, setShowWrongAddressModal] = useState(false);
     const uploadImageRef = useRef(null);
 
-
     const navigate = useNavigate();
 
     const userId = localStorage.getItem("userId");
@@ -49,12 +47,14 @@ const AddActivity = () => {
     maxDate.setFullYear(maxDate.getFullYear() + 1);
     const maxDateISO = maxDate.toISOString().split('T')[0];
 
+    console.log(activityData)
+
     useEffect(() => {
         manageTime();
     }, [activityData.date])
 
     const handleChosenOption = (option) => {
-        const value = chosenOption === option ? null : option;
+        const value = chosenOption === option ? "" : option;
         setChosenOption(value);
         updateInfo(setActivityData, "activityType", value);
     };
@@ -82,79 +82,17 @@ const AddActivity = () => {
         });
     };
 
-    const {isLoaded} = useJsApiLoader({
-        id: 'google-map-script',
-        googleMapsApiKey: googleMapApiKey,
-        libraries: googleMapsLibraries
-    });
-
     const handleImageUpload = async (event) => {
         const file = event.target.files[0];
         const base64 = await convertBase64(file);
         updateInfo(setActivityData, "activityPhoto", base64);
     };
 
-    function handleSubmit(e) {
-        e.preventDefault();
-
-        if (!selectedUserPlace) {
-            setShowWrongAddressModal(true);
-            setTimeout(() => {
-                setShowWrongAddressModal(false);
-            }, 3000)
-            return;
-        }
-
-        if (activityData.activityType === "") {
-            setShowIncorrectActivityModal(true);
-            setTimeout(() => {
-                setShowIncorrectActivityModal(false);
-            }, 3000)
-            return;
-        }
-
-        if (![activityData.selectedUserPlace.selectedAddress, activityData.selectedUserPlace.city, activityData.selectedUserPlace.street].every(Boolean)) {
-            setShowWrongAddressModal(true);
-            setTimeout(() => {
-                setShowWrongAddressModal(false);
-            }, 3000)
-            return;
-        }
-
-        const activityId = UUID();
-        fetch("http://localhost:8080/activities", {
-            headers: {Authorization: localStorage.getItem("jwt"), "Content-Type": "application/json"},
-            method: "POST",
-            body: JSON.stringify({
-                "activityId": activityId,
-                "activityType": activityData.activityType,
-                "owner": {
-                    "userId": userId
-                },
-                "title": activityData.title,
-                "city": activityData.selectedUserPlace.city,
-                "street": activityData.selectedUserPlace.street,
-                "streetNumber": activityData.selectedUserPlace.streetNumber,
-                "country": activityData.selectedUserPlace.country,
-                "address": activityData.selectedUserPlace.selectedAddress,
-                "date": activityData.date,
-                "time": activityData.time,
-                "description": activityData.description,
-                "participants": null,
-                "activityPhoto": activityData.activityPhoto && activityData.activityPhoto.length > 0 ? activityData.activityPhoto.split(",")[1] : null
-            })
-        }).then(response => {
-            if (response.status !== 200) {
-                console.error("something went wrong");
-                return;
-            }
-            setDisplayActivityAddedModal(true);
-            setTimeout(() => {
-                setDisplayActivityAddedModal(false)
-                navigate(`/activity-page/${activityId}`)
-            }, 3000)
-        })
+    function dateHandler(e) {
+        updateInfo(setActivityData, "date", e.target.value);
+        setTimeDisable(false);
     }
+
     function addHours(date, hours) {
         date.setHours(date.getHours() + hours);
         const timeString = date.toLocaleTimeString();
@@ -167,11 +105,91 @@ const AddActivity = () => {
         }
     }
 
-    function dateHandler(e) {
-        updateInfo(setActivityData, "date", e.target.value);
-        setTimeDisable(false);
+    const {isLoaded} = useJsApiLoader({
+        id: 'google-map-script',
+        googleMapsApiKey: googleMapApiKey,
+        libraries: googleMapsLibraries
+    });
+
+    function validateSelectedUserPlace() {
+        if (!selectedUserPlace) {
+            setShowWrongAddressModal(true);
+            setTimeout(() => {
+                setShowWrongAddressModal(false);
+            }, 3000)
+            return false;
+        }
+        return true;
     }
 
+    function validateActivityType() {
+        if (activityData.activityType === "") {
+            setShowIncorrectActivityModal(true);
+            setTimeout(() => {
+                setShowIncorrectActivityModal(false);
+            }, 3000)
+            return false;
+        }
+        return true;
+    }
+
+    function validateAddress() {
+        if (![activityData.selectedUserPlace.selectedAddress, activityData.selectedUserPlace.city, activityData.selectedUserPlace.street].every(Boolean)) {
+            setShowWrongAddressModal(true);
+            setTimeout(() => {
+                setShowWrongAddressModal(false);
+            }, 3000)
+            return false;
+        }
+        return true;
+    }
+
+    function createRequestBody() {
+        const activityId = UUID();
+        return {
+            activityId: activityId,
+            activityType: activityData.activityType,
+            owner: {userId},
+            title: activityData.title,
+            city: activityData.selectedUserPlace.city,
+            street: activityData.selectedUserPlace.street,
+            streetNumber: activityData.selectedUserPlace.streetNumber,
+            country: activityData.selectedUserPlace.country,
+            address: activityData.selectedUserPlace.selectedAddress,
+            date: activityData.date,
+            time: activityData.time,
+            description: activityData.description,
+            participants: null,
+            activityPhoto:
+                activityData.activityPhoto && activityData.activityPhoto.length > 0
+                    ? activityData.activityPhoto.split(",")[1]
+                    : null,
+        };
+    }
+
+    function handleSubmit(e) {
+        e.preventDefault();
+
+        if (!validateAddress() || !validateSelectedUserPlace() || !validateActivityType()) return false;
+
+        const requestBody = createRequestBody();
+
+        fetch("http://localhost:8080/activities", {
+            headers: {Authorization: localStorage.getItem("jwt"), "Content-Type": "application/json"},
+            method: "POST",
+            body: JSON.stringify(requestBody)
+        }).then(response => {
+            if (response.status !== 200) {
+                console.error("something went wrong");
+                return;
+            }
+            setDisplayActivityAddedModal(true);
+            setTimeout(() => {
+                setDisplayActivityAddedModal(false)
+                navigate(`/activity-page/${requestBody.activityId}`)
+            }, 3000)
+        })
+    }
 
     return isLoaded ? (
         <div className="add-activity">
@@ -253,7 +271,6 @@ const AddActivity = () => {
                     <textarea
                         required={true}
                         className="description-input"
-                        type="text"
                         id="description"
                         value={activityData.description}
                         minLength={8}
@@ -286,11 +303,11 @@ const AddActivity = () => {
                 </div>
                 <div className="add-activity-add-photo">
                     <button className="custom-file-button" type="button" onClick={() => uploadImageRef.current.click()}>
-                        {activityData.activityPhoto ? <img className='activity-picture'
-                             src={activityData.activityPhoto}></img> :
-                        <div className='change-photo-button'>
-                            Click to choose activity image
-                        </div>}
+                        {activityData.activityPhoto ? <img className='activity-picture' alt="activity picture"
+                                                           src={activityData.activityPhoto}></img> :
+                            <div className='change-photo-button'>
+                                Click to choose activity image
+                            </div>}
                     </button>
                     <div className="image-field">
                         <input
@@ -308,7 +325,8 @@ const AddActivity = () => {
             {activityData.selectedUserPlace && activityData.selectedUserPlace.selectedAddress ?
                 <div className="google-maps">
                     <p>Selected Address: {activityData.selectedUserPlace.selectedAddress}</p>
-                    <GoogleMapComponent height={'400px'} width={'1020px'} address={activityData.selectedUserPlace.selectedAddress}/>
+                    <GoogleMapComponent height={'400px'} width={'1020px'}
+                                        address={activityData.selectedUserPlace.selectedAddress}/>
                 </div> : <></>}
         </div>
     ) : <></>;
