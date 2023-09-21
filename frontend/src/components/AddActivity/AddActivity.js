@@ -82,17 +82,35 @@ const AddActivity = () => {
         });
     };
 
+    const handleImageUpload = async (event) => {
+        const file = event.target.files[0];
+        const base64 = await convertBase64(file);
+        updateInfo(setActivityData, "activityPhoto", base64);
+    };
+
+    function dateHandler(e) {
+        updateInfo(setActivityData, "date", e.target.value);
+        setTimeDisable(false);
+    }
+    function addHours(date, hours) {
+        date.setHours(date.getHours() + hours);
+        const timeString = date.toLocaleTimeString();
+        return timeString.substring(0, timeString.length - 3);
+    }
+
+    function manageTime() {
+        if (new Date(activityData.date).getDate() === new Date().getDate()) {
+            return addHours(new Date(), 2);
+        }
+    }
+
     const {isLoaded} = useJsApiLoader({
         id: 'google-map-script',
         googleMapsApiKey: googleMapApiKey,
         libraries: googleMapsLibraries
     });
 
-    const handleImageUpload = async (event) => {
-        const file = event.target.files[0];
-        const base64 = await convertBase64(file);
-        updateInfo(setActivityData, "activityPhoto", base64);
-    };
+
     function validateSelectedUserPlace() {
         if (!selectedUserPlace) {
             setShowWrongAddressModal(true);
@@ -171,23 +189,6 @@ const AddActivity = () => {
             }, 3000)
         })
     }
-    function addHours(date, hours) {
-        date.setHours(date.getHours() + hours);
-        const timeString = date.toLocaleTimeString();
-        return timeString.substring(0, timeString.length - 3);
-    }
-
-    function manageTime() {
-        if (new Date(activityData.date).getDate() === new Date().getDate()) {
-            return addHours(new Date(), 2);
-        }
-    }
-
-    function dateHandler(e) {
-        updateInfo(setActivityData, "date", e.target.value);
-        setTimeDisable(false);
-    }
-
 
     return isLoaded ? (
         <div className="add-activity">
