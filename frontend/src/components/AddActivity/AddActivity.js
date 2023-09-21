@@ -8,7 +8,6 @@ import './AddActivity.css'
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPersonBiking, faPersonRunning, faPersonSkating, faPersonWalking} from "@fortawesome/free-solid-svg-icons";
 import ModalStyles from "../../ModalStyles";
-import ActivityAddedModal from "../ActivityAddedModal/ActivityAddedModal";
 import Modal from "react-modal";
 import {convertBase64, updateInfo} from "../functions";
 
@@ -39,7 +38,6 @@ const AddActivity = () => {
     const [showWrongAddressModal, setShowWrongAddressModal] = useState(false);
     const uploadImageRef = useRef(null);
 
-
     const navigate = useNavigate();
 
     const userId = localStorage.getItem("userId");
@@ -49,12 +47,14 @@ const AddActivity = () => {
     maxDate.setFullYear(maxDate.getFullYear() + 1);
     const maxDateISO = maxDate.toISOString().split('T')[0];
 
+    console.log(activityData)
+
     useEffect(() => {
         manageTime();
     }, [activityData.date])
 
     const handleChosenOption = (option) => {
-        const value = chosenOption === option ? null : option;
+        const value = chosenOption === option ? "" : option;
         setChosenOption(value);
         updateInfo(setActivityData, "activityType", value);
     };
@@ -92,6 +92,7 @@ const AddActivity = () => {
         updateInfo(setActivityData, "date", e.target.value);
         setTimeDisable(false);
     }
+
     function addHours(date, hours) {
         date.setHours(date.getHours() + hours);
         const timeString = date.toLocaleTimeString();
@@ -109,7 +110,6 @@ const AddActivity = () => {
         googleMapsApiKey: googleMapApiKey,
         libraries: googleMapsLibraries
     });
-
 
     function validateSelectedUserPlace() {
         if (!selectedUserPlace) {
@@ -149,7 +149,7 @@ const AddActivity = () => {
         return {
             activityId: activityId,
             activityType: activityData.activityType,
-            owner: { userId },
+            owner: {userId},
             title: activityData.title,
             city: activityData.selectedUserPlace.city,
             street: activityData.selectedUserPlace.street,
@@ -166,6 +166,7 @@ const AddActivity = () => {
                     : null,
         };
     }
+
     function handleSubmit(e) {
         e.preventDefault();
 
@@ -270,7 +271,6 @@ const AddActivity = () => {
                     <textarea
                         required={true}
                         className="description-input"
-                        type="text"
                         id="description"
                         value={activityData.description}
                         minLength={8}
@@ -303,11 +303,11 @@ const AddActivity = () => {
                 </div>
                 <div className="add-activity-add-photo">
                     <button className="custom-file-button" type="button" onClick={() => uploadImageRef.current.click()}>
-                        {activityData.activityPhoto ? <img className='activity-picture'
-                             src={activityData.activityPhoto}></img> :
-                        <div className='change-photo-button'>
-                            Click to choose activity image
-                        </div>}
+                        {activityData.activityPhoto ? <img className='activity-picture' alt="activity picture"
+                                                           src={activityData.activityPhoto}></img> :
+                            <div className='change-photo-button'>
+                                Click to choose activity image
+                            </div>}
                     </button>
                     <div className="image-field">
                         <input
@@ -325,7 +325,8 @@ const AddActivity = () => {
             {activityData.selectedUserPlace && activityData.selectedUserPlace.selectedAddress ?
                 <div className="google-maps">
                     <p>Selected Address: {activityData.selectedUserPlace.selectedAddress}</p>
-                    <GoogleMapComponent height={'400px'} width={'1020px'} address={activityData.selectedUserPlace.selectedAddress}/>
+                    <GoogleMapComponent height={'400px'} width={'1020px'}
+                                        address={activityData.selectedUserPlace.selectedAddress}/>
                 </div> : <></>}
         </div>
     ) : <></>;
