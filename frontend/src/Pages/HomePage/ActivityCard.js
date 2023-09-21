@@ -6,10 +6,12 @@ import {iconSelector, photoSelector} from '../../components/functions'
 import {faUser} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
-function ActivityCard({activity}) {
+function ActivityCard({activity, setDisplayLoginForm, handleAcceptActivity, handleDeleteActivity, isUserLogged}) {
 
     const [showMap, setShowMap] = useState(false);
     const [isUserMobile, setIsUserMobile] = useState(false);
+    const [startX, setStartX] = useState(null);
+    const [offsetX, setOffsetX] = useState(0);
 
     const navigate = useNavigate();
 
@@ -22,14 +24,53 @@ function ActivityCard({activity}) {
     }, [window.innerWidth])
     const navigateToActivityPage = (e) => {
         const mapButton = document.querySelector('.map-button button')
-        if(e.target !== mapButton){
-        navigate(`/activity-page/${activity.activityId}`)
+        if (e.target !== mapButton) {
+            navigate(`/activity-page/${activity.activityId}`)
         }
     }
 
+    const handleTouchStart = (e) => {
+        setStartX(e.touches[0].clientX);
+    };
+
+    const handleTouchMove = (e) => {
+        if (startX !== null) {
+            const currentX = e.touches[0].clientX;
+            const newOffsetX = currentX - startX;
+            setOffsetX(newOffsetX);
+        }
+    };
+
+    const handleTouchEnd = () => {
+        if (offsetX < 180 && offsetX > -180) {
+            setOffsetX(0);
+        }
+        setStartX(null);
+    };
+    useEffect(() => {
+        const gradientBg = document.querySelector('.background-container');
+        if (offsetX < -180) {
+            setOffsetX(-300);
+            setTimeout(() => {
+                handleDeleteActivity()
+            gradientBg.style.backgroundPosition = `50% 0`;
+            }, 400)
+        } else if (offsetX > 180) {
+            setOffsetX(300);
+            setTimeout(() => {
+                isUserLogged ? handleAcceptActivity() : setDisplayLoginForm(true);
+            gradientBg.style.backgroundPosition = `50% 0`;
+            }, 400)
+        }
+        gradientBg.style.backgroundPosition = `${50 + offsetX / 2 > 0 ? 50 + offsetX / 2 < 100 ? 50 + offsetX / 2 : 100 : 0}% 0`;
+    }, [offsetX])
     return (
         <div className="card"
              onClick={(e) => navigateToActivityPage(e)}
+             onTouchStart={isUserMobile ? handleTouchStart : undefined}
+             onTouchMove={isUserMobile ? handleTouchMove : undefined}
+             onTouchEnd={isUserMobile ? handleTouchEnd : undefined}
+             style={isUserMobile ? {transform: `translateX(${1.5 * offsetX}px)`} : {}}
         >
             <div
                 className="top-section"

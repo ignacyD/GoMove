@@ -107,7 +107,7 @@
 }
 
 .map-button button {
-    z-index:10;
+    z-index: 10;
     background-color: darkgrey;
     height: 30px;
     width: 140px;
@@ -168,7 +168,9 @@ div.middle-section > div.datetime {
 @media screen and (max-width: 768px) {
     .card {
         height: calc(100vh - 250px);
-        width: 60vw;
+        width: 70vw;
+        touch-action: none;
+        transition: transform .5s;
     }
 
     .card .top-section {
