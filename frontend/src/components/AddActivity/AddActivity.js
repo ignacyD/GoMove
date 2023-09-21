@@ -93,56 +93,72 @@ const AddActivity = () => {
         const base64 = await convertBase64(file);
         updateInfo(setActivityData, "activityPhoto", base64);
     };
-
-    function handleSubmit(e) {
-        e.preventDefault();
-
+    function validateSelectedUserPlace() {
         if (!selectedUserPlace) {
             setShowWrongAddressModal(true);
             setTimeout(() => {
                 setShowWrongAddressModal(false);
             }, 3000)
-            return;
+            return false;
         }
+        return true;
+    }
 
+    function validateActivityType() {
         if (activityData.activityType === "") {
             setShowIncorrectActivityModal(true);
             setTimeout(() => {
                 setShowIncorrectActivityModal(false);
             }, 3000)
-            return;
+            return false;
         }
+        return true;
+    }
 
+    function validateAddress() {
         if (![activityData.selectedUserPlace.selectedAddress, activityData.selectedUserPlace.city, activityData.selectedUserPlace.street].every(Boolean)) {
             setShowWrongAddressModal(true);
             setTimeout(() => {
                 setShowWrongAddressModal(false);
             }, 3000)
-            return;
+            return false;
         }
+        return true;
+    }
 
+    function createRequestBody() {
         const activityId = UUID();
+        return {
+            activityId: activityId,
+            activityType: activityData.activityType,
+            owner: { userId },
+            title: activityData.title,
+            city: activityData.selectedUserPlace.city,
+            street: activityData.selectedUserPlace.street,
+            streetNumber: activityData.selectedUserPlace.streetNumber,
+            country: activityData.selectedUserPlace.country,
+            address: activityData.selectedUserPlace.selectedAddress,
+            date: activityData.date,
+            time: activityData.time,
+            description: activityData.description,
+            participants: null,
+            activityPhoto:
+                activityData.activityPhoto && activityData.activityPhoto.length > 0
+                    ? activityData.activityPhoto.split(",")[1]
+                    : null,
+        };
+    }
+    function handleSubmit(e) {
+        e.preventDefault();
+
+        if (!validateAddress() || !validateSelectedUserPlace() || !validateActivityType()) return false;
+
+        const requestBody = createRequestBody();
+
         fetch("http://localhost:8080/activities", {
             headers: {Authorization: localStorage.getItem("jwt"), "Content-Type": "application/json"},
             method: "POST",
-            body: JSON.stringify({
-                "activityId": activityId,
-                "activityType": activityData.activityType,
-                "owner": {
-                    "userId": userId
-                },
-                "title": activityData.title,
-                "city": activityData.selectedUserPlace.city,
-                "street": activityData.selectedUserPlace.street,
-                "streetNumber": activityData.selectedUserPlace.streetNumber,
-                "country": activityData.selectedUserPlace.country,
-                "address": activityData.selectedUserPlace.selectedAddress,
-                "date": activityData.date,
-                "time": activityData.time,
-                "description": activityData.description,
-                "participants": null,
-                "activityPhoto": activityData.activityPhoto && activityData.activityPhoto.length > 0 ? activityData.activityPhoto.split(",")[1] : null
-            })
+            body: JSON.stringify(requestBody)
         }).then(response => {
             if (response.status !== 200) {
                 console.error("something went wrong");
@@ -151,7 +167,7 @@ const AddActivity = () => {
             setDisplayActivityAddedModal(true);
             setTimeout(() => {
                 setDisplayActivityAddedModal(false)
-                navigate(`/activity-page/${activityId}`)
+                navigate(`/activity-page/${requestBody.activityId}`)
             }, 3000)
         })
     }
