@@ -11,7 +11,7 @@ function AdditionalUserInfoForm() {
     const userData = useContext(Context).userData;
     const [additionalInfo, setAdditionalInfo] = useState({
         city: "",
-        preferredActivity: "",
+        preferredActivity: null,
         description: "",
         selectedImage: ""
     })

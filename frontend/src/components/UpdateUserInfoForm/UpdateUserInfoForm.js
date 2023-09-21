@@ -9,10 +9,10 @@ import {convertBase64, updateInfo} from "../functions";
 function UpdateUserInfoForm() {
     const userData = useContext(Context).userData;
     const [additionalInfo, setAdditionalInfo] = useState({
-        city: "",
-        preferredActivity: "",
-        description: "",
-        selectedImage: ""
+        city: userData.city,
+        preferredActivity: userData.preferredActivity,
+        description: userData.description,
+        selectedImage: null
     })
     const uploadImageRef = useRef(null);
     const navigate = useNavigate()
