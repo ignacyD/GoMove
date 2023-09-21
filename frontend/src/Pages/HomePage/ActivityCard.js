@@ -119,8 +119,8 @@ function ActivityCard({activity, setDisplayLoginForm, handleAcceptActivity, hand
                             onClick={() => setShowMap(!showMap)}>{showMap ? "Back to details" : "See on map"}</button>
                     </div>
                     <div className="google-maps">
-                        <GoogleMapComponent height={isUserMobile ? 'calc(50vh - 150px)' : '270px'}
-                                            width={isUserMobile ? '60vw' : '400px'}
+                        <GoogleMapComponent height={isUserMobile ? 'calc(60vh - 150px)' : '270px'}
+                                            width={isUserMobile ? '70vw' : '400px'}
                                             address={`${activity.address}`}/>
                     </div>
                 </div>

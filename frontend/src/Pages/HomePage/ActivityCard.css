@@ -167,29 +167,38 @@ div.middle-section > div.datetime {
 
 @media screen and (max-width: 768px) {
     .card {
-        height: calc(100vh - 250px);
+        height: calc(100vh - 200px);
         width: 70vw;
         touch-action: none;
         transition: transform .5s;
     }
 
     .card .top-section {
-        width: 60vw;
-        height: 200px;
+        width: 70vw;
+        height: 160px;
         margin-bottom: 0;
     }
 
-    .top-section > .photo {
-        height: 200px;
-        width: 30vw;
+    .top-section > .activity-photo {
+        height: 160px;
+        width: 35vw;
         margin-right: 0;
+    }
+
+    .card .top-section > .activity-photo img {
+        height: 160px;
+        width: 35vw;
     }
 
     .card .top-section .title-section {
         min-width: 30vw;
         max-width: 30vw;
         position: relative;
-        left: 20px;
+        left: 10px;
+    }
+
+    div.middle-section > .datetime p {
+        width: 35vw;
     }
 
     .middle-section {
@@ -198,24 +207,29 @@ div.middle-section > div.datetime {
     }
 
     .location h3, .datetime h3 {
-        margin-top: 10px;
+        margin-top: 5px;
     }
 
     .bottom-section {
-        height: calc(35vh - 150px);
+        margin-top: 10px;
+        height: calc(45vh - 160px);
     }
-
+    .description {
+        word-break: break-word;
+        overflow: hidden;
+    }
     .bottom-section h3 {
         margin-top: 0;
     }
 
     .map-button {
-        height: calc(50vh - 300px);
+        height: calc(40vh - 210px);
+        margin-bottom: 1px;
     }
 
     .map-side {
         position: relative;
-        bottom: calc(50vh - 150px);
+        bottom: calc(60vh - 150px);
         transition: bottom 1s;
     }
 }
