@@ -155,7 +155,6 @@ const AddActivity = () => {
             }, 3000)
         })
     }
-
     function addHours(date, hours) {
         date.setHours(date.getHours() + hours);
         const timeString = date.toLocaleTimeString();

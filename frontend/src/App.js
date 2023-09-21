@@ -8,7 +8,6 @@ import ModalStyles from "./ModalStyles";
 import RegistrationForm from "./components/RegistrationForm/RegistrationForm";
 import ActivityAddedModal from "./components/ActivityAddedModal/ActivityAddedModal";
 import ActivityDeleteModal from "./components/ActivityDeleteModal/ActivityDeleteModal";
-import HomePage from "./Pages/HomePage/HomePage";
 
 export const Context = React.createContext();
 
