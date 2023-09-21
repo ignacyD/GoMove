@@ -5,6 +5,7 @@ import Modal from "react-modal";
 import updateUserInfoModalStyles from "../../ModalStyles";
 import {Context} from "../../App";
 import {convertBase64, updateInfo} from "../functions";
+import blankProfilePicture from "../../assets/images/blank-profile-picture.jpg"
 
 function UpdateUserInfoForm() {
     const userData = useContext(Context).userData;
@@ -19,8 +20,10 @@ function UpdateUserInfoForm() {
 
     const handleImageUpload = async (event) => {
         const file = event.target.files[0];
-        const base64 = await convertBase64(file);
-        updateInfo(setAdditionalInfo, "selectedImage", base64);
+        if (file) {
+            const base64 = await convertBase64(file);
+            updateInfo(setAdditionalInfo, "selectedImage", base64);
+        }
     };
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -67,7 +70,7 @@ function UpdateUserInfoForm() {
                                 <button className="custom-file-button" type="button"
                                         onClick={() => uploadImageRef.current.click()}>
                                     <img className='profile-picture' alt='profile picture'
-                                         src={additionalInfo.selectedImage ? additionalInfo.selectedImage : userData.userPhoto ? 'data:image/jpeg;base64,' + userData.userPhoto : 'blank-profile-picture.png'}></img>
+                                         src={additionalInfo.selectedImage ? additionalInfo.selectedImage : userData.userPhoto ? 'data:image/jpeg;base64,' + userData.userPhoto : blankProfilePicture}></img>
                                     <div className='change-photo-button'>
                                         Click to change
                                     </div>
