@@ -4,7 +4,8 @@ import "./SearchPage.css";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
     faAngleDown,
-    faAngleUp, faChevronUp,
+    faAngleUp,
+    faChevronUp,
     faPersonBiking,
     faPersonRunning,
     faPersonSkating,
@@ -13,7 +14,6 @@ import {
 import {Context} from "../../App";
 import ModalStyles from "../../ModalStyles";
 import Modal from "react-modal";
-import {useNavigate} from "react-router-dom";
 
 function SearchPage() {
 
@@ -129,15 +129,14 @@ function SearchPage() {
             }
         }
     }, [carouselIndex, activities, touchStartY]);
+
     const scrollToTop = () => {
-        const goToTopButton = document.querySelector('.scroll-to-top-button');
         window.scrollTo({
             top: '0',
             behavior: 'smooth',
         });
     };
     const scrollToActivities = () => {
-        const goToTopButton = document.querySelector('.scroll-to-top-button');
         const filtersContainer = document.querySelector('.activity-search-filters');
         console.log(filtersContainer.offsetHeight)
         window.scrollTo({
@@ -392,7 +391,12 @@ function SearchPage() {
                             id="dateFrom"
                             name="dateFrom"
                             min={today}
-                            onChange={(e) => setDateFrom(e.target.value)}
+                            onChange={(e) => {
+                                setDateFrom(e.target.value)
+                                if (e.target.value > dateTo && dateTo !== "") {
+                                    setDateTo("")
+                                }
+                            }}
                         />
                     </div>
                     <div className="date-to-filter">
@@ -404,7 +408,7 @@ function SearchPage() {
                             type="date"
                             id="dateTo"
                             name="dateTo"
-                            min={today}
+                            min={dateFrom !== "" ? dateFrom : today}
                             onChange={(e) => setDateTo(e.target.value)}/>
                     </div>
                 </div>
@@ -416,7 +420,7 @@ function SearchPage() {
             </div>
             <div className="found-activities">
                 <button className="scroll-to-top-button" onClick={() => scrollToTop()}>
-                    <FontAwesomeIcon icon={faChevronUp} />
+                    <FontAwesomeIcon icon={faChevronUp}/>
                 </button>
                 <div className="activities-carousel">
                     <div className="activities-carousel-visible">
