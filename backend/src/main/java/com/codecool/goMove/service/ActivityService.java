@@ -123,7 +123,8 @@ public class ActivityService {
 
         if (activityRepository.findById(id).isPresent()) {
             Activity activityToDelete = activityRepository.findById(id).get();
-            for (User user : activityToDelete.getParticipants()) {
+            Set<User> participants = new HashSet<>(activityToDelete.getParticipants());
+            for (User user : participants) {
                 activityToDelete.removeParticipant(user);
             }
             activityRepository.deleteById(id);
