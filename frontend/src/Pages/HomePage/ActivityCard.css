@@ -80,6 +80,7 @@
 
 .location {
     width: 60%;
+    margin-right: 15px;
 }
 
 .description {
@@ -87,6 +88,7 @@
     height: 130px;
     justify-content: space-around;
     width: 60%;
+    margin-right: 15px;
 }
 
 .description p {
@@ -134,6 +136,7 @@
 
 .card p {
     color: white;
+    word-break: break-word;;
 }
 
 .card-changeable-space {
