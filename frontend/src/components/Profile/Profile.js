@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
 import './Profile.css';
 import {Context} from "../../App";
-import testPhoto from "../../assets/images/cycling.jpg";
+import blankProfilePicture from "../../assets/images/blank-profile-picture.jpg"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faChevronLeft, faChevronRight} from "@fortawesome/free-solid-svg-icons";
 import {iconSelector, photoSelector} from '../functions'
@@ -109,7 +109,9 @@ function Profile() {
                                         <div className="activity-city">{activity.city}</div>
                                     </div>
                                     <div className="activity-photo">
-                                        <img src={activity.activityPhoto ? 'data:image/jpeg;base64,' + activity.activityPhoto : photoSelector(activity.activityType)} alt="Activity"/>
+                                        <img
+                                            src={activity.activityPhoto ? 'data:image/jpeg;base64,' + activity.activityPhoto : photoSelector(activity.activityType)}
+                                            alt="Activity"/>
                                     </div>
                                 </div>
                             ))}
@@ -186,7 +188,7 @@ function Profile() {
                     <div className="profile-picture-container">
                         <img
                             className="profile-picture"
-                            src={profileUserData.userPhoto ? 'data:image/jpeg;base64,' + profileUserData.userPhoto : 'blank-profile-picture.png'}
+                            src={profileUserData.userPhoto ? 'data:image/jpeg;base64,' + profileUserData.userPhoto : blankProfilePicture}
                             alt="Profile picture"
                         />
                     </div>
