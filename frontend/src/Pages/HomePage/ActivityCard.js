@@ -21,16 +21,24 @@ function ActivityCard({activity}) {
             setIsUserMobile(false);
         }
     }, [window.innerWidth])
+    const navigateToActivityPage = (e) => {
+        const mapButton = document.querySelector('.map-button button')
+        if(e.target !== mapButton){
+        navigate(`/activity-page/${activity.activityId}`)
+        }
+    }
 
     return (
         <div className="card"
-             onClick={() => navigate(`/activity-page/${activity.activityId}`)}
+             onClick={(e) => navigateToActivityPage(e)}
         >
             <div
                 className="top-section"
             >
                 <div className="activity-photo">
-                    <img src={activity.activityPhoto ? 'data:image/jpeg;base64,' + activity.activityPhoto : photoSelector(activity.activityType)} alt="Activity"/>
+                    <img
+                        src={activity.activityPhoto ? 'data:image/jpeg;base64,' + activity.activityPhoto : photoSelector(activity.activityType)}
+                        alt="Activity"/>
                 </div>
                 <div className="title-section">
                     <div className="activityCard-icon">{iconSelector(activity.activityType)}</div>
@@ -57,8 +65,8 @@ function ActivityCard({activity}) {
                         <div className="participants-container">
                             <h3>Participants: </h3>
                             <div className="participants">
-                            <FontAwesomeIcon icon={faUser} style={{color: "#FFFFFF",}}/>
-                            <h2>{activity.participants.length}</h2>
+                                <FontAwesomeIcon icon={faUser} style={{color: "#FFFFFF",}}/>
+                                <h2>{activity.participants.length}</h2>
                             </div>
                         </div>
                     </div>
