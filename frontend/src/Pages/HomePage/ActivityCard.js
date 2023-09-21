@@ -20,10 +20,16 @@ function ActivityCard({activity}) {
             setIsUserMobile(false);
         }
     }, [window.innerWidth])
+    const navigateToActivityPage = (e) => {
+        const mapButton = document.querySelector('.map-button button')
+        if(e.target !== mapButton){
+        navigate(`/activity-page/${activity.activityId}`)
+        }
+    }
 
     return (
         <div className="card"
-             onClick={() => navigate(`/activity-page/${activity.activityId}`)}
+             onClick={(e) => navigateToActivityPage(e)}
         >
             <div
                 className="top-section"

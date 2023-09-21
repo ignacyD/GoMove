@@ -1,11 +1,11 @@
 import React, {useContext} from 'react';
-import './ActivitySmallCard.css';
+import './SearchActivityCard.css';
 import testPhoto from "../../assets/images/cycling.jpg";
 import {useNavigate} from "react-router-dom";
 import {Context} from "../../App";
 import {iconSelector, photoSelector} from '../functions'
 
-const ActivitySmallCard = ({activity, handleJoinActivity}) => {
+const SearchActivityCard = ({activity, handleJoinActivity}) => {
 
     const isUserLogged = useContext(Context).isUserLogged;
     const setDisplayLoginForm = useContext(Context).setDisplayLoginForm;
@@ -44,4 +44,4 @@ const ActivitySmallCard = ({activity, handleJoinActivity}) => {
     );
 };
 
-export default ActivitySmallCard;
+export default SearchActivityCard;
