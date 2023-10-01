@@ -6,6 +6,7 @@ import additionalProfileInfoModalStyles from "../../ModalStyles";
 import {useRef} from 'react';
 import {Context} from "../../App";
 import {convertBase64, updateInfo} from "../functions";
+import blankProfilePicture from "../../assets/images/blank-profile-picture.jpg"
 
 function AdditionalUserInfoForm() {
     const userData = useContext(Context).userData;
@@ -67,7 +68,7 @@ function AdditionalUserInfoForm() {
                             <div>
                                 <button className="custom-file-button" type="button" onClick={() => uploadImageRef.current.click()}>
                                     <img className='profile-picture' alt='profile picture'
-                                         src={additionalInfo.selectedImage ? additionalInfo.selectedImage : 'blank-profile-picture.png'}></img>
+                                         src={additionalInfo.selectedImage ? additionalInfo.selectedImage : blankProfilePicture}></img>
                                     <div className='change-photo-button'>
                                         Click to change
                                     </div>
