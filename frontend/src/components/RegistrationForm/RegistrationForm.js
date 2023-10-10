@@ -33,8 +33,8 @@ function RegistrationForm({setDisplayLoginForm, setDisplayRegistrationForm}) {
             },
             "method": "POST",
             "body": JSON.stringify({
-                "username": registrationData.username,
-                "email": registrationData.email,
+                "username": registrationData.username.toLowerCase(),
+                "email": registrationData.email.toLowerCase(),
                 "password": registrationData.password
             })
         }).then(response => {

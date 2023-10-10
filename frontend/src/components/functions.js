@@ -35,7 +35,7 @@ export function photoSelector(activityType) {
             photoToDisplay = cyclingPhoto;
             break;
         case "WALKING":
-            photoToDisplay = walkingPhoto
+            photoToDisplay = walkingPhoto;
             break;
         case "SKATING":
             photoToDisplay = skatingPhoto;

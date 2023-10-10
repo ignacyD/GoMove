@@ -27,7 +27,7 @@ function LoginForm({setDisplayLoginForm, setDisplayRegistrationForm}) {
             },
             "method": "POST",
             "body": JSON.stringify({
-                "username": loginData.username,
+                "username": loginData.username.toLowerCase(),
                 "password": loginData.password
             })
         }).then(response => {

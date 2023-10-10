@@ -12,7 +12,7 @@ import java.util.UUID;
 @Service
 public class ActivityImageService implements ImageService {
 
-    ApplicationConfig applicationConfig;
+    private final ApplicationConfig applicationConfig;
 
     public ActivityImageService(ApplicationConfig applicationConfig) {
         this.applicationConfig = applicationConfig;
