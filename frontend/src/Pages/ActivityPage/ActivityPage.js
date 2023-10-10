@@ -16,12 +16,12 @@ import {useNavigate, useParams} from "react-router-dom";
 import {Context} from "../../App";
 import {iconSelector, photoSelector} from '../../components/functions'
 import {
-    FacebookShareButton,
+    EmailIcon,
+    EmailShareButton,
     FacebookIcon,
+    FacebookShareButton,
     TwitterIcon,
     TwitterShareButton,
-    EmailShareButton,
-    EmailIcon,
 } from "react-share";
 
 
@@ -230,7 +230,7 @@ function ActivityPage() {
                         <div className="users">
                             {activityData.participants.length > 0 ? activityData.participants.map(participant => (
                                 <div className="participant-info" key={participant.userId}
-                                     onClick={() => navigate(`/profile/${participant.userId}`)}>
+                                     onClick={() => isUserLogged ? navigate(`/profile/${participant.userId}`) : setDisplayLoginForm(true)}>
                                     <FontAwesomeIcon icon={faUser} size="2xl" style={{color: "#2a2a2a",}}/>
                                     <p>{participant.username === activityData.owner.username ? participant.username + " (owner)" : participant.username}</p>
                                 </div>
